@@ -1,0 +1,122 @@
+{
+    "accessoryFiles": {},
+    "language": "WDL_1_0",
+    "outputs": {
+        "bcl2fastq.fastqs": {
+            "keys": {
+                "name": "STRING"
+            },
+            "outputs": {
+                "fastqs": "file-with-labels"
+            },
+            "type": "list"
+        }
+    },
+    "parameters": {
+        "bcl2fastq.basesMask": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "bcl2fastq.lanes": {
+            "inner": "integer",
+            "is": "list"
+        },
+        "bcl2fastq.mismatches": "integer",
+        "bcl2fastq.modules": "string",
+        "bcl2fastq.process.basesMask": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "bcl2fastq.process.bcl2fastq": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "bcl2fastq.process.bcl2fastqJail": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "bcl2fastq.process.extraOptions": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "bcl2fastq.process.ignoreMissingBcls": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "bcl2fastq.process.ignoreMissingFilter": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "bcl2fastq.process.ignoreMissingPositions": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "bcl2fastq.process.lanes": {
+            "inner": "integer",
+            "is": "list"
+        },
+        "bcl2fastq.process.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "bcl2fastq.process.mismatches": "integer",
+        "bcl2fastq.process.modules": "string",
+        "bcl2fastq.process.runDirectory": "string",
+        "bcl2fastq.process.samples": {
+            "fields": {
+                "samples": {
+                    "inner": {
+                        "fields": null,
+                        "is": "object"
+                    },
+                    "is": "list"
+                }
+            },
+            "is": "object"
+        },
+        "bcl2fastq.process.temporaryDirectory": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "bcl2fastq.process.threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "bcl2fastq.process.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "bcl2fastq.runDirectory": "directory",
+        "bcl2fastq.samples": {
+            "inner": {
+                "fields": {
+                    "acceptableUmiList": {
+                        "inner": "string",
+                        "is": "optional"
+                    },
+                    "barcodes": {
+                        "inner": "string",
+                        "is": "list"
+                    },
+                    "inlineUmi": "boolean",
+                    "name": "string",
+                    "patterns": {
+                        "inner": {
+                            "is": "dictionary",
+                            "key": "string",
+                            "value": "string"
+                        },
+                        "is": "optional"
+                    }
+                },
+                "is": "object"
+            },
+            "is": "list"
+        },
+        "bcl2fastq.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        }
+    },
+    "workflow": "version 1.0\n\nstruct Sample {\n    Array[String]+ barcodes\n    String name\n    Boolean inlineUmi\n    String? acceptableUmiList\n    Map[String,String]? patterns\n}\n\nstruct SampleList {\n    Array[Sample]+ samples\n}\n\nstruct Output {\n    String name\n    Pair[File,Map[String,String]] fastqs\n}\n\nstruct Outputs {\n    Array[Output]+ outputs\n}\n\nworkflow bcl2fastq {\n  input {\n    String? basesMask\n    Array[Int]+ lanes\n    Int mismatches\n    String modules\n    Array[Sample]+ samples\n    String runDirectory\n    Int timeout = 40\n  }\n  parameter_meta {\n    basesMask: \"An Illumina bases mask string to use. If absent, the one written by the instrument will be used.\"\n    lanes: \"The lane numbers to process from this run\"\n    mismatches: \"Number of mismatches to allow in the barcodes (usually, 1)\"\n    modules: \"The modules to load when running the workflow. This should include bcl2fastq and the helper scripts.\"\n    runDirectory: {description: \"The path to the instrument's output directory.\", vidarr_type: \"directory\"}\n    samples: \"The information about the samples. Tname of the sample which will determine the output file prefix. The list of barcodes in the format i7-i5 for this sample. If multiple barcodes are provided, they will be merged into a single output.\"\n    timeout: \"The maximum number of hours this workflow can run for.\"\n  }\n  meta {\n    author: \"Andre Masella\"\n    description: \"Workflow to produce FASTQ files from an Illumina instrument's run directory\"\n    dependencies: [{\n      name: \"bcl2fastq\",\n      url: \"https://emea.support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html\"\n    }]\n    output_meta: {\n      fastqs: \"A list of FASTQs generated and annotations that should be applied to them.\"\n    }\n  }\n  call process {\n    input:\n      basesMask = basesMask,\n      lanes = lanes,\n      mismatches  = mismatches,\n      modules = modules,\n      runDirectory = runDirectory,\n      samples = object { samples: samples },\n      timeout = timeout\n  }\n  output {\n    Array[Output]+ fastqs = process.out.outputs\n  }\n}\n\n\ntask process {\n  input {\n    String? basesMask\n    String bcl2fastq = \"bcl2fastq\"\n    String bcl2fastqJail = \"bcl2fastq-jail\"\n    String extraOptions = \"\"\n    Boolean ignoreMissingBcls = false\n    Boolean ignoreMissingFilter = false\n    Boolean ignoreMissingPositions = false\n    Array[Int]+ lanes\n    Int memory = 32\n    Int mismatches\n    String modules\n    String runDirectory\n    SampleList samples\n    String temporaryDirectory = \".\"\n    Int threads = 8\n    Int timeout = 40\n  }\n  parameter_meta {\n    basesMask: \"An Illumina bases mask string to use. If absent, the one written by the instrument will be used.\"\n    bcl2fastq: \"The name or path of the BCL2FASTQ executable.\"\n    bcl2fastqJail: \"The name ro path of the BCL2FASTQ wrapper script executable.\"\n    extraOptions: \"Any other options that will be passed directly to bcl2fastq.\"\n    ignoreMissingBcls: \"Flag passed to bcl2fastq, allows missing bcl files.\"\n    ignoreMissingFilter: \"Flag passed to bcl2fastq, allows missing or corrupt filter files.\"\n    ignoreMissingPositions: \"Flag passed to bcl2fastq, allows missing or corrupt positions files.\"\n    lanes: \"The set of lanes to process.\"\n    memory: \"The memory for the BCL2FASTQ process in GB.\"\n    mismatches: \"Number of mismatches to allow in the barcodes (usually, 1)\"\n    modules: \"The modules to load when running the workflow. This should include bcl2fastq and the helper scripts.\"\n    runDirectory: \"The path to the instrument's output directory.\"\n    samples: \"The samples to extract from the run.\"\n    temporaryDirectory: \"A directory where bcl2fastq can dump massive amounts of garbage while running.\"\n    threads: \"The number of processing threads to use when running BCL2FASTQ\"\n    timeout: \"The maximum number of hours this workflow can run for.\"\n  }\n  meta {\n    output_meta: {\n      out: \"The FASTQ files and read counts for the samples\"\n    }\n  }\n\n  command <<<\n    ~{bcl2fastqJail} \\\n      -t \"~{temporaryDirectory}\" \\\n      -s ~{write_json(samples)} \\\n      -- ~{bcl2fastq} \\\n      --barcode-mismatches ~{mismatches} \\\n      --input-dir \"~{runDirectory}/Data/Intensities/BaseCalls\" \\\n      --intensities-dir \"~{runDirectory}/Data/Intensities\" \\\n      --no-lane-splitting \\\n      --processing-threads ~{threads} \\\n      --runfolder-dir \"~{runDirectory}\" \\\n      --tiles \"^(s_)?[~{sep=\"\" lanes}]_\" \\\n      --interop-dir \"~{temporaryDirectory}\" \\\n      ~{if ignoreMissingBcls then \"--ignore-missing-bcls\" else \"\"} \\\n      ~{if ignoreMissingFilter then \"--ignore-missing-filter\" else \"\"} \\\n      ~{if ignoreMissingPositions then \"--ignore-missing-positions\" else \"\"} \\\n      ~{if defined(basesMask) then \"--use-bases-mask ~{basesMask}\" else \"\"} \\\n      ~{extraOptions}\n  >>>\n  output {\n    Outputs out = read_json(\"outputs.json\")\n  }\n  runtime {\n    memory: \"~{memory}G\"\n    modules: \"~{modules}\"\n    timeout: \"~{timeout}\"\n  }\n}\n"
+}
