@@ -1,0 +1,39 @@
+{
+    "accessoryFiles": {},
+    "language": "WDL_1_0",
+    "outputs": {
+        "fingerprintCompare.jaccardMatrix": "file"
+    },
+    "parameters": {
+        "fingerprintCompare.generateFinList.inputs": {
+            "inner": "file",
+            "is": "list"
+        },
+        "fingerprintCompare.generateFinList.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fingerprintCompare.generateFinList.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fingerprintCompare.generateMatrix.finList": "file",
+        "fingerprintCompare.generateMatrix.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fingerprintCompare.generateMatrix.modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "fingerprintCompare.generateMatrix.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fingerprintCompare.inputs": {
+            "inner": "file",
+            "is": "list"
+        }
+    },
+    "workflow": "version 1.0\n\nworkflow fingerprintCompare {\n\n    input {\n        Array[File] inputs\n    }\n\n    call generateFinList { input: inputs = inputs}\n    call generateMatrix { input: finList = generateFinList.finList }\n\n    parameter_meta {\n        inputs: \"A list of FIN files generated from fingerprintCollector workflow\"\n    }\n\n    meta {\n        author: \"Michelle Feng\"\n        email: \"mfeng@oicr.on.ca\"\n        description: \"Workflow to generate jaccard matrices for all projects.\"\n        dependencies: [\n            {\n            name: \"perl/5.30\",\n            url: \"https://www.perl.org/\"\n            }\n        ]\n        output_meta: {\n            jaccardMatrix: \"A matrix of jaccard scores from pairwise comparisions between the fingerprints.\"\n        }\n    }\n\n    output {\n        File jaccardMatrix = generateMatrix.jaccardMatrix\n    }\n}\n\ntask generateFinList {\n\n    input {\n        Array[File] inputs\n        Int timeout = 5\n        Int memory = 20\n    }\n\n    parameter_meta {\n        inputs: \"A list of FIN files generated from fingerprintCollector\"\n        timeout: \"Timeout in hours, needed to override imposed limits\"\n        memory: \"Memory allocated for job\"\n    }\n\n    command <<<\n        mkdir finFiles\n        while read line ; do\n            ln -s $line finFiles/$(basename $line)\n        done < ~{write_lines(inputs)}\n        echo $PWD/finFiles\n    >>>\n\n    runtime {\n        timeout: \"~{timeout}\"\n        memory: \"~{memory}G\"\n    }\n\n    output {\n        File finList = write_lines(inputs)\n    }\n\n    meta {\n        output_meta: {\n            finList: \"Input file for generateMatrix containing list of .fin files\"\n        }\n    }\n}\n\ntask generateMatrix {\n\n    input {\n        File finList\n        String modules = \"sample-fingerprinting/0\"\n        Int timeout = 5\n        Int memory = 20\n    }\n\n    parameter_meta {\n        finList: \"The .txt file containing a list of .fin files on which a jaccard matrix will be generated.\"\n        modules: \"Names and versions of modules.\"\n        timeout: \"Timeout in hours, needed to override imposed limits.\"\n        memory: \"Memory allocated for job.\"\n    }\n\n    command <<<\n        jaccard_coeff_matrix_mc --list ~{finList} > matrix.txt\n    >>>\n\n    runtime {\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n        memory: \"~{memory}G\"\n    }\n\n    output {\n        File jaccardMatrix = \"matrix.txt\"\n    }\n\n    meta {\n        output_meta: {\n            jaccardMatrix: \"A matrix of jaccard scores from pairwise comparisions between the fingerprints.\"\n        }\n    }\n}\n"
+}
