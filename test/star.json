@@ -9,7 +9,6 @@
         "star.transcriptomeBam": "file"
     },
     "parameters": {
-        "star.indexBam.inputBam": "file",
         "star.indexBam.jobMemory": {
             "inner": "integer",
             "is": "optional"
@@ -122,7 +121,6 @@
             "inner": "integer",
             "is": "optional"
         },
-        "star.runStar.outputFileNamePrefix": "string",
         "star.runStar.peOvMMp": {
             "inner": "floating",
             "is": "optional"
@@ -131,18 +129,6 @@
             "inner": "integer",
             "is": "optional"
         },
-        "star.runStar.read1s": {
-            "inner": "file",
-            "is": "list"
-        },
-        "star.runStar.read2s": {
-            "inner": "file",
-            "is": "list"
-        },
-        "star.runStar.readGroups": {
-            "inner": "string",
-            "is": "list"
-        },
         "star.runStar.saSparsed": {
             "inner": "integer",
             "is": "optional"
@@ -150,16 +136,6 @@
         "star.runStar.starSuffix": {
             "inner": "string",
             "is": "optional"
-        },
-        "star.runStar.test": {
-            "fields": {
-                "content": "file",
-                "optionalContent": {
-                    "inner": "file",
-                    "is": "optional"
-                }
-            },
-            "is": "object"
         },
         "star.runStar.threads": {
             "inner": "integer",

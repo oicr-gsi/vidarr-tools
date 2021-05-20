@@ -23,10 +23,6 @@
         },
         "bcl2fastq.mismatches": "integer",
         "bcl2fastq.modules": "string",
-        "bcl2fastq.process.basesMask": {
-            "inner": "string",
-            "is": "optional"
-        },
         "bcl2fastq.process.bcl2fastq": {
             "inner": "string",
             "is": "optional"
@@ -51,38 +47,15 @@
             "inner": "boolean",
             "is": "optional"
         },
-        "bcl2fastq.process.lanes": {
-            "inner": "integer",
-            "is": "list"
-        },
         "bcl2fastq.process.memory": {
             "inner": "integer",
             "is": "optional"
-        },
-        "bcl2fastq.process.mismatches": "integer",
-        "bcl2fastq.process.modules": "string",
-        "bcl2fastq.process.runDirectory": "string",
-        "bcl2fastq.process.samples": {
-            "fields": {
-                "samples": {
-                    "inner": {
-                        "fields": null,
-                        "is": "object"
-                    },
-                    "is": "list"
-                }
-            },
-            "is": "object"
         },
         "bcl2fastq.process.temporaryDirectory": {
             "inner": "string",
             "is": "optional"
         },
         "bcl2fastq.process.threads": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "bcl2fastq.process.timeout": {
             "inner": "integer",
             "is": "optional"
         },

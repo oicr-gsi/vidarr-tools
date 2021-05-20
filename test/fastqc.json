@@ -13,6 +13,34 @@
             "inner": "file",
             "is": "optional"
         },
+        "fastQC.firstMateFastQC.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.firstMateFastQC.modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "fastQC.firstMateFastQC.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.firstMateHtml.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.firstMateHtml.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.firstMateZip.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.firstMateZip.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
         "fastQC.outputFileNamePrefix": {
             "inner": "string",
             "is": "optional"
@@ -25,27 +53,31 @@
             "inner": "string",
             "is": "optional"
         },
-        "fastQC.renameOutput.customPrefix": "string",
-        "fastQC.renameOutput.extension": "string",
-        "fastQC.renameOutput.inputFile": "file",
-        "fastQC.renameOutput.jobMemory": {
+        "fastQC.secondMateFastQC.jobMemory": {
             "inner": "integer",
             "is": "optional"
         },
-        "fastQC.renameOutput.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.runFastQC.inputFastq": "file",
-        "fastQC.runFastQC.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.runFastQC.modules": {
+        "fastQC.secondMateFastQC.modules": {
             "inner": "string",
             "is": "optional"
         },
-        "fastQC.runFastQC.timeout": {
+        "fastQC.secondMateFastQC.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.secondMateHtml.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.secondMateHtml.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.secondMateZip.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "fastQC.secondMateZip.timeout": {
             "inner": "integer",
             "is": "optional"
         }
