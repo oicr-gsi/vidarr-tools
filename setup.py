@@ -11,7 +11,9 @@ setup(
     entry_points={"console_scripts": ["wdl2vidarr = vidarr.wdl:main"]},
     install_requires=[
         "miniwdl>=0.9.0",
+        "requests>=2.22.0"
     ],
+    scripts=["scripts/vidarr-build"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     test_suite="test",
