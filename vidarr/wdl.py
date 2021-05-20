@@ -203,7 +203,9 @@ def main():
 
     if args.output_path:
         workflow = parse(args.input_wdl_path)
-        os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
+        parent_dir = os.path.dirname(args.output_path)
+        if parent_dir:
+            os.makedirs(parent_dir, exist_ok=True)
         with open(args.output_path, "w") as output_file:
             json.dump(workflow, output_file)
     else:
