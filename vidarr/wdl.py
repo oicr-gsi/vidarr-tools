@@ -149,14 +149,6 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
 
     workflow_inputs = {}
 
-    def add_input(prefix: str, decl: WDL.Decl, parameter_meta: Dict[str, Any]):
-        meta = parameter_meta.get(decl.name)
-        if meta and isinstance(meta, dict) and "vidarr_type" in meta:
-            workflow_inputs[prefix + "." + decl.name] = meta["vidarr_type"]
-        else:
-            workflow_inputs[prefix + "." + decl.name] = {"is": "optional", "inner": _map_input(
-                decl.type, structures)} if decl.expr else _map_input(decl.type, structures)
-
     def read_output(output: WDL.Decl):
         output_metadata = doc.workflow.meta.get(
             "output_meta", {}).get(
@@ -169,23 +161,14 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             return _map_output(
                 output.type, True, doc.struct_typedefs)
 
-    for wf_input in (doc.workflow.inputs or []):
-        add_input(doc.workflow.name, wf_input, doc.workflow.parameter_meta)
-    for task in doc.tasks:
-        for task_input in (task.inputs or []):
-            add_input(
-                doc.workflow.name +
-                "." +
-                task.name,
-                task_input,
-                task.parameter_meta)
-        for wf_input in task.postinputs:
-            add_input(
-                doc.workflow.name +
-                "." +
-                task.name,
-                wf_input,
-                task.parameter_meta)
+    for wf_input in (doc.workflow.available_inputs or []):
+        meta = doc.workflow.parameter_meta.get(wf_input.name)
+        if meta and isinstance(meta, dict) and "vidarr_type" in meta:
+            workflow_inputs[doc.workflow.name + "." +
+                            wf_input.name] = meta["vidarr_type"]
+        else:
+            workflow_inputs[doc.workflow.name + "." + wf_input.name] = {"is": "optional", "inner": _map_input(
+                wf_input.value.type, structures)} if wf_input.value.expr else _map_input(wf_input.value.type, structures)
 
     workflow = {
         'language': 'WDL_' + str(

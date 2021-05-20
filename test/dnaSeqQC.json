@@ -10,6 +10,412 @@
         "dnaSeqQC.result": "file"
     },
     "parameters": {
+        "dnaSeqQC.bamQC.bamQCMetrics_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_normalInsertMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_refFasta": "string",
+        "dnaSeqQC.bamQC.bamQCMetrics_refSizesBed": "string",
+        "dnaSeqQC.bamQC.bamQCMetrics_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_workflowVersion": "string",
+        "dnaSeqQC.bamQC.collateResults_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.collateResults_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.collateResults_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.collateResults_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_downsampleSuffix": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_randomSeed": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_minQuality": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_baseInterval": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_chromosomes": {
+            "inner": {
+                "inner": "string",
+                "is": "list"
+            },
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_customRegions": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_intervalStart": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_threshold": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_minReadsAbsolute": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_minReadsRelative": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_preDSMultiplier": {
+            "inner": "floating",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_precision": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_targetReads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_opticalDuplicatePixelDistance": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_picardMaxMemMb": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.metadata": {
+            "is": "dictionary",
+            "key": "string",
+            "value": "string"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapter1": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapter2": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimmingLog_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimmingLog_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_addParam": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.bamMerge_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.bamMerge_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.bamMerge_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.countChunkSize_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.countChunkSize_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.doTrim": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.indexBam_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.indexBam_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.indexBam_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.numChunk": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.readGroups": "string",
+        "dnaSeqQC.bwaMem.runBwaMem_addParam": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.runBwaMem_bwaRef": "string",
+        "dnaSeqQC.bwaMem.runBwaMem_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.runBwaMem_modules": "string",
+        "dnaSeqQC.bwaMem.runBwaMem_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.runBwaMem_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR1_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR1_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR1_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR2_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR2_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR2_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.trimMinLength": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.trimMinQuality": {
+            "inner": "integer",
+            "is": "optional"
+        },
         "dnaSeqQC.fastqR1": "file",
         "dnaSeqQC.fastqR2": "file",
         "dnaSeqQC.outputFileNamePrefix": {
