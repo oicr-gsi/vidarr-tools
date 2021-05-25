@@ -176,6 +176,12 @@ ok = True
 if args.command == "deploy":
     for vidarr_url in vidarr_urls:
         for name in config["names"]:
+            res = requests.get(f"{vidarr_url}/api/workflow/{name}")
+            if res.status_code != 200:
+                print(
+                    f"Workflow {name} not registered on {vidarr_url}. Skipping.")
+                continue
+
             print(f"Pushing {name}/{args.version} to {vidarr_url} server...")
             res = requests.post(
                 f"{vidarr_url}/api/workflow/{name}/{args.version}",
