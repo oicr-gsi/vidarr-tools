@@ -120,7 +120,7 @@ def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
                 else:
                     outputs[member_name] = _map_output(
                         member_type, False, structures)
-            return {"type": "list", "keys": keys, "outputs": outputs}
+            return {"is": "list", "keys": keys, "outputs": outputs}
     raise ValueError(
         f"Vidarr cannot process output type {wdl_type} in output.")
 
