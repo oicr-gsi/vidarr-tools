@@ -59,9 +59,15 @@ deploy_parser.add_argument(
     "--url",
     help="A Vidarr server to deploy to. If unspecified, the servers from the space-separated environment variable VIDARR_URLS will be used.",
     nargs='*',
+    dest="vidarr_urls",
     default=os.environ.get(
         "VIDARR_URLS",
-         "").split(" "))
+        "").split(" "))
+deploy_parser.add_argument(
+    "-U",
+    "--url-file",
+    dest="vidarr_url_file",
+    help="A file containing Vidarr servers to deploy to (one per line).")
 deploy_parser.add_argument(
     "-p",
     "--performance-test",
@@ -149,7 +155,10 @@ for test in tests:
 
 vidarr_urls = []
 if args.command == "deploy":
-    vidarr_urls = filter(lambda x: bool(x), args.vidarr_urls)
+    vidarr_urls = [filter(lambda x: bool(x), args.vidarr_urls)]
+    if args.vidarr_url_file:
+        with open(args.vidarr_url_file, "r") as url_file:
+            vidarr_urls.extend(filter(lambda x: bool(x), url_file))
     if not vidarr_urls:
         sys.stderr.write(
             "Cannot perform a deployment without a Vidarr server to update. Use --url or set VIDARR_URLS.\n")
