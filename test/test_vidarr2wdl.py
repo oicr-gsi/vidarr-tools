@@ -30,3 +30,7 @@ def tests_fingerprintCompare():
 
 def tests_dnaSeqQc():
     compare_wdl("dnaSeqQC")
+
+
+def tests_bmpp():
+    compare_wdl("bamMergePreprocessing")

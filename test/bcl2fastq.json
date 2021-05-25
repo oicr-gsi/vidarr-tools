@@ -3,13 +3,13 @@
     "language": "WDL_1_0",
     "outputs": {
         "bcl2fastq.fastqs": {
+            "is": "list",
             "keys": {
                 "name": "STRING"
             },
             "outputs": {
                 "fastqs": "file-with-labels"
-            },
-            "type": "list"
+            }
         }
     },
     "parameters": {
