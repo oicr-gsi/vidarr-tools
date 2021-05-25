@@ -79,7 +79,7 @@ def _map_inner_input(wdl_type: WDL.Type.Base, structures: Dict[str, Any]):
                 left_type, structures), "right": _map_input(
                 right_type, structures)}
     elif isinstance(wdl_type, WDL.Type.StructInstance):
-        return {"is": "object", "fields": structures.get(wdl_type.type_name)}
+        return {"is": "object", "fields": structures[wdl_type.type_name]}
     elif isinstance(wdl_type, WDL.Type.Map):
         (key_type, value_type) = wdl_type.parameters
         return {
@@ -143,9 +143,17 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
     """
     workflow_name = doc.workflow.name
     structures = {}
-    for structure in doc.struct_typedefs:
-        structures[structure.name] = {member_name: _map_input(member_type, structures) for (
-            member_name, member_type) in structure.value.members.items()}
+    unprocessed_structs = [s for s in doc.struct_typedefs]
+    while unprocessed_structs:
+        structs_needing_unprocessed = []
+        for structure in unprocessed_structs:
+            try:
+                structures[structure.name] = {member_name: _map_input(member_type, structures) for (
+                    member_name, member_type) in structure.value.members.items()}
+            except KeyError:
+                structs_needing_unprocessed.append(structure)
+        assert len(structs_needing_unprocessed) < len(unprocessed_structs)
+        unprocessed_structs = structs_needing_unprocessed
 
     workflow_inputs = {}
 
