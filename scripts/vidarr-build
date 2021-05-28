@@ -158,7 +158,10 @@ if args.command == "deploy":
     vidarr_urls.extend(filter(lambda x: bool(x), args.vidarr_urls))
     if args.vidarr_url_file:
         with open(args.vidarr_url_file, "r") as url_file:
-            vidarr_urls.extend(filter(lambda x: bool(x), url_file))
+            vidarr_urls.extend(
+                filter(
+                    lambda x: bool(x), map(
+                        str.strip, url_file)))
     if not vidarr_urls:
         vidarr_urls.extend(
             filter(
