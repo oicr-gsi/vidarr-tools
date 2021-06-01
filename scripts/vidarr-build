@@ -153,8 +153,9 @@ for test in tests:
         sys.stderr.write(f"Cannot find {test} containing required tests.\n")
         sys.exit(1)
 
-vidarr_urls: List[str] = []
+registration_urls: List[str] = []
 if args.command == "deploy":
+    vidarr_urls: List[str] = []
     vidarr_urls.extend(filter(lambda x: bool(x), args.vidarr_urls))
     if args.vidarr_url_file:
         with open(args.vidarr_url_file, "r") as url_file:
@@ -173,17 +174,6 @@ if args.command == "deploy":
         sys.stderr.write(
             "Cannot perform a deployment without a Vidarr server to update. Use --url or set VIDARR_URLS.\n")
         sys.exit(1)
-
-for test in tests:
-    print(f"Running tests from {test}...")
-    sys.stdout.flush()
-    sys.stderr.flush()
-    subprocess.check_call(
-        ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
-
-print("EVERYTHING IS AWESOME!!!")
-ok = True
-if args.command == "deploy":
     for vidarr_url in vidarr_urls:
         for name in config["names"]:
             res = requests.get(f"{vidarr_url}/api/workflow/{name}")
@@ -192,15 +182,36 @@ if args.command == "deploy":
                     f"Workflow {name} not registered on {vidarr_url}. Skipping.")
                 continue
 
-            print(f"Pushing {name}/{args.version} to {vidarr_url} server...")
-            res = requests.post(
-                f"{vidarr_url}/api/workflow/{name}/{args.version}",
-                json=workflow)
-            if res.status_code not in [200, 201]:
-                print(
-                    f"Failed to register workflow on {vidarr_url} as {name}/{args.version}: {res.status_code} {res.json()}")
-                ok = False
-            else:
-                print(f"Registered on {vidarr_url} as {name}/{args.version}")
+            registration_urls.append(
+                f"{vidarr_url}/api/workflow/{name}/{args.version}")
+    if not registration_urls:
+        print("""Could not find a server that wanted this workflow. :-(
+        Check that the "names" in the vidarrbuild.json are registered on the servers or update the names.
+        """)
+        sys.exit(1)
 
-sys.exit(0 if ok else False)
+for test in tests:
+    print(f"Running tests from {test}...")
+    sys.stdout.flush()
+    sys.stderr.flush()
+    subprocess.check_call(
+        ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
+
+ok = True
+for registration_url in registration_urls:
+    print(f"Pushing to {registration_url} server...")
+    res = requests.post(registration_url, json=workflow)
+    if res.status_code not in [200, 201]:
+        print(
+            f"Failed to register workflow on {registration_url}: {res.status_code} {res.json()}")
+        ok = False
+    else:
+        print(f"Registered on {registration_url}!")
+        registered = True
+
+if ok:
+    print("EVERYTHING IS AWESOME!!!")
+    sys.exit(0)
+else:
+    print("Awesomeness was a pipedream")
+    sys.exit(1)
