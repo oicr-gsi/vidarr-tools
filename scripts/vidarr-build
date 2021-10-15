@@ -201,10 +201,13 @@ ok = True
 for registration_url in registration_urls:
     print(f"Pushing to {registration_url} server...")
     res = requests.post(registration_url, json=workflow)
-    if res.status_code not in [200, 201]:
+    if res.status_code not in [200, 201, 409]:
         print(
-            f"Failed to register workflow on {registration_url}: {res.status_code} {res.json()}")
+            f"Failed to register workflow version on {registration_url}: {res.status_code} {res.json()}")
         ok = False
+    elif res.status_code in [409]:
+        print(f"This workflow version has already been installed on {registration_url}")
+        registered = True
     else:
         print(f"Registered on {registration_url}!")
         registered = True
