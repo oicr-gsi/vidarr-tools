@@ -1,8 +1,9 @@
 from setuptools import setup, find_packages
+from os import path
 
 setup(
     name="vidarrtools",
-    version="0.1.0",
+    version=open(path.join(path.dirname(__file__), 'VERSION')).read().strip(),
     description="Tools for use with Vidarr",
     author="Andre Masella",
     author_email="andre.masella@oicr.on.ca",
