@@ -206,7 +206,10 @@ for registration_url in registration_urls:
             f"Failed to register workflow version on {registration_url}: {res.status_code} {res.json()}")
         ok = False
     elif res.status_code in [409]:
-        print(f"This workflow version has already been installed on {registration_url}")
+        print(f"This workflow version is different from the workflow version with the same name + version on {registration_url}")
+        ok = False
+    elif res.status_code in [200]:
+        print(f"Workflow version is already registered on {registration_url}")
         registered = True
     else:
         print(f"Registered on {registration_url}!")
