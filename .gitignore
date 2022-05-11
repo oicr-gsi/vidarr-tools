@@ -1,7 +1,4 @@
 .idea/
 .venv
 __pycache__/
-build/
-dist/
 venv/
-vidarrtools.egg-info/
