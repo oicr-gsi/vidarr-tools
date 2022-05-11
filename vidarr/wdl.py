@@ -24,6 +24,13 @@ _output_mapping = [
             (WDL.Type.String(),
              WDL.Type.String()))),
      "files-with-labels"),
+    (WDL.Type.Array(
+        WDL.Type.Pair(
+            WDL.Type.File(),
+            WDL.Type.Map(
+                (WDL.Type.String(),
+                 WDL.Type.String()))), nonempty=True),
+     "files-with-labels"),
     (WDL.Type.Boolean(),
      "quality-control"),
     (WDL.Type.File(
