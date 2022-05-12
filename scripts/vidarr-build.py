@@ -203,8 +203,8 @@ for registration_url in registration_urls:
     res = requests.post(registration_url, json=workflow)
     if res.status_code not in [200, 201, 409]:
         print(
-            f"Failed to register workflow version on {registration_url}: response status {res.status_code}}")
-        print(f"{res.json() if res.content}")  # only read the response body if it is not empty
+            f"Failed to register workflow version on {registration_url}: response status {res.status_code}")
+        print(f"{res.json() if res.content else ''}")  # only read the response body if it is not empty
         ok = False
     elif res.status_code in [409]:
         print(f"This workflow version is different from the workflow version with the same name + version on {registration_url}")
