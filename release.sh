@@ -44,12 +44,12 @@ esac
 RELEASE_VERSION=${MAJOR}.${MINOR}.${PATCH}
 
 echo "${RELEASE_VERSION}" > ${VERSION_FILE}
+PIPENV_VENV_IN_PROJECT=1 pipenv --quiet install --dev
+pipenv --quiet run pytest
 git commit -a -m "Release ${RELEASE_VERSION}"
-pip install .
 git tag -a v${RELEASE_VERSION} -m "vidarr-tools v${RELEASE_VERSION} release"
 echo "${RELEASE_VERSION}+dev" > ${VERSION_FILE}
 git commit -a -m "prepared for next development iteration"
 git push origin ${MAIN_BRANCH}
 git push origin v${RELEASE_VERSION}
 echo "vidarr-tools release v${RELEASE_VERSION} completed."
-

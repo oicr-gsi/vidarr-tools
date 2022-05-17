@@ -1,9 +1,9 @@
 import argparse
-
 import json
 import os
 import sys
 from typing import Dict, Any
+
 import WDL
 
 _output_mapping = [
@@ -23,6 +23,13 @@ _output_mapping = [
         WDL.Type.Map(
             (WDL.Type.String(),
              WDL.Type.String()))),
+     "files-with-labels"),
+    (WDL.Type.Array(
+        WDL.Type.Pair(
+            WDL.Type.File(),
+            WDL.Type.Map(
+                (WDL.Type.String(),
+                 WDL.Type.String()))), nonempty=True),
      "files-with-labels"),
     (WDL.Type.Boolean(),
      "quality-control"),
@@ -176,7 +183,8 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                             wf_input.name] = meta["vidarr_type"]
         else:
             workflow_inputs[doc.workflow.name + "." + wf_input.name] = {"is": "optional", "inner": _map_input(
-                wf_input.value.type, structures)} if wf_input.value.expr else _map_input(wf_input.value.type, structures)
+                wf_input.value.type, structures)} if wf_input.value.expr else _map_input(wf_input.value.type,
+                                                                                         structures)
 
     workflow = {
         'language': 'WDL_' + str(
@@ -185,7 +193,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             "_"),
         'outputs': {
             workflow_name + "." + output.name:
-            read_output(output)
+                read_output(output)
             for output in doc.workflow.outputs},
         'parameters': workflow_inputs,
         'workflow': doc.source_text,

@@ -1,6 +1,7 @@
-import vidarr.wdl
-import os
 import json
+import os
+
+import vidarr.wdl
 
 
 def compare_wdl(base_name: str) -> bool:
