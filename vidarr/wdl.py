@@ -178,13 +178,21 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
 
     for wf_input in (doc.workflow.available_inputs or []):
         meta = doc.workflow.parameter_meta.get(wf_input.name)
+
         if meta and isinstance(meta, dict) and "vidarr_type" in meta:
-            workflow_inputs[doc.workflow.name + "." +
-                            wf_input.name] = meta["vidarr_type"]
+            vidarr_type = meta["vidarr_type"]
         else:
-            workflow_inputs[doc.workflow.name + "." + wf_input.name] = {"is": "optional", "inner": _map_input(
-                wf_input.value.type, structures)} if wf_input.value.expr else _map_input(wf_input.value.type,
-                                                                                         structures)
+            vidarr_type = _map_input(wf_input.value.type, structures)
+
+        # Optional should be processed after retry because it should be okay to omit a retriable value and use a
+        # singular default.
+        if meta and isinstance(meta, dict) and meta.get("vidarr_retry", False):
+            vidarr_type = {"is": "retry", "inner": vidarr_type}
+
+        if wf_input.value.expr:
+            vidarr_type = {"is": "optional", "inner": vidarr_type}
+
+        workflow_inputs[doc.workflow.name + "." + wf_input.name] = vidarr_type
 
     workflow = {
         'language': 'WDL_' + str(
