@@ -102,3 +102,20 @@ to be one entry that is associated with the input external keys. Since Cromwell
 should not try to copy or link the sequencer run directory, it is desirable to
 make it have the type `String` in WDL but `"directory"` in Vidarr so that
 external keys can be associated with it.
+
+Inputs can also be marked for _retry_. That allows Vidarr to try multiple values of a parameter if the workflow
+failures. The allows automatically escalating the amount of memory until a job succeeds.
+
+```
+workflow dosomething {
+   ...
+   parameter_meta {
+     memory: {
+       vidarr_retry: true
+     }
+  }
+}
+```
+
+`vidarr_type` and `vidarr_retry` can be combined. Only basic types (Booleans, dates, floats, integers, JSON, and
+strings) may be retried. Input files cannot be changed by retrying.
