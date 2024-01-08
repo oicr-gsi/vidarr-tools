@@ -4,7 +4,7 @@ import argparse
 import json
 import os
 from typing import List
-
+import pdb
 import requests
 import subprocess
 import sys
@@ -16,6 +16,15 @@ workflow_types = {
 }
 
 parser = argparse.ArgumentParser()
+
+# looks like this:
+# {
+#    "names": [
+#        "myworkflow"
+#    ],
+#    "wdl": "myworkflow.wdl"
+# }
+#
 parser.add_argument(
     "-c",
     "--build-config",
@@ -27,6 +36,7 @@ build_parser = subparsers.add_parser(
     "build",
     help="Run the build process to produce a Vidarr-compatible workflow bundle.")
 
+# This looks unused, but it's not so much unused as implicitly the default
 test_parser = subparsers.add_parser(
     "test", help="Build the workflow and perform the regression tests.")
 test_parser.add_argument(
@@ -102,13 +112,16 @@ if "names" not in config or not isinstance(config["names"], list) or any(
     sys.exit(1)
 
 workflows = []
-
+# For each workflow type we know about (currently just WDL)
 for (workflow_key, workflow_parser) in workflow_types.items():
+    # Make sure a "wdl" field is in the build config
     if workflow_key in config:
         if not isinstance(config[workflow_key], str):
             sys.stderr.write(
                 f"The `{workflow_key}` property must contain the name of the root workflow file.\n")
             sys.exit(1)
+        # Get a path that looks like `/dir/where/vidarrbuild-dot-json/is/wdl`
+        # die if it doesn't exist
         file_path = os.path.join(
             os.path.dirname(
                 args.build_config),
@@ -117,24 +130,30 @@ for (workflow_key, workflow_parser) in workflow_types.items():
             sys.stderr.write(f"Cannot find {file_path}.")
             sys.exit(1)
 
+        # Add wdl2vidarr as a lambda
         workflows.append(lambda: workflow_parser(file_path))
 
+# Why do we specify 'root' workflow here?
 if len(workflows) != 1:
     sys.stderr.write(
         "The configuration file must have exactly one root workflow.")
     sys.exit(1)
 
+# Run the lambda we appended to workflows earlier
 workflow = workflows[0]()
 
 if not workflow:
     sys.exit(1)
 
+# wdl2vidarr supports custom output file names, but vidarr-build is written with the assumption
+# that there may be more than one parser, and who knows how the others would be implemented.
 with open("v.out", "w") as f:
     json.dump(workflow, f)
 
 if args.command == "build":
     sys.exit(0)
 
+# Validate existence of vidarrtest-regression and vidarrtest-performance json files
 tests = [
     os.path.join(
         os.path.dirname(
@@ -153,6 +172,7 @@ for test in tests:
         sys.stderr.write(f"Cannot find {test} containing required tests.\n")
         sys.exit(1)
 
+# Validate the registration URLs and that those vidarrs have the workflow installed
 registration_urls: List[str] = []
 if args.command == "deploy":
     vidarr_urls: List[str] = []
@@ -190,6 +210,7 @@ if args.command == "deploy":
         """)
         sys.exit(1)
 
+# Actually run the tests. check_call() will kill the program if returncode is not 0
 for test in tests:
     print(f"Running tests from {test}...")
     sys.stdout.flush()
@@ -197,6 +218,7 @@ for test in tests:
     subprocess.check_call(
         ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
 
+# Assuming we didn't die from tests failing, deploy to each server
 ok = True
 for registration_url in registration_urls:
     print(f"Pushing to {registration_url} server...")
@@ -213,7 +235,7 @@ for registration_url in registration_urls:
     elif res.status_code in [200]:
         print(f"Workflow version is already registered on {registration_url}")
         registered = True
-    else:
+    else: # 201 means created
         print(f"Registered on {registration_url}!")
         registered = True
 
