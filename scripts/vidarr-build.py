@@ -39,6 +39,8 @@ build_parser = subparsers.add_parser(
 # This looks unused, but it's not so much unused as implicitly the default
 test_parser = subparsers.add_parser(
     "test", help="Build the workflow and perform the regression tests.")
+
+# TODO this is the vidarr-cli 'test' config. Document that
 test_parser.add_argument(
     "-t",
     "--test-config",
@@ -57,6 +59,7 @@ test_parser.add_argument(
 deploy_parser = subparsers.add_parser(
     "deploy",
     help="Build the workflow, run the regression tests, and deploy the workflow to Vidarr servers.")
+
 deploy_parser.add_argument(
     "-t",
     "--test-config",
@@ -150,16 +153,58 @@ if not workflow:
 with open("v.out", "w") as f:
     json.dump(workflow, f)
 
+# Exit early if command is 'build', don't try tests or deploying
 if args.command == "build":
     sys.exit(0)
 
 # Validate existence of vidarrtest-regression and vidarrtest-performance json files
+# vidarrtest-regression is a JSON array of objects that looks like:
+# [
+#   {
+#     "arguments": {
+#       "contents": {
+#         "configuration": "/path/to/test/data.fastq.gz",
+#         "externalIds": [
+#           {
+#             "id": "TEST",
+#             "provider": "TEST"
+#           }
+#         ]
+#       },
+#       "type": "EXTERNAL"
+#     },
+#     "description": "Tests that workflow does its thing",
+#     "engineArguments": {
+#       "write_to_cache": false,
+#       "read_from_cache": false
+#     },
+#     "id": "myTest1",
+#     "metadata": {
+#       "contents": [
+#         {
+#           "outputDirectory": "/path/to/output/dir"
+#         }
+#       ],
+#       "type": "ALL"
+#       }
+#     },
+#     "validators": [
+#        {
+#         "metrics_calculate": "/path/to/calculate.sh",
+#         "metrics_compare": "/path/to/compare.sh",
+#         "output_metrics": "/path/to/output/metrics",
+#         "type": "script"
+#        }
+#      ]
+#   }
+# ]
 tests = [
     os.path.join(
         os.path.dirname(
             args.build_config),
         "vidarrtest-regression.json")]
 
+# Appended to tests without modification and sent to Vidarr all the same - assume same format
 if args.performance_test:
     tests.append(
         os.path.join(
@@ -172,7 +217,7 @@ for test in tests:
         sys.stderr.write(f"Cannot find {test} containing required tests.\n")
         sys.exit(1)
 
-# Validate the registration URLs and that those vidarrs have the workflow installed
+# If 'deploy', validate the registration URLs and that those vidarrs have the workflow installed
 registration_urls: List[str] = []
 if args.command == "deploy":
     vidarr_urls: List[str] = []
@@ -210,7 +255,7 @@ if args.command == "deploy":
         """)
         sys.exit(1)
 
-# Actually run the tests. check_call() will kill the program if returncode is not 0
+# Actually run the tests. check_call() will kill the program if test's returncode is not 0
 for test in tests:
     print(f"Running tests from {test}...")
     sys.stdout.flush()
@@ -219,6 +264,7 @@ for test in tests:
         ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
 
 # Assuming we didn't die from tests failing, deploy to each server
+# `registration_urls` will be empty if our mode is not 'deploy'
 ok = True
 for registration_url in registration_urls:
     print(f"Pushing to {registration_url} server...")
@@ -234,7 +280,7 @@ for registration_url in registration_urls:
         ok = False
     elif res.status_code in [200]:
         print(f"Workflow version is already registered on {registration_url}")
-        registered = True
+        registered = True # TODO unused?
     else: # 201 means created
         print(f"Registered on {registration_url}!")
         registered = True
