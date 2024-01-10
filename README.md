@@ -148,12 +148,13 @@ Configuration file which specifies the name(s) of the workflow and the workflow 
 Expected format is as follows:
 
 Let $LANGUAGE be one of:
- - "wdl"
+- "wdl"
 
-    {
-      "names": ["myworkflow"],
-      "$LANGUAGE": "myworkflow.file"
-    }
+
+      {
+        "names": ["myworkflow"],
+        "$LANGUAGE": "myworkflow.file"
+      }
 
 vidarr-build requires that the directory containing vidarrbuild.json also contains a directory named $LANGUAGE and that directory contains the file specified in the JSON. 
 
