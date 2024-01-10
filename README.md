@@ -35,9 +35,9 @@ pipenv run pytest
 
 Process WDL file and extract a Víðarr workflow definition that can be used for testing or installation.
 
-| Argument           | Required? | Description                                                                           |
-|--------------------|-----------|---------------------------------------------------------------------------------------|
-| `--input-wdl-path` | True      | Source wdl path                                                                       |
+| Argument | Required? | Description  |
+|--------------------|-----------|----------------------------------------------|
+| `--input-wdl-path` | True      | Source wdl path  |
 | `--output-path`    | False     | Output a file with contents of the workflow parameter dict. This is just for display. |
 
 ```
@@ -100,10 +100,10 @@ workflow dosomething {
 In the case of most root workflows (bcl2fastq, guppy, file import), there needs
 to be one entry that is associated with the input external keys. Since Cromwell
 should not try to copy or link the sequencer run directory, it is desirable to
-make it have the type `String` in WDL but `"directory"` in Vidarr so that
+make it have the type `String` in WDL but `"directory"` in Víðarr so that
 external keys can be associated with it.
 
-Inputs can also be marked for _retry_. That allows Vidarr to try multiple values of a parameter if the workflow
+Inputs can also be marked for _retry_. That allows Víðarr to try multiple values of a parameter if the workflow
 failures. The allows automatically escalating the amount of memory until a job succeeds.
 
 ```
@@ -119,3 +119,113 @@ workflow dosomething {
 
 `vidarr_type` and `vidarr_retry` can be combined. Only basic types (Booleans, dates, floats, integers, JSON, and
 strings) may be retried. Input files cannot be changed by retrying.
+
+
+### vidarr-build
+
+vidarr-build provides configurable build, test, and deploy functionality for Víðarr workflows. Configuration files are used to specify the workflow's language and test suite. 
+
+Currently, the following workflow languages are supported:
+
+| Language | Processor | 
+|-|-|
+| WDL | [wdl2vidarr](#wdl2vidarr) |
+
+#### vidarr-build build
+
+Builds the workflow using the specified language's build process to produce a Víðarr-compatible workflow bundle.
+
+| Argument | Required? | Default Value | Description |
+|-|-|-|--|
+| `--build-config`, `-c` | False | `vidarrbuild.json` | Specify the build file location. See [vidarrbuild.json](#vidarrbuildjson) |
+
+vidarr-build will output the result of the specified language's processor at `v.out`. 
+
+##### vidarrbuild.json
+
+Configuration file which specifies the name(s) of the workflow and the workflow language. 
+
+Expected format is as follows:
+
+Let $LANGUAGE be one of:
+ - "wdl"
+
+    {
+      "names": ["myworkflow"],
+      "$LANGUAGE": "myworkflow.file"
+    }
+
+vidarr-build requires that the directory containing vidarrbuild.json also contains a directory named $LANGUAGE and that directory contains the file specified in the JSON. 
+
+#### vidarr-build test
+
+Builds the workflow using the specified language's build process and performs regression specified by `vidarrtest-regression.json` and optionally performance tests specified by `vidarrtest-performance.json`. See [Test configuration](#test-configuration).
+
+| Argument | Required? | Default Value | Description |
+|-|-|-|--|
+| `--build-config`, `-c` | False | `vidarrbuild.json` | Specify the build file location. See [vidarrbuild.json](#vidarrbuildjson) |
+| `--test-config`, `t`| True | Environment variable `VIDARR_TEST_CONFIG` | Víðarr configuration file for running tests |
+| `--performance-test`, `-p` | False | | Run performance tests specified by `vidarrtest-performance.json` |
+
+vidarr-build will output the result of the specified language's processor and test results at `v.out`. 
+
+##### Test configuration
+
+`vidarrtest-regression.json` and optionally `vidarrtest-performance.json` are configuration files which specify a test suite for a workflow. The files are JSON arrays of objects which each describe one test.
+
+Expected format is as follows:
+
+    [
+      {
+        "arguments": {
+          "contents": {
+            "configuration": "/path/to/test/data.fastq.gz",
+            "externalIds": [
+              {
+                "id": "TEST",
+                "provider": "TEST"
+              }
+            ]
+          },
+          "type": "EXTERNAL"
+        },
+        "description": "Tests that workflow does its thing",
+        "engineArguments": {
+          "write_to_cache": false,
+          "read_from_cache": false
+        },
+        "id": "myTest1",
+        "metadata": {
+          "contents": [
+            {
+              "outputDirectory": "/path/to/output/dir"
+            }
+          ],
+          "type": "ALL"
+          }
+        },
+        "validators": [
+            {
+            "metrics_calculate": "/path/to/calculate.sh",
+            "metrics_compare": "/path/to/compare.sh",
+            "output_metrics": "/path/to/output/metrics",
+            "type": "script"
+            }
+          ]
+      }
+    ]
+
+#### vidarr-build deploy
+
+Builds the workflow using the specified language's build process and performs regression specified by `vidarrtest-regression.json` and optionally performance tests specified by `vidarrtest-performance.json`. See [Test configuration](#test-configuration). If build and test are successful, deploys built workflow to one or more remote Víðarr instances.
+
+| Argument | Required? | Default Value | Description |
+|-|-|-|--|
+| `--build-config`, `-c` | False | `vidarrbuild.json` | Specify the build file location. See [vidarrbuild.json](#vidarrbuildjson) |
+| `--test-config`, `t`| True | Environment variable `VIDARR_TEST_CONFIG` | Víðarr configuration file for running tests |
+| `--performance-test`, `-p` | False | | Run performance tests specified by `vidarrtest-performance.json` |
+| `--url`, `-u` | False | Environment variable `VIDARR_URLS` | A Víðarr server to deploy to. If unspecified, the servers from the space-separated environment variable VIDARR_URLS will be used. |
+| `--url-file`, `-U` | False | | A file containing Víðarr servers to deploy to (one per line). |
+| `--version`, `-v` | True | | The version number to push as. See [Víðarr's glossary](https://github.com/oicr-gsi/vidarr/blob/master/glossary.md) |
+
+vidarr-build will output the result of the specified language's processor and test output at `v.out`, then push the resultant build to the Víðarr instances specified by `--url` and/or `--url-file`. 
