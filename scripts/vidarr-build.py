@@ -4,7 +4,6 @@ import argparse
 import json
 import os
 from typing import List
-import pdb
 import requests
 import subprocess
 import sys
