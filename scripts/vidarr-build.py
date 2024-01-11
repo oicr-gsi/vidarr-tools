@@ -39,7 +39,7 @@ build_parser = subparsers.add_parser(
 test_parser = subparsers.add_parser(
     "test", help="Build the workflow and perform the regression tests.")
 
-# TODO this is the vidarr-cli 'test' config. Document that
+# https://github.com/oicr-gsi/vidarr/blob/master/admin-guide.md#creating-a-development-environment
 test_parser.add_argument(
     "-t",
     "--test-config",

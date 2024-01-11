@@ -223,7 +223,7 @@ Builds the workflow using the specified language's build process and performs re
 | Argument | Required? | Default Value | Description |
 |-|-|-|--|
 | `--build-config`, `-c` | False | `vidarrbuild.json` | Specify the build file location. See [vidarrbuild.json](#vidarrbuildjson) |
-| `--test-config`, `t`| True | Environment variable `VIDARR_TEST_CONFIG` | Víðarr configuration file for running tests |
+| `--test-config`, `t`| True | Environment variable `VIDARR_TEST_CONFIG` | Víðarr configuration file for running tests. See the [Admin Guide](https://github.com/oicr-gsi/vidarr/blob/master/admin-guide.md#creating-a-development-environment) |
 | `--performance-test`, `-p` | False | | Run performance tests specified by `vidarrtest-performance.json` |
 | `--url`, `-u` | False | Environment variable `VIDARR_URLS` | A Víðarr server to deploy to. If unspecified, the servers from the space-separated environment variable VIDARR_URLS will be used. |
 | `--url-file`, `-U` | False | | A file containing Víðarr servers to deploy to (one per line). |
