@@ -14,8 +14,7 @@ workflow_types = {
     "wdl": vidarr.wdl.parse
 }
 
-# CustomArgumentParser extends argparse.ArgumentParser, adding a new "-c" or
-# "--build-config" option to define a build config file.
+# CustomArgumentParser extends argparse.ArgumentParser, to help parse any argument in command line.
 # Default is "vidarrbuild.json", and the value is stored in 'build_config'.
 class CustomArgumentParser(argparse.ArgumentParser):
     def __init__(self, *args, **kwargs):
@@ -42,8 +41,8 @@ subparsers = parser.add_subparsers(dest="command")
 build_parser = subparsers.add_parser(
     "build",
     help="Run the build process to produce a Vidarr-compatible workflow bundle.")
-# Suppressed argument "--build-config-build" in build_parser for defining
-# a custom build config file, with value stored in 'build_config'.
+
+# Add a command-line argument "--build-config-build" to the parser, setting the destination to "build_config".
 build_parser.add_argument("--build-config-build", dest="build_config", help=argparse.SUPPRESS)
 
 # This looks unused, but it's not so much unused as implicitly the default
@@ -51,8 +50,8 @@ test_parser = subparsers.add_parser(
     "test", help="Build the workflow and perform the regression tests.")
 
 # https://github.com/oicr-gsi/vidarr/blob/master/admin-guide.md#creating-a-development-environment
-# Suppressed argument "--build-config-test" in test_parser for defining
-# a custom build config file, with value stored in 'build_config'.
+
+# Add a command-line argument "--build-config-test" to the parser, setting the destination to "build_config".
 test_parser.add_argument("--build-config-test", dest="build_config", help=argparse.SUPPRESS)
 test_parser.add_argument(
     "-t",
@@ -70,8 +69,8 @@ test_parser.add_argument(
 deploy_parser = subparsers.add_parser(
     "deploy",
     help="Build the workflow, run the regression tests, and deploy the workflow to Vidarr servers.")
-# Suppressed argument "--build-config-deploy" in deploy_parser for defining
-# a custom build config file, with value stored in 'build_config'.
+
+# Add a command-line argument "--build-config-deploy" to the parser, setting the destination to "build_config".
 deploy_parser.add_argument("--build-config-deploy", dest="build_config", help=argparse.SUPPRESS)
 deploy_parser.add_argument(
     "-t",
