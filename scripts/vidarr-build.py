@@ -53,7 +53,7 @@ test_parser = subparsers.add_parser(
 # https://github.com/oicr-gsi/vidarr/blob/master/admin-guide.md#creating-a-development-environment
 # Suppressed argument "--build-config-test" in test_parser for defining
 # a custom build config file, with value stored in 'custom_build_config'.
-test_parser.add_argument("--build-config-test", dest="build_config", help=argparse.SUPPRESS)
+test_parser.add_argument("--build-config-test", dest="custom_build_config", help=argparse.SUPPRESS)
 test_parser.add_argument(
     "-t",
     "--test-config",
@@ -72,7 +72,7 @@ deploy_parser = subparsers.add_parser(
     help="Build the workflow, run the regression tests, and deploy the workflow to Vidarr servers.")
 # Suppressed argument "--build-config-deploy" in deploy_parser for defining
 # a custom build config file, with value stored in 'custom_build_config'.
-deploy_parser.add_argument("--build-config-deploy", dest="build_config", help=argparse.SUPPRESS)
+deploy_parser.add_argument("--build-config-deploy", dest="custom_build_config", help=argparse.SUPPRESS)
 deploy_parser.add_argument(
     "-t",
     "--test-config",
@@ -212,7 +212,7 @@ if args.command == "build":
 tests = [
     os.path.join(
         os.path.dirname(
-            args.build_config),
+            args.custom_build_config),
         "vidarrtest-regression.json")]
 
 # Appended to tests without modification and sent to Vidarr all the same - assume same format
@@ -220,7 +220,7 @@ if args.performance_test:
     tests.append(
         os.path.join(
             os.path.dirname(
-                args.build_config),
+                args.custom_build_config),
             "vidarrtest-performance.json"))
 
 for test in tests:
