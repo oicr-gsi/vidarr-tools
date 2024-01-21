@@ -20,7 +20,7 @@ workflow_types = {
 class CustomArgumentParser(argparse.ArgumentParser):
     def __init__(self, *args, **kwargs):
         super(CustomArgumentParser, self).__init__(*args, **kwargs)
-        self.build_config_arg = self.add_argument(
+        self.custom_build_config_arg = self.add_argument(
             "-c",
             "--build-config",
             default="vidarrbuild.json",
