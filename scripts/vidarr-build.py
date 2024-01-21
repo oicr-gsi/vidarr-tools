@@ -14,7 +14,20 @@ workflow_types = {
     "wdl": vidarr.wdl.parse
 }
 
-parser = argparse.ArgumentParser()
+# CustomArgumentParser extends argparse.ArgumentParser, adding a new "-c" or
+# "--build-config" option to define a build config file.
+# Default is "vidarrbuild.json", and the value is stored in 'custom_build_config'.
+class CustomArgumentParser(argparse.ArgumentParser):
+    def __init__(self, *args, **kwargs):
+        super(CustomArgumentParser, self).__init__(*args, **kwargs)
+        self.build_config_arg = self.add_argument(
+            "-c",
+            "--build-config",
+            default="vidarrbuild.json",
+            dest="custom_build_config")
+
+# Create an instance of the custom argument parser
+parser = CustomArgumentParser()
 
 # looks like this:
 # {
@@ -24,31 +37,30 @@ parser = argparse.ArgumentParser()
 #    "wdl": "myworkflow.wdl"
 # }
 #
-parser.add_argument(
-    "-c",
-    "--build-config",
-    default="vidarrbuild.json",
-    dest="build_config")
 subparsers = parser.add_subparsers(dest="command")
 
 build_parser = subparsers.add_parser(
     "build",
     help="Run the build process to produce a Vidarr-compatible workflow bundle.")
+# Suppressed argument "--build-config-build" in build_parser for defining
+# a custom build config file, with value stored in 'custom_build_config'.
+build_parser.add_argument("--build-config-build", dest="custom_build_config", help=argparse.SUPPRESS)
 
 # This looks unused, but it's not so much unused as implicitly the default
 test_parser = subparsers.add_parser(
     "test", help="Build the workflow and perform the regression tests.")
 
 # https://github.com/oicr-gsi/vidarr/blob/master/admin-guide.md#creating-a-development-environment
+# Suppressed argument "--build-config-test" in test_parser for defining
+# a custom build config file, with value stored in 'custom_build_config'.
+test_parser.add_argument("--build-config-test", dest="build_config", help=argparse.SUPPRESS)
 test_parser.add_argument(
     "-t",
     "--test-config",
     dest="test_config",
     required=True,
     help="Vidarr plugin configuration file for running tests.",
-    default=os.environ.get(
-        "VIDARR_TEST_CONFIG",
-         None))
+    default=os.environ.get("VIDARR_TEST_CONFIG", None))
 test_parser.add_argument(
     "-p",
     "--performance-test",
@@ -58,16 +70,16 @@ test_parser.add_argument(
 deploy_parser = subparsers.add_parser(
     "deploy",
     help="Build the workflow, run the regression tests, and deploy the workflow to Vidarr servers.")
-
+# Suppressed argument "--build-config-deploy" in deploy_parser for defining
+# a custom build config file, with value stored in 'custom_build_config'.
+deploy_parser.add_argument("--build-config-deploy", dest="build_config", help=argparse.SUPPRESS)
 deploy_parser.add_argument(
     "-t",
     "--test-config",
     dest="test_config",
     required=True,
     help="Vidarr plugin configuration file for running tests.",
-    default=os.environ.get(
-        "VIDARR_TEST_CONFIG",
-         None))
+    default=os.environ.get("VIDARR_TEST_CONFIG", None))
 deploy_parser.add_argument(
     "-u",
     "--url",
@@ -99,12 +111,12 @@ if not args.command:
         "Please supply a command: build, test, or deploy\n")
     sys.exit(1)
 
-if not os.path.exists(args.build_config):
+if not os.path.exists(args.custom_build_config):
     sys.stderr.write(
-        f"Cannot find {args.build_config}. Are you in the right directory?\n")
+        f"Cannot find {args.custom_build_config}. Are you in the right directory?\n")
     sys.exit(1)
 
-with open(args.build_config) as cf:
+with open(args.custom_build_config) as cf:
     config = json.load(cf)
 
 if "names" not in config or not isinstance(config["names"], list) or any(
@@ -126,7 +138,7 @@ for (workflow_key, workflow_parser) in workflow_types.items():
         # die if it doesn't exist
         file_path = os.path.join(
             os.path.dirname(
-                args.build_config),
+                args.custom_build_config),
             config[workflow_key])
         if not os.path.exists(file_path):
             sys.stderr.write(f"Cannot find {file_path}.")
