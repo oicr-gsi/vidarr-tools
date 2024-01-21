@@ -54,8 +54,8 @@ test_parser.add_argument(
     required=True,
     help="Vidarr plugin configuration file for running tests.",
     default=os.environ.get(
-    "VIDARR_TEST_CONFIG",
-    None))
+        "VIDARR_TEST_CONFIG",
+         None))
 test_parser.add_argument(
     "-p",
     "--performance-test",
@@ -73,8 +73,8 @@ deploy_parser.add_argument(
     required=True,
     help="Vidarr plugin configuration file for running tests.",
     default=os.environ.get(
-    "VIDARR_TEST_CONFIG",
-    None))
+        "VIDARR_TEST_CONFIG",
+         None))
 deploy_parser.add_argument(
     "-u",
     "--url",
