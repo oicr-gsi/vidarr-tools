@@ -42,24 +42,20 @@ build_parser = subparsers.add_parser(
     "build",
     help="Run the build process to produce a Vidarr-compatible workflow bundle.")
 
-# Add a command-line argument "--build-config-build" to the parser, setting the destination to "build_config".
-build_parser.add_argument("--build-config-build", dest="build_config", help=argparse.SUPPRESS)
-
 # This looks unused, but it's not so much unused as implicitly the default
 test_parser = subparsers.add_parser(
     "test", help="Build the workflow and perform the regression tests.")
 
 # https://github.com/oicr-gsi/vidarr/blob/master/admin-guide.md#creating-a-development-environment
-
-# Add a command-line argument "--build-config-test" to the parser, setting the destination to "build_config".
-test_parser.add_argument("--build-config-test", dest="build_config", help=argparse.SUPPRESS)
 test_parser.add_argument(
     "-t",
     "--test-config",
     dest="test_config",
     required=True,
     help="Vidarr plugin configuration file for running tests.",
-    default=os.environ.get("VIDARR_TEST_CONFIG", None))
+    default=os.environ.get(
+    "VIDARR_TEST_CONFIG",
+    None))
 test_parser.add_argument(
     "-p",
     "--performance-test",
@@ -70,15 +66,15 @@ deploy_parser = subparsers.add_parser(
     "deploy",
     help="Build the workflow, run the regression tests, and deploy the workflow to Vidarr servers.")
 
-# Add a command-line argument "--build-config-deploy" to the parser, setting the destination to "build_config".
-deploy_parser.add_argument("--build-config-deploy", dest="build_config", help=argparse.SUPPRESS)
 deploy_parser.add_argument(
     "-t",
     "--test-config",
     dest="test_config",
     required=True,
     help="Vidarr plugin configuration file for running tests.",
-    default=os.environ.get("VIDARR_TEST_CONFIG", None))
+    default=os.environ.get(
+    "VIDARR_TEST_CONFIG",
+    None))
 deploy_parser.add_argument(
     "-u",
     "--url",
