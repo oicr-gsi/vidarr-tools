@@ -14,7 +14,19 @@ workflow_types = {
     "wdl": vidarr.wdl.parse
 }
 
-parser = argparse.ArgumentParser()
+# CustomArgumentParser extends argparse.ArgumentParser, to help parse any argument in command line.
+# Default is "vidarrbuild.json", and the value is stored in 'build_config'.
+class CustomArgumentParser(argparse.ArgumentParser):
+    def __init__(self, *args, **kwargs):
+        super(CustomArgumentParser, self).__init__(*args, **kwargs)
+        self.build_config_arg = self.add_argument(
+            "-c",
+            "--build-config",
+            default="vidarrbuild.json",
+            dest="build_config")
+
+# Create an instance of the custom argument parser
+parser = CustomArgumentParser()
 
 # looks like this:
 # {
@@ -24,11 +36,6 @@ parser = argparse.ArgumentParser()
 #    "wdl": "myworkflow.wdl"
 # }
 #
-parser.add_argument(
-    "-c",
-    "--build-config",
-    default="vidarrbuild.json",
-    dest="build_config")
 subparsers = parser.add_subparsers(dest="command")
 
 build_parser = subparsers.add_parser(
