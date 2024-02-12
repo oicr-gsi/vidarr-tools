@@ -14,6 +14,7 @@ workflow_types = {
     "wdl": vidarr.wdl.parse
 }
 
+
 # CustomArgumentParser extends argparse.ArgumentParser, to help parse any argument in command line.
 # Default is "vidarrbuild.json", and the value is stored in 'build_config'.
 class CustomArgumentParser(argparse.ArgumentParser):
@@ -24,6 +25,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             "--build-config",
             default="vidarrbuild.json",
             dest="build_config")
+
 
 # Create an instance of the custom argument parser
 parser = CustomArgumentParser()
@@ -55,12 +57,18 @@ test_parser.add_argument(
     help="Vidarr plugin configuration file for running tests.",
     default=os.environ.get(
         "VIDARR_TEST_CONFIG",
-         None))
+        None))
 test_parser.add_argument(
     "-p",
     "--performance-test",
     dest="performance_test",
     help="Run performance tests too.")
+
+test_parser.add_argument(
+    "-o",
+    "--output-directory",
+    dest="output_directory",
+    help="Provide an explicit output directory for the test output files.")
 
 deploy_parser = subparsers.add_parser(
     "deploy",
@@ -74,7 +82,7 @@ deploy_parser.add_argument(
     help="Vidarr plugin configuration file for running tests.",
     default=os.environ.get(
         "VIDARR_TEST_CONFIG",
-         None))
+        None))
 deploy_parser.add_argument(
     "-u",
     "--url",
@@ -261,13 +269,23 @@ if args.command == "deploy":
         """)
         sys.exit(1)
 
+# Build the filepath and then pass that into the tests
+
 # Actually run the tests. check_call() will kill the program if test's returncode is not 0
 for test in tests:
     print(f"Running tests from {test}...")
     sys.stdout.flush()
     sys.stderr.flush()
-    subprocess.check_call(
-        ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
+
+    # Did the user provide an output directory? This runs vidarr-cli with the additional argument -o
+    if args.output_directory != "null":
+        print("AN OUTPUT DIRECTORY PROVIDED!!!")
+        subprocess.check_call(
+            ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test, "-o", args.output_directory])
+    else:
+        print("NO DIRECTORY PROVIDED!")
+        subprocess.check_call(
+            ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
 
 # Assuming we didn't die from tests failing, deploy to each server
 # `registration_urls` will be empty if our mode is not 'deploy'
@@ -279,15 +297,16 @@ for registration_url in registration_urls:
         print(
             f"Failed to register workflow version on {registration_url}: response status {res.status_code}")
         if res.content:
-            print(f"{res.json()}") # only read the response body if it is not empty
+            print(f"{res.json()}")  # only read the response body if it is not empty
         ok = False
     elif res.status_code in [409]:
-        print(f"This workflow version is different from the workflow version with the same name + version on {registration_url}")
+        print(
+            f"This workflow version is different from the workflow version with the same name + version on {registration_url}")
         ok = False
     elif res.status_code in [200]:
         print(f"Workflow version is already registered on {registration_url}")
-        registered = True # TODO unused?
-    else: # 201 means created
+        registered = True  # TODO unused?
+    else:  # 201 means created
         print(f"Registered on {registration_url}!")
         registered = True
 
