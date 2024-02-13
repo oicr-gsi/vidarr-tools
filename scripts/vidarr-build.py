@@ -269,7 +269,6 @@ if args.command == "deploy":
         """)
         sys.exit(1)
 
-# Build the filepath and then pass that into the tests
 
 # Actually run the tests. check_call() will kill the program if test's returncode is not 0
 for test in tests:
@@ -278,12 +277,12 @@ for test in tests:
     sys.stderr.flush()
 
     # Did the user provide an output directory? This runs vidarr-cli with the additional argument -o
-    if args.output_directory != "null":
-        print("AN OUTPUT DIRECTORY PROVIDED!!!")
+    if args.output_directory is not None:
+        print("Output directory provided")
         subprocess.check_call(
             ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test, "-o", args.output_directory])
     else:
-        print("NO DIRECTORY PROVIDED!")
+        print("No output directory provided")
         subprocess.check_call(
             ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
 
