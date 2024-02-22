@@ -113,7 +113,9 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
     output_name = output.name
     output_metadata = doc.workflow.meta.get("output_meta", {}).get(output_name, {})
     if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
-        return "file-with-labels"
+        label_value = output_metadata['vidarr_label']
+        label_map = {"vidarr_label": label_value}
+        return {"is": "pair", "left": "file", "right": label_map}
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
             return vidarr_type
