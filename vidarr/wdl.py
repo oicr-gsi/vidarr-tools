@@ -108,8 +108,12 @@ def _map_inner_input(wdl_type: WDL.Type.Base, structures: Dict[str, Any]):
     raise ValueError(f"No conversion for {wdl_type}")
 
 
-def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
+def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, allow_complex: bool,
                 structures: WDL.Env.Bindings[WDL.StructTypeDef]):
+    output_name = output.name
+    output_metadata = doc.workflow.meta.get("output_meta", {}).get(output_name, {})
+    if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
+        return "file-with-labels"
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
             return vidarr_type
@@ -126,7 +130,7 @@ def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
                     keys[member_name] = "STRING"
                 else:
                     outputs[member_name] = _map_output(
-                        member_type, False, structures)
+                        doc, output, member_type, False, structures)
             return {"is": "list", "keys": keys, "outputs": outputs}
     raise ValueError(
         f"Vidarr cannot process output type {wdl_type} in output.")
@@ -174,7 +178,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             return output_metadata["vidarr_type"]
         else:
             return _map_output(
-                output.type, True, doc.struct_typedefs)
+                doc, output, output.type, True, doc.struct_typedefs)
 
     for wf_input in (doc.workflow.available_inputs or []):
         meta = doc.workflow.parameter_meta.get(wf_input.name)
