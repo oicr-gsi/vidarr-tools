@@ -1,7 +1,13 @@
 {
   "language": "WDL_1_0",
   "outputs": {
-    "empty.err": "file-with-labels"
+    "empty.err": {
+      "is": "pair",
+      "left": "file",
+      "right": {
+        "vidarr_label": "counts"
+      }
+    }
   },
   "parameters": {
     "empty.dummyInput": "file",
@@ -22,6 +28,6 @@
       "inner": "integer"
     }
   },
-  "workflow": "version 1.0\n\nworkflow empty {\n  input {\n    File dummyInput\n    Int exitCode = 0\n    Int n = 10\n  }\n  parameter_meta {\n    exitCode: \"Exit code\"\n    n: \"Number of lines to log to stderr\"\n  }\n  call log {\n    input:\n      exitCode = exitCode,\n      n = n\n  }\n  output {\n    File err = log.err\n  }\n  meta {\n    author: \"Jenniffer Meng\"\n    email: \"jenniffer.meng@oicr.on.ca\"\n    description: \"Workflow for testing infrastructure\"\n    output_meta: {\n     err: {\n      description: \"Gzipped and sorted index ...\"\n      vidarr_label: \"counts\"\n     }\n    }\n  }\n}\n\ntask log {\n  input {\n    Int exitCode\n    Int n\n    Int mem = 1\n    Int timeout = 1\n  }\n  command <<<\n    set -euo pipefail\n    # Output n lines to stderr\n    for (( i = 1; i <= ~{n}; i++ )) ; do\n      echo \"This is a place holder stderr line ${i}\" 1>&2\n    done\n    exit ~{exitCode}\n  >>>\n  runtime {\n    memory: \"~{mem} GB\"\n    timeout: \"~{timeout}\"\n  }\n  output {\n    File err = stderr()\n  }\n  parameter_meta {\n    exitCode: \"Integer used to fail as appropriate\"\n    n: \"Number of lines to log to stderr\"\n    mem: \"Memory (in GB) to allocate to the job\"\n    timeout: \"Maximum amount of time (in hours) the task can run for\"\n  }\n  meta {\n    output_meta: {\n      err: \"stderr lines produced\"\n    }\n  }\n}\n\n",
+  "workflow": "version 1.0\n\nworkflow empty {\n  input {\n    File dummyInput\n    Int exitCode = 0\n    Int n = 10\n  }\n  parameter_meta {\n    exitCode: \"Exit code\"\n    n: \"Number of lines to log to stderr\"\n  }\n  call log {\n    input:\n      exitCode = exitCode,\n      n = n\n  }\n  output {\n    File err = log.err\n  }\n  meta {\n    author: \"Jenniffer Meng\"\n    email: \"jenniffer.meng@oicr.on.ca\"\n    description: \"Workflow for testing infrastructure\"\n    output_meta: {\n     err: {\n      description: \"Gzipped and sorted index ...\"\n      vidarr_label: \"counts\"\n      }\n    }\n  }\n}\n\ntask log {\n  input {\n    Int exitCode\n    Int n\n    Int mem = 1\n    Int timeout = 1\n  }\n  command <<<\n    set -euo pipefail\n    # Output n lines to stderr\n    for (( i = 1; i <= ~{n}; i++ )) ; do\n      echo \"This is a place holder stderr line ${i}\" 1>&2\n    done\n    exit ~{exitCode}\n  >>>\n  runtime {\n    memory: \"~{mem} GB\"\n    timeout: \"~{timeout}\"\n  }\n  output {\n    File err = stderr()\n  }\n  parameter_meta {\n    exitCode: \"Integer used to fail as appropriate\"\n    n: \"Number of lines to log to stderr\"\n    mem: \"Memory (in GB) to allocate to the job\"\n    timeout: \"Maximum amount of time (in hours) the task can run for\"\n  }\n  meta {\n    output_meta: {\n      err: \"stderr lines produced\"\n    }\n  }\n}\n\n",
   "accessoryFiles": {}
 }

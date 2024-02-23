@@ -26,7 +26,7 @@ workflow empty {
      err: {
       description: "Gzipped and sorted index ..."
       vidarr_label: "counts"
-     }
+      }
     }
   }
 }
