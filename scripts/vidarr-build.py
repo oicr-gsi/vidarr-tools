@@ -70,6 +70,14 @@ test_parser.add_argument(
     dest="output_directory",
     help="Provide an explicit output directory for the test output files.")
 
+test_parser.add_argument(
+    "-v",
+    "--verbose",
+    dest="verbose_mode",
+    action="store_true",
+    help="Verbose mode. Helpful for troubleshooting"
+    )
+
 deploy_parser = subparsers.add_parser(
     "deploy",
     help="Build the workflow, run the regression tests, and deploy the workflow to Vidarr servers.")
@@ -276,15 +284,25 @@ for test in tests:
     sys.stdout.flush()
     sys.stderr.flush()
 
-    # Did the user provide an output directory? This runs vidarr-cli with the additional argument -o
-    if args.output_directory is not None:
-        print("Output directory provided")
+    # Logical operations to determine if output directory provided and/or verbose flag is enabled
+    # Based on those conditions this runs vidarr-cli with those respective arguments passed in
+    if args.output_directory and args.verbose_mode:  # verbose true
+        print("Output directory provided...")
+        subprocess.check_call(
+            ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test, "-o", args.output_directory, "-v"])
+    elif args.output_directory:  # verbose false
+        print("Output directory provided...")
         subprocess.check_call(
             ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test, "-o", args.output_directory])
-    else:
-        print("No output directory provided")
+    elif args.verbose_mode:  # verbose true
+        print("No output directory provided...")
+        subprocess.check_call(
+            ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test, "-v"])
+    else:  # verbose false
+        print("No output directory provided...")
         subprocess.check_call(
             ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
+
 
 # Assuming we didn't die from tests failing, deploy to each server
 # `registration_urls` will be empty if our mode is not 'deploy'
