@@ -162,12 +162,13 @@ vidarr-build requires that the directory containing vidarrbuild.json also contai
 
 Builds the workflow using the specified language's build process and performs regression specified by `vidarrtest-regression.json` and optionally performance tests specified by `vidarrtest-performance.json`. See [Test configuration](#test-configuration). Additionally there is an optional argument to provide an explicit output directory for those test outputs. 
 
-| Argument | Required? | Default Value | Description |
-|-|-|-|--|
-| `--build-config`, `-c` | False | `vidarrbuild.json` | Specify the build file location. See [vidarrbuild.json](#vidarrbuildjson) |
-| `--test-config`, `t`| True | Environment variable `VIDARR_TEST_CONFIG` | Víðarr configuration file for running tests |
-| `--performance-test`, `-p` | False | | Run performance tests specified by `vidarrtest-performance.json` |
+| Argument                   | Required? | Default Value | Description                                                                                             |
+|----------------------------|-|-|---------------------------------------------------------------------------------------------------------|
+| `--build-config`, `-c`     | False | `vidarrbuild.json` | Specify the build file location. See [vidarrbuild.json](#vidarrbuildjson)                               |
+| `--test-config`, `t`       | True | Environment variable `VIDARR_TEST_CONFIG` | Víðarr configuration file for running tests                                                             |
+| `--performance-test`, `-p` | False | | Run performance tests specified by `vidarrtest-performance.json`                                        |
 | `--output-directory`, `-o` | False | | Provide an explicit output directory for the test output files e.g. `/scratch2/groups/gsi/development/` |
+| `--verbose`, `-v`          | False | | Verbose mode flag helpful for debugging                                                                 |
 
 vidarr-build will output the result of the specified language's processor and test results at `v.out`. 
 
