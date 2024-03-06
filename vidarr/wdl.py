@@ -111,13 +111,12 @@ def _map_inner_input(wdl_type: WDL.Type.Base, structures: Dict[str, Any]):
 def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, allow_complex: bool,
                 structures: WDL.Env.Bindings[WDL.StructTypeDef]):
     output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
-    if isinstance(
-                output_metadata,
-                dict) and "vidarr_label" in output_metadata:
-        return "file-with-labels"
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
-            return vidarr_type
+            if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata and str(wdl_type) == "File":
+                return "file-with-labels"
+            else:
+                return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
         if isinstance(inner, WDL.Type.StructInstance):
@@ -230,7 +229,6 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 f"Pair[File, Map[String, String]] {output.name} = ({output_value}, {{\"vidarr_label\": \"{vidarr_label}\"}})")
 
     return workflow
-
 
 
 def main():
