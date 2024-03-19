@@ -114,7 +114,7 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
             if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
-                if "file" in vidarr_type and not output.type.optional:
+                if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
                     return "file-with-labels"
                 else:
                     print("Warning: a label is assigned to a type other than file or file-with-labels")   
