@@ -113,10 +113,12 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
     output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
-            if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata and str(wdl_type) == "File":
-                return "file-with-labels"
-            else:
-                return vidarr_type
+            if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
+                if "file" in vidarr_type and not output.type.optional:
+                    return "file-with-labels"
+                else:
+                    print("Warning: a label is assigned to a type other than file or file-with-labels")   
+            return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
         if isinstance(inner, WDL.Type.StructInstance):
@@ -175,6 +177,8 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         if isinstance(
                 output_metadata,
                 dict) and "vidarr_type" in output_metadata:
+            if "vidarr_label" in output_metadata:
+                print("Warning: There is a label inside output_meta that is being overriden by the specified vidarr_type")
             return output_metadata["vidarr_type"]
         else:
             return _map_output(
@@ -211,22 +215,6 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         'workflow': doc.source_text,
         'accessoryFiles': {
             imported.uri: imported.doc.source_text for imported in doc.imports}}
-
-    # Define the output within the workflow
-    for output in doc.workflow.outputs:
-        output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
-        if isinstance(
-                output_metadata,
-                dict) and "vidarr_label" in output_metadata:
-            vidarr_label = output_metadata.get("vidarr_label", "")
-            output_value = output.expr
-            if isinstance(output_value, WDL.Expr.Ident):
-                output_value = output_value.name
-
-            # Replace the output definition with Pair[File, Map[String, String]] format
-            workflow['workflow'] = workflow['workflow'].replace(
-                f"File {output.name} = {output_value}",
-                f"Pair[File, Map[String, String]] {output.name} = ({output_value}, {{\"vidarr_label\": \"{vidarr_label}\"}})")
 
     return workflow
 
