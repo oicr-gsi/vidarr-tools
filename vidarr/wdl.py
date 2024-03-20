@@ -3,7 +3,7 @@ import json
 import os
 import sys
 from typing import Dict, Any
-
+import pdb
 import WDL
 
 _output_mapping = [
@@ -117,7 +117,13 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
                 if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
                     return "file-with-labels"
                 else:
-                    print("Warning: a label is assigned to a type other than file or file-with-labels")   
+                    print(output)
+                    vidarr_label = WDL.Type.String("vidarr_label")
+                    vidarr_label_value = WDL.Type.String("test")
+                    output.type.right_type.item_type += (vidarr_label, vidarr_label_value)
+                    print(output.type.right_type.item_type)
+                    print(output)
+                    print("Warning: a label is assigned to a type other than file")   
             return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
@@ -181,6 +187,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 print("Warning: There is a label inside output_meta that is being overriden by the specified vidarr_type")
             return output_metadata["vidarr_type"]
         else:
+            pdb.set_trace()
             return _map_output(
                 doc, output, output.type, True, doc.struct_typedefs)
 
@@ -215,7 +222,6 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         'workflow': doc.source_text,
         'accessoryFiles': {
             imported.uri: imported.doc.source_text for imported in doc.imports}}
-
     return workflow
 
 
