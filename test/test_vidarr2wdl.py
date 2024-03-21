@@ -35,3 +35,6 @@ def tests_dnaSeqQc():
 
 def tests_bmpp():
     compare_wdl("bamMergePreprocessing")
+
+def tests_empty():
+    compare_wdl("empty")

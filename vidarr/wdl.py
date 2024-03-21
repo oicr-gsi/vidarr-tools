@@ -3,7 +3,7 @@ import json
 import os
 import sys
 from typing import Dict, Any
-
+import pdb
 import WDL
 
 _output_mapping = [
@@ -108,10 +108,58 @@ def _map_inner_input(wdl_type: WDL.Type.Base, structures: Dict[str, Any]):
     raise ValueError(f"No conversion for {wdl_type}")
 
 
-def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
+def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, allow_complex: bool,
                 structures: WDL.Env.Bindings[WDL.StructTypeDef]):
+    output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
+            if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
+                
+                if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
+                    print(output)
+                    output_value = output.expr
+                    if isinstance(output_value, WDL.Expr.Ident):
+                        output_value = output_value.name
+
+                    vidarr_map = WDL.Expr.Map(
+                        pos=output.expr.pos,
+                        items=[(WDL.Expr.String(parts=['vidarr_label'], pos=output.expr.pos), 
+                            WDL.Expr.String(parts=[output_metadata['vidarr_label']], pos=output.expr.pos))]
+                        )
+
+                    pair_expr = WDL.Expr.Pair(
+                        pos=output.expr.pos,
+                        left=output_value,
+                        right=vidarr_map
+                    )
+
+                    output.expr = pair_expr
+
+                    print(output)
+                    print(output.type)
+                    #print(pair_expr.type)
+                    #pdb.set_trace()
+       
+                else:
+                    vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos) #TODO: Make a new SourcePosition object that accurately describes this String
+                    vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos) #TODO: ditto
+                    print(output)
+                    # Extracting existing entries from output.expr.right
+                    existing_entries = output.expr.right.items
+
+                    # Constructing a list of existing entries
+                    existing_entries_list = []
+                    for item in existing_entries:
+                        existing_entries_list.append(item)
+
+                    # Adding the new (vidarr_label, vidarr_label_value) tuple
+                    existing_entries_list.append((vidarr_label, vidarr_label_value))
+
+                    # Creating a new map with the updated list of items
+                    new_map = WDL.Expr.Map(pos=output.expr.pos, items=existing_entries_list)
+                    output.expr.right = new_map
+                    print(output)
+                    print("Warning: a label is assigned to a type other than file")   
             return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
@@ -126,7 +174,7 @@ def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
                     keys[member_name] = "STRING"
                 else:
                     outputs[member_name] = _map_output(
-                        member_type, False, structures)
+                        doc, output, member_type, False, structures)
             return {"is": "list", "keys": keys, "outputs": outputs}
     raise ValueError(
         f"Vidarr cannot process output type {wdl_type} in output.")
@@ -171,10 +219,13 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         if isinstance(
                 output_metadata,
                 dict) and "vidarr_type" in output_metadata:
+            if "vidarr_label" in output_metadata:
+                print("Warning: There is a label inside output_meta that is being overriden by the specified vidarr_type")
             return output_metadata["vidarr_type"]
         else:
+            #pdb.set_trace()
             return _map_output(
-                output.type, True, doc.struct_typedefs)
+                doc, output, output.type, True, doc.struct_typedefs)
 
     for wf_input in (doc.workflow.available_inputs or []):
         meta = doc.workflow.parameter_meta.get(wf_input.name)
