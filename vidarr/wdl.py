@@ -114,14 +114,50 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
             if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
+                
                 if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
-                    return "file-with-labels"
-                else:
                     print(output)
-                    vidarr_label = WDL.Type.String("vidarr_label")
-                    vidarr_label_value = WDL.Type.String("test")
-                    output.type.right_type.item_type += (vidarr_label, vidarr_label_value)
-                    print(output.type.right_type.item_type)
+                    output_value = output.expr
+                    if isinstance(output_value, WDL.Expr.Ident):
+                        output_value = output_value.name
+
+                    vidarr_map = WDL.Expr.Map(
+                        pos=output.expr.pos,
+                        items=[(WDL.Expr.String(parts=['vidarr_label'], pos=output.expr.pos), 
+                            WDL.Expr.String(parts=[output_metadata['vidarr_label']], pos=output.expr.pos))]
+                        )
+
+                    pair_expr = WDL.Expr.Pair(
+                        pos=output.expr.pos,
+                        left=output_value,
+                        right=vidarr_map
+                    )
+
+                    output.expr = pair_expr
+
+                    print(output)
+                    print(output.type)
+                    #print(pair_expr.type)
+                    #pdb.set_trace()
+       
+                else:
+                    vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos) #TODO: Make a new SourcePosition object that accurately describes this String
+                    vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos) #TODO: ditto
+                    print(output)
+                    # Extracting existing entries from output.expr.right
+                    existing_entries = output.expr.right.items
+
+                    # Constructing a list of existing entries
+                    existing_entries_list = []
+                    for item in existing_entries:
+                        existing_entries_list.append(item)
+
+                    # Adding the new (vidarr_label, vidarr_label_value) tuple
+                    existing_entries_list.append((vidarr_label, vidarr_label_value))
+
+                    # Creating a new map with the updated list of items
+                    new_map = WDL.Expr.Map(pos=output.expr.pos, items=existing_entries_list)
+                    output.expr.right = new_map
                     print(output)
                     print("Warning: a label is assigned to a type other than file")   
             return vidarr_type
@@ -187,7 +223,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 print("Warning: There is a label inside output_meta that is being overriden by the specified vidarr_type")
             return output_metadata["vidarr_type"]
         else:
-            pdb.set_trace()
+            #pdb.set_trace()
             return _map_output(
                 doc, output, output.type, True, doc.struct_typedefs)
 
