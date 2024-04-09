@@ -58,6 +58,7 @@ test_parser.add_argument(
     default=os.environ.get(
         "VIDARR_TEST_CONFIG",
         None))
+
 test_parser.add_argument(
     "-p",
     "--performance-test",
@@ -75,8 +76,7 @@ test_parser.add_argument(
     "--verbose",
     dest="verbose_mode",
     action="store_true",
-    help="Verbose mode. Helpful for troubleshooting"
-)
+    help="Verbose mode. Helpful for troubleshooting")
 
 deploy_parser = subparsers.add_parser(
     "deploy",
@@ -91,6 +91,7 @@ deploy_parser.add_argument(
     default=os.environ.get(
         "VIDARR_TEST_CONFIG",
         None))
+
 deploy_parser.add_argument(
     "-u",
     "--url",
@@ -98,27 +99,32 @@ deploy_parser.add_argument(
     nargs='*',
     dest="vidarr_urls",
     default=[])
+
 deploy_parser.add_argument(
     "-U",
     "--url-file",
     dest="vidarr_url_file",
     help="A file containing Vidarr servers to deploy to (one per line).")
+
 deploy_parser.add_argument(
     "-p",
     "--performance-test",
     dest="performance_test",
     help="Run performance tests too.")
+
 deploy_parser.add_argument(
     "-v",
     "--version",
     dest="version",
     help="The version number to push as.",
     required=True)
+
 deploy_parser.add_argument(
     "-o",
     "--output-directory",
     dest="output_directory",
     help="Provide an explicit output directory for the test output files.")
+
 deploy_parser.add_argument(
     "-ver",
     "--verbose",
@@ -272,6 +278,7 @@ if args.command == "deploy":
         sys.stderr.write(
             "Cannot perform a deployment without a Vidarr server to update. Use --url or set VIDARR_URLS.\n")
         sys.exit(1)
+        
     for vidarr_url in vidarr_urls:
         for name in config["names"]:
             res = requests.get(f"{vidarr_url}/api/workflow/{name}")
