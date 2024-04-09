@@ -72,7 +72,6 @@ test_parser.add_argument(
     help="Provide an explicit output directory for the test output files.")
 
 test_parser.add_argument(
-    "-v",
     "--verbose",
     dest="verbose_mode",
     action="store_true",
