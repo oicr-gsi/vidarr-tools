@@ -126,7 +126,6 @@ deploy_parser.add_argument(
     help="Provide an explicit output directory for the test output files.")
 
 deploy_parser.add_argument(
-    "-ver",
     "--verbose",
     dest="verbose_mode",
     action="store_true",
@@ -278,7 +277,7 @@ if args.command == "deploy":
         sys.stderr.write(
             "Cannot perform a deployment without a Vidarr server to update. Use --url or set VIDARR_URLS.\n")
         sys.exit(1)
-        
+
     for vidarr_url in vidarr_urls:
         for name in config["names"]:
             res = requests.get(f"{vidarr_url}/api/workflow/{name}")
