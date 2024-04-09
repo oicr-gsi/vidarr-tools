@@ -58,6 +58,7 @@ test_parser.add_argument(
     default=os.environ.get(
         "VIDARR_TEST_CONFIG",
         None))
+
 test_parser.add_argument(
     "-p",
     "--performance-test",
@@ -71,12 +72,10 @@ test_parser.add_argument(
     help="Provide an explicit output directory for the test output files.")
 
 test_parser.add_argument(
-    "-v",
     "--verbose",
     dest="verbose_mode",
     action="store_true",
-    help="Verbose mode. Helpful for troubleshooting"
-    )
+    help="Verbose mode. Helpful for troubleshooting")
 
 deploy_parser = subparsers.add_parser(
     "deploy",
@@ -91,6 +90,7 @@ deploy_parser.add_argument(
     default=os.environ.get(
         "VIDARR_TEST_CONFIG",
         None))
+
 deploy_parser.add_argument(
     "-u",
     "--url",
@@ -98,22 +98,37 @@ deploy_parser.add_argument(
     nargs='*',
     dest="vidarr_urls",
     default=[])
+
 deploy_parser.add_argument(
     "-U",
     "--url-file",
     dest="vidarr_url_file",
     help="A file containing Vidarr servers to deploy to (one per line).")
+
 deploy_parser.add_argument(
     "-p",
     "--performance-test",
     dest="performance_test",
     help="Run performance tests too.")
+
 deploy_parser.add_argument(
     "-v",
     "--version",
     dest="version",
     help="The version number to push as.",
     required=True)
+
+deploy_parser.add_argument(
+    "-o",
+    "--output-directory",
+    dest="output_directory",
+    help="Provide an explicit output directory for the test output files.")
+
+deploy_parser.add_argument(
+    "--verbose",
+    dest="verbose_mode",
+    action="store_true",
+    help="Verbose mode. Helpful for troubleshooting")
 
 args = parser.parse_args()
 
@@ -261,6 +276,7 @@ if args.command == "deploy":
         sys.stderr.write(
             "Cannot perform a deployment without a Vidarr server to update. Use --url or set VIDARR_URLS.\n")
         sys.exit(1)
+
     for vidarr_url in vidarr_urls:
         for name in config["names"]:
             res = requests.get(f"{vidarr_url}/api/workflow/{name}")
@@ -276,7 +292,6 @@ if args.command == "deploy":
         Check that the "names" in the vidarrbuild.json are registered on the servers or update the names.
         """)
         sys.exit(1)
-
 
 # Actually run the tests. check_call() will kill the program if test's returncode is not 0
 for test in tests:
@@ -302,7 +317,6 @@ for test in tests:
         print("No output directory provided...")
         subprocess.check_call(
             ["vidarr", "test", "-c", args.test_config, "-w", "v.out", "-t", test])
-
 
 # Assuming we didn't die from tests failing, deploy to each server
 # `registration_urls` will be empty if our mode is not 'deploy'
