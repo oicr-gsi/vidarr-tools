@@ -3,7 +3,6 @@ import json
 import os
 import sys
 from typing import Dict, Any
-import pdb
 import WDL
 
 _output_mapping = [
@@ -205,7 +204,6 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 print("Warning: There is a label inside output_meta that is being overriden by the specified vidarr_type")
             return output_metadata["vidarr_type"]
         else:
-            #pdb.set_trace()
             return _map_output(
                 doc, output, output.type, True, doc.struct_typedefs)
 
@@ -252,7 +250,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
 
             if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
                 vidarr_label = output_metadata['vidarr_label']
-                
+
                 # Replace the output definition with Pair[File, Map[String, String]] format
                 workflow['workflow'] = workflow['workflow'].replace(
                     f"File {output.name} = {output.expr}",
