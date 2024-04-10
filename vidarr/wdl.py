@@ -139,6 +139,7 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
                     # Creating a new map with the updated list of items
                     new_map = WDL.Expr.Map(pos=output.expr.pos, items=existing_entries_list)
                     output.expr.right = new_map
+
                 else:
                     print("Warning: a label is assigned to a type other than file or a file-with-labels")   
             return vidarr_type
@@ -239,20 +240,25 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         'workflow': doc.source_text,
         'accessoryFiles': {
             imported.uri: imported.doc.source_text for imported in doc.imports}}
-
     
-    # Define the output within the workflow
+    output_meta = doc.workflow.meta.get("output_meta", {})
+
+    # Iterate over each output defined in the workflow
     for output in doc.workflow.outputs:
-        output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
-        if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
-            vidarr_label = output_metadata.get("vidarr_label", "")
-            output_meta = doc.workflow.meta.get("output_meta", {})
-            meta_name = next(iter(output_meta))
-            if (meta_name == output.name):
+
+        # Check if the output name exists in the output metadata
+        if output.name in output_meta:
+            output_metadata = output_meta[output.name]
+
+            if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
+                vidarr_label = output_metadata['vidarr_label']
+                
                 # Replace the output definition with Pair[File, Map[String, String]] format
                 workflow['workflow'] = workflow['workflow'].replace(
                     f"File {output.name} = {output.expr}",
-                    f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})")
+                    f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
+                )
+
     return workflow
 
 
