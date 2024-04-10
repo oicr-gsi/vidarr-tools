@@ -116,34 +116,15 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
             if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
                 
                 if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
-                    print(output)
-                    output_value = output.expr
-                    if isinstance(output_value, WDL.Expr.Ident):
-                        output_value = output_value.name
-
-                    vidarr_map = WDL.Expr.Map(
-                        pos=output.expr.pos,
-                        items=[(WDL.Expr.String(parts=['vidarr_label'], pos=output.expr.pos), 
-                            WDL.Expr.String(parts=[output_metadata['vidarr_label']], pos=output.expr.pos))]
-                        )
-
-                    pair_expr = WDL.Expr.Pair(
-                        pos=output.expr.pos,
-                        left=output_value,
-                        right=vidarr_map
-                    )
-
-                    output.expr = pair_expr
-
-                    print(output)
-                    print(output.type)
-                    #print(pair_expr.type)
-                    #pdb.set_trace()
+                        if isinstance(
+                            output_metadata,
+                            dict) and "vidarr_label" in output_metadata:
+                            return "file-with-labels"
        
-                else:
+                elif vidarr_type == "file-with-labels":
                     vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos) #TODO: Make a new SourcePosition object that accurately describes this String
                     vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos) #TODO: ditto
-                    print(output)
+                    
                     # Extracting existing entries from output.expr.right
                     existing_entries = output.expr.right.items
 
@@ -158,8 +139,8 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
                     # Creating a new map with the updated list of items
                     new_map = WDL.Expr.Map(pos=output.expr.pos, items=existing_entries_list)
                     output.expr.right = new_map
-                    print(output)
-                    print("Warning: a label is assigned to a type other than file")   
+                else:
+                    print("Warning: a label is assigned to a type other than file or a file-with-labels")   
             return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
@@ -258,6 +239,20 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         'workflow': doc.source_text,
         'accessoryFiles': {
             imported.uri: imported.doc.source_text for imported in doc.imports}}
+
+    
+    # Define the output within the workflow
+    for output in doc.workflow.outputs:
+        output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
+        if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
+            vidarr_label = output_metadata.get("vidarr_label", "")
+            output_meta = doc.workflow.meta.get("output_meta", {})
+            meta_name = next(iter(output_meta))
+            if (meta_name == output.name):
+                # Replace the output definition with Pair[File, Map[String, String]] format
+                workflow['workflow'] = workflow['workflow'].replace(
+                    f"File {output.name} = {output.expr}",
+                    f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})")
     return workflow
 
 
