@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import sys
+import re
 from typing import Dict, Any
 import WDL
 
@@ -251,11 +252,11 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
                 vidarr_label = output_metadata['vidarr_label']
 
-                # Replace the output definition with Pair[File, Map[String, String]] format
-                workflow['workflow'] = workflow['workflow'].replace(
-                    f"File {output.name} = {output.expr}",
-                    f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
-                )
+                # Define the pattern to match the output block
+                output_pattern = r"File\s+" + re.escape(str(output.name)) + r"\s*=\s*" + re.escape(str(output.expr))
+
+                # Replace only the first instance of the output block
+                workflow['workflow'] = re.sub(output_pattern, f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})", workflow['workflow'], count=1)
 
     return workflow
 
