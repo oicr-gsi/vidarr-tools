@@ -252,11 +252,30 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
                 vidarr_label = output_metadata['vidarr_label']
 
-                # Define the pattern to match the output block
-                output_pattern = r"File\s+" + re.escape(str(output.name)) + r"\s*=\s*" + re.escape(str(output.expr))
+                # Define the pattern for searching and replacing the output block
+                pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?=})"
 
-                # Replace only the first instance of the output block
-                workflow['workflow'] = re.sub(output_pattern, f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})", workflow['workflow'], count=1)
+                # Search for the pattern in the workflow
+                match = re.search(pattern, workflow['workflow'], re.DOTALL)
+
+                # If the pattern is found, perform the replacement
+                if match:
+
+                    # Extracting the part of the workflow string where the output block is located
+                    output_block_start = match.start(2)
+                    output_block_end = match.end(2)
+                    output_block_text = match.group(2)
+
+                    # Construct the modified output block text
+                    modified_output_block_text = output_block_text.replace(
+                    f"File {output.name} = {output.expr}",
+                    f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})")
+
+                    # Replace the output block text in the workflow
+                    modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
+
+                    # Update the workflow text with the modified output block
+                    workflow['workflow'] = modified_workflow_text
 
     return workflow
 
