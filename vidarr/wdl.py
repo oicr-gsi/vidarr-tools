@@ -253,7 +253,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 vidarr_label = output_metadata['vidarr_label']
 
                 # Define the pattern for searching and replacing the output block
-                pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?=$)"
+                pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
 
                 # Search for the pattern in the workflow
                 match = re.search(pattern, workflow['workflow'], re.DOTALL)
