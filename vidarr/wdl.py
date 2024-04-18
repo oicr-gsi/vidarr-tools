@@ -242,6 +242,9 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
     
     output_meta = doc.workflow.meta.get("output_meta", {})
 
+    # Construct the modified output lines with vidarr_label metadata
+    modified_output_lines = []
+
     # Iterate over each output defined in the workflow
     for output in doc.workflow.outputs:
 
@@ -267,9 +270,18 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                     output_block_text = match.group(2)
 
                     # Construct the modified output block text
-                    modified_output_block_text = output_block_text.replace(
-                    f"File {output.name} = {output.expr}",
-                    f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})")
+                    modified_output_line = f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
+                    
+                    # If the output type is Pair[File, Map[String, String]]
+                    if isinstance(output.type, WDL.Type.Pair) and \
+                        isinstance(output.type.left_type, WDL.Type.File) and \
+                        isinstance(output.type.right_type, WDL.Type.Map):
+                        # Construct the modified output line
+                        modified_output_line = f"    Pair[File, Map[String, String]] {output.name} = ({output.expr})"
+                    modified_output_lines.append(modified_output_line)
+
+                    # Replace the output block text in the workflow
+                    modified_output_block_text = "\n".join(modified_output_lines)
 
                     # Replace the output block text in the workflow
                     modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
