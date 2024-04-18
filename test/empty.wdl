@@ -1,8 +1,8 @@
 version 1.0
 
 workflow empty {
-  input {
-    File dummyInput
+  input {	
+  File dummyInput
     Int exitCode = 0
     Int n = 10
   }
@@ -23,8 +23,8 @@ workflow empty {
     email: "jenniffer.meng@oicr.on.ca"
     description: "Workflow for testing infrastructure"
     output_meta: {
-     err: {
-      description: "Gzipped and sorted index ..."
+      err: {
+      description: "Gzipped and sorted index ...",
       vidarr_label: "counts"
       }
     }
@@ -65,3 +65,4 @@ task log {
     }
   }
 }
+
