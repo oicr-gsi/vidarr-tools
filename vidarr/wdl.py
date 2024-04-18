@@ -278,9 +278,9 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                         isinstance(output.type.right_type, WDL.Type.Map):
                         # Construct the modified output line
                         modified_output_line = f"    Pair[File, Map[String, String]] {output.name} = ({output.expr})"
+                    
+                    # Append modified output lines to a consistently updated list
                     modified_output_lines.append(modified_output_line)
-
-                    # Replace the output block text in the workflow
                     modified_output_block_text = "\n".join(modified_output_lines)
 
                     # Replace the output block text in the workflow
