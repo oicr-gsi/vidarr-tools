@@ -271,6 +271,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         # Add outputs without corresponding output_meta
         else:
             modified_output_lines.append(str(output))
+
     # Define the pattern for searching and replacing the output block
     pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
 
@@ -285,14 +286,14 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         output_block_end = match.end(2)
         output_block_text = match.group(2)
 
-    # Join all outputs
-    modified_output_block_text = "\n".join(modified_output_lines)
+        # Join all outputs
+        modified_output_block_text = "\n".join(modified_output_lines)
 
-    # Replace the output block text in the workflow
-    modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
+        # Replace the output block text in the workflow
+        modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
 
-    # Update the workflow text with the modified output block
-    workflow['workflow'] = modified_workflow_text
+        # Update the workflow text with the modified output block
+        workflow['workflow'] = modified_workflow_text
 
     return workflow
 
