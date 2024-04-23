@@ -242,10 +242,12 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
     
     output_meta = doc.workflow.meta.get("output_meta", {})
 
-    modified_output_lines = []
+    output_lines = []
 
     # Iterate over each output defined in the workflow
     for output in doc.workflow.outputs:
+
+        output_line = str(output)
 
         # Check if the output name exists in the output metadata
         if output.name in output_meta:
@@ -254,23 +256,19 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
                 vidarr_label = output_metadata['vidarr_label']
 
-                if isinstance(output.type, WDL.Type.File(optional=False)):
+                if isinstance(output.type, WDL.Type.File) and not output.type.optional:
 
                     # Construct the modified output line
-                    modified_output_line = f"   Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
+                    output_line = f"   Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
                     
-                if isinstance(output.type, WDL.Type.Pair) and \
+                elif isinstance(output.type, WDL.Type.Pair) and \
                     isinstance(output.type.left_type, WDL.Type.File) and \
                     isinstance(output.type.right_type, WDL.Type.Map):
 
-                    modified_output_line = f"    Pair[File, Map[String, String]] {output.name} = {output.expr}"
-                    
-                # Append modified output lines to a consistently updated list
-                modified_output_lines.append(modified_output_line)
+                    output_line = f"    Pair[File, Map[String, String]] {output.name} = {output.expr}"
 
-        # Add outputs without corresponding output_meta
-        else:
-            modified_output_lines.append(str(output))
+        # Append output lines to a consistently updated list
+        output_lines.append(output_line)
 
     # Define the pattern for searching and replacing the output block
     pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
@@ -287,7 +285,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         output_block_text = match.group(2)
 
         # Join all outputs
-        modified_output_block_text = "\n".join(modified_output_lines)
+        modified_output_block_text = "\n".join(output_lines)
 
         # Replace the output block text in the workflow
         modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
