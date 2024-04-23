@@ -120,7 +120,7 @@ workflow dosomething {
 `vidarr_type` and `vidarr_retry` can be combined. Only basic types (Booleans, dates, floats, integers, JSON, and
 strings) may be retried. Input files cannot be changed by retrying.
 
-`vidarr_label` can also be added to output_meta to label an output file.
+`vidarr_label` can also be added to `output_meta` to label an output file.
 
 ```
 workflow dosomething {
@@ -128,10 +128,10 @@ workflow dosomething {
    output {
      File thing = something
   }
-  meta{
+  meta {
     ...
     output_meta: {
-      thing:{
+      thing: {
         vidarr_label: "counts"
       }
     }
