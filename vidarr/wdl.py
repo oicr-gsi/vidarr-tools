@@ -122,8 +122,8 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
                             return "file-with-labels"
        
                 elif vidarr_type == "file-with-labels":
-                    vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos) #TODO: Make a new SourcePosition object that accurately describes this String
-                    vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos) #TODO: ditto
+                    vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos)
+                    vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos)
                     
                     # Extracting existing entries from output.expr.right
                     existing_entries = output.expr.right.items
@@ -242,7 +242,6 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
     
     output_meta = doc.workflow.meta.get("output_meta", {})
 
-    # Construct the modified output lines with vidarr_label metadata
     modified_output_lines = []
 
     # Iterate over each output defined in the workflow
@@ -255,39 +254,45 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
             if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
                 vidarr_label = output_metadata['vidarr_label']
 
-                # Define the pattern for searching and replacing the output block
-                pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
+                if isinstance(output.type, WDL.Type.File(optional=False)):
 
-                # Search for the pattern in the workflow
-                match = re.search(pattern, workflow['workflow'], re.DOTALL)
-
-                # If the pattern is found, perform the replacement
-                if match:
-
-                    # Extracting the part of the workflow string where the output block is located
-                    output_block_start = match.start(2)
-                    output_block_end = match.end(2)
-                    output_block_text = match.group(2)
-
-                    # Construct the modified output block text
-                    modified_output_line = f"Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
+                    # Construct the modified output line
+                    modified_output_line = f"   Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
                     
-                    # If the output type is Pair[File, Map[String, String]]
-                    if isinstance(output.type, WDL.Type.Pair) and \
-                        isinstance(output.type.left_type, WDL.Type.File) and \
-                        isinstance(output.type.right_type, WDL.Type.Map):
-                        # Construct the modified output line
-                        modified_output_line = f"    Pair[File, Map[String, String]] {output.name} = {output.expr}"
+                if isinstance(output.type, WDL.Type.Pair) and \
+                    isinstance(output.type.left_type, WDL.Type.File) and \
+                    isinstance(output.type.right_type, WDL.Type.Map):
+
+                    modified_output_line = f"    Pair[File, Map[String, String]] {output.name} = {output.expr}"
                     
-                    # Append modified output lines to a consistently updated list
-                    modified_output_lines.append(modified_output_line)
-                    modified_output_block_text = "\n".join(modified_output_lines)
+                # Append modified output lines to a consistently updated list
+                modified_output_lines.append(modified_output_line)
 
-                    # Replace the output block text in the workflow
-                    modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
+        # Add outputs without corresponding output_meta
+        else:
+            modified_output_lines.append(str(output))
+    # Define the pattern for searching and replacing the output block
+    pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
 
-                    # Update the workflow text with the modified output block
-                    workflow['workflow'] = modified_workflow_text
+    # Search for the pattern in the workflow
+    match = re.search(pattern, workflow['workflow'], re.DOTALL)
+
+    # If the pattern is found, perform the replacement
+    if match:
+
+        # Extracting the part of the workflow string where the output block is located
+        output_block_start = match.start(2)
+        output_block_end = match.end(2)
+        output_block_text = match.group(2)
+
+    # Join all outputs
+    modified_output_block_text = "\n".join(modified_output_lines)
+
+    # Replace the output block text in the workflow
+    modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
+
+    # Update the workflow text with the modified output block
+    workflow['workflow'] = modified_workflow_text
 
     return workflow
 
