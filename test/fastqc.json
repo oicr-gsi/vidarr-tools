@@ -1,86 +1,86 @@
 {
-    "accessoryFiles": {},
-    "language": "WDL_1_0",
-    "outputs": {
-        "fastQC.html_report_R1": "optional-file",
-        "fastQC.html_report_R2": "optional-file",
-        "fastQC.zip_bundle_R1": "optional-file",
-        "fastQC.zip_bundle_R2": "optional-file"
+  "language": "WDL_1_0",
+  "outputs": {
+    "fastQC.html_report_R1": "optional-file",
+    "fastQC.zip_bundle_R1": "optional-file",
+    "fastQC.html_report_R2": "optional-file",
+    "fastQC.zip_bundle_R2": "optional-file"
+  },
+  "parameters": {
+    "fastQC.fastqR1": "file",
+    "fastQC.fastqR2": {
+      "is": "optional",
+      "inner": "file"
     },
-    "parameters": {
-        "fastQC.fastqR1": "file",
-        "fastQC.fastqR2": {
-            "inner": "file",
-            "is": "optional"
-        },
-        "fastQC.firstMateFastQC.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.firstMateFastQC.modules": {
-            "inner": "string",
-            "is": "optional"
-        },
-        "fastQC.firstMateFastQC.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.firstMateHtml.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.firstMateHtml.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.firstMateZip.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.firstMateZip.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.outputFileNamePrefix": {
-            "inner": "string",
-            "is": "optional"
-        },
-        "fastQC.r1Suffix": {
-            "inner": "string",
-            "is": "optional"
-        },
-        "fastQC.r2Suffix": {
-            "inner": "string",
-            "is": "optional"
-        },
-        "fastQC.secondMateFastQC.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.secondMateFastQC.modules": {
-            "inner": "string",
-            "is": "optional"
-        },
-        "fastQC.secondMateFastQC.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.secondMateHtml.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.secondMateHtml.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.secondMateZip.jobMemory": {
-            "inner": "integer",
-            "is": "optional"
-        },
-        "fastQC.secondMateZip.timeout": {
-            "inner": "integer",
-            "is": "optional"
-        }
+    "fastQC.outputFileNamePrefix": {
+      "is": "optional",
+      "inner": "string"
     },
-    "workflow": "version 1.0\n\n# ======================================================\n# Workflow accepts two fastq files, with R1 and R2 reads\n# ======================================================\nworkflow fastQC {\ninput {\n        File fastqR1 \n        File? fastqR2\n        String outputFileNamePrefix = \"\"\n        String r1Suffix = \"_R1\"\n        String r2Suffix = \"_R2\"\n}\nArray[File] inputFastqs = select_all([fastqR1,fastqR2])\nString outputPrefixOne = if outputFileNamePrefix == \"\" then basename(inputFastqs[0], '.fastq.gz') + \"_fastqc\"\n                                                       else outputFileNamePrefix + r1Suffix\n\ncall runFastQC as firstMateFastQC { input: inputFastq = inputFastqs[0] }\ncall renameOutput as firstMateHtml { input: inputFile = firstMateFastQC.html_report_file, extension = \"html\", customPrefix = outputPrefixOne }\ncall renameOutput as firstMateZip { input: inputFile = firstMateFastQC.zip_bundle_file, extension = \"zip\", customPrefix = outputPrefixOne }\n\nif (length(inputFastqs) > 1) {\n String outputPrefixTwo = if outputFileNamePrefix==\"\" then basename(inputFastqs[1], '.fastq.gz') + \"_fastqc\"\n                                                      else outputFileNamePrefix + r2Suffix\n call runFastQC as secondMateFastQC { input: inputFastq = inputFastqs[1] }\n call renameOutput as secondMateHtml { input: inputFile = secondMateFastQC.html_report_file, extension = \"html\", customPrefix = outputPrefixTwo }\n call renameOutput as secondMateZip { input: inputFile = secondMateFastQC.zip_bundle_file, extension = \"zip\", customPrefix = outputPrefixTwo }\n}\n\nparameter_meta {\n  fastqR1: \"Input file with the first mate reads.\"\n  fastqR2: \" Input file with the second mate reads (if not set the experiments will be regarded as single-end).\"\n  outputFileNamePrefix: \"Output prefix, customizable. Default is the first file's basename.\"\n  r1Suffix: \"Suffix for R1 file.\"\n  r2Suffix: \"Suffix for R2 file.\"\n}\n\nmeta {\n    author: \"Peter Ruzanov\"\n    email: \"peter.ruzanov@oicr.on.ca\"\n    description: \"Niassa-wrapped Cromwell (widdle) workflow for running FastQC tools on paired or unpaired reads.\"\n    dependencies: [\n      {\n        name: \"fastqc/0.11.8\",\n        url: \"https://www.bioinformatics.babraham.ac.uk/projects/fastqc/\"\n      }\n    ]\n    output_meta: {\n      html_report_R1: \"HTML report for the first mate fastq file.\",\n      zip_bundle_R1: \"zipped report from FastQC for the first mate reads.\",\n      html_report_R2: \"HTML report for read second mate fastq file.\",\n      zip_bundle_R2: \"zipped report from FastQC for the second mate reads.\"\n    }\n}\n\noutput {\n File? html_report_R1  = firstMateHtml.renamedOutput\n File? zip_bundle_R1   = firstMateZip.renamedOutput\n File? html_report_R2 = secondMateHtml.renamedOutput\n File? zip_bundle_R2  = secondMateZip.renamedOutput\n}\n\n}\n\n# ===================================\n#            MAIN STEP\n# ===================================\ntask runFastQC {\ninput {\n        Int    jobMemory = 6\n        Int    timeout   = 20\n        File   inputFastq\n        String modules = \"perl/5.28 java/8 fastqc/0.11.8\"\n}\n\ncommand <<<\n set -euo pipefail\n FASTQC=$(which fastqc)\n JAVA=$(which java)\n perl $FASTQC ~{inputFastq} --java=$JAVA --noextract --outdir \".\"\n>>>\n\nparameter_meta {\n jobMemory: \"Memory allocated to fastqc.\"\n inputFastq: \"Input fastq file, gzipped.\"\n modules: \"Names and versions of required modules.\"\n timeout: \"Timeout in hours, needed to override imposed limits.\"\n}\n\nruntime {\n  memory:  \"~{jobMemory} GB\"\n  modules: \"~{modules}\"\n  timeout: \"~{timeout}\"\n}\n\noutput {\n  File html_report_file = \"~{basename(inputFastq, '.fastq.gz')}_fastqc.html\"\n  File zip_bundle_file  = \"~{basename(inputFastq, '.fastq.gz')}_fastqc.zip\"\n}\n}\n\n# =================================================\n#      RENAMING STEP - IF WE HAVE CUSTOM PREFIX\n# =================================================\ntask renameOutput {\ninput {\n  Int  jobMemory = 2\n  File inputFile\n  String extension\n  String customPrefix\n  Int timeout    = 1\n}\n\nparameter_meta {\n inputFile: \"Input file, html or zip.\"\n extension: \"Extension for a file (without leading dot).\"\n customPrefix: \"Prefix for making a file.\"\n jobMemory: \"Memory allocated to this task.\"\n timeout: \"Timeout, in hours, needed to override imposed limits.\"\n}\n\ncommand <<<\n set -euo pipefail\n if [[ ~{basename(inputFile)} != \"~{customPrefix}.~{extension}\" ]];then \n   ln -s ~{inputFile} \"~{customPrefix}.~{extension}\"\n else\n   ln -s ~{inputFile}\n fi\n>>>\n\nruntime {\n  memory:  \"~{jobMemory} GB\"\n  timeout: \"~{timeout}\"\n}\n\n\noutput {\n  File? renamedOutput = \"~{customPrefix}.~{extension}\"\n}\n}\n"
+    "fastQC.r1Suffix": {
+      "is": "optional",
+      "inner": "string"
+    },
+    "fastQC.r2Suffix": {
+      "is": "optional",
+      "inner": "string"
+    },
+    "fastQC.firstMateFastQC.jobMemory": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.firstMateFastQC.timeout": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.firstMateFastQC.modules": {
+      "is": "optional",
+      "inner": "string"
+    },
+    "fastQC.firstMateHtml.jobMemory": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.firstMateHtml.timeout": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.firstMateZip.jobMemory": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.firstMateZip.timeout": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.secondMateFastQC.jobMemory": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.secondMateFastQC.timeout": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.secondMateFastQC.modules": {
+      "is": "optional",
+      "inner": "string"
+    },
+    "fastQC.secondMateHtml.jobMemory": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.secondMateHtml.timeout": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.secondMateZip.jobMemory": {
+      "is": "optional",
+      "inner": "integer"
+    },
+    "fastQC.secondMateZip.timeout": {
+      "is": "optional",
+      "inner": "integer"
+    }
+  },
+  "workflow": "version 1.0\n\n# ======================================================\n# Workflow accepts two fastq files, with R1 and R2 reads\n# ======================================================\nworkflow fastQC {\ninput {\n        File fastqR1 \n        File? fastqR2\n        String outputFileNamePrefix = \"\"\n        String r1Suffix = \"_R1\"\n        String r2Suffix = \"_R2\"\n}\nArray[File] inputFastqs = select_all([fastqR1,fastqR2])\nString outputPrefixOne = if outputFileNamePrefix == \"\" then basename(inputFastqs[0], '.fastq.gz') + \"_fastqc\"\n                                                       else outputFileNamePrefix + r1Suffix\n\ncall runFastQC as firstMateFastQC { input: inputFastq = inputFastqs[0] }\ncall renameOutput as firstMateHtml { input: inputFile = firstMateFastQC.html_report_file, extension = \"html\", customPrefix = outputPrefixOne }\ncall renameOutput as firstMateZip { input: inputFile = firstMateFastQC.zip_bundle_file, extension = \"zip\", customPrefix = outputPrefixOne }\n\nif (length(inputFastqs) > 1) {\n String outputPrefixTwo = if outputFileNamePrefix==\"\" then basename(inputFastqs[1], '.fastq.gz') + \"_fastqc\"\n                                                      else outputFileNamePrefix + r2Suffix\n call runFastQC as secondMateFastQC { input: inputFastq = inputFastqs[1] }\n call renameOutput as secondMateHtml { input: inputFile = secondMateFastQC.html_report_file, extension = \"html\", customPrefix = outputPrefixTwo }\n call renameOutput as secondMateZip { input: inputFile = secondMateFastQC.zip_bundle_file, extension = \"zip\", customPrefix = outputPrefixTwo }\n}\n\nparameter_meta {\n  fastqR1: \"Input file with the first mate reads.\"\n  fastqR2: \" Input file with the second mate reads (if not set the experiments will be regarded as single-end).\"\n  outputFileNamePrefix: \"Output prefix, customizable. Default is the first file's basename.\"\n  r1Suffix: \"Suffix for R1 file.\"\n  r2Suffix: \"Suffix for R2 file.\"\n}\n\nmeta {\n    author: \"Peter Ruzanov\"\n    email: \"peter.ruzanov@oicr.on.ca\"\n    description: \"Niassa-wrapped Cromwell (widdle) workflow for running FastQC tools on paired or unpaired reads.\"\n    dependencies: [\n      {\n        name: \"fastqc/0.11.8\",\n        url: \"https://www.bioinformatics.babraham.ac.uk/projects/fastqc/\"\n      }\n    ]\n    output_meta: {\n      html_report_R1: \"HTML report for the first mate fastq file.\",\n      zip_bundle_R1: \"zipped report from FastQC for the first mate reads.\",\n      html_report_R2: \"HTML report for read second mate fastq file.\",\n      zip_bundle_R2: \"zipped report from FastQC for the second mate reads.\"\n    }\n}\n\noutput {File? html_report_R1 = firstMateHtml.renamedOutput\nFile? zip_bundle_R1 = firstMateZip.renamedOutput\nFile? html_report_R2 = secondMateHtml.renamedOutput\nFile? zip_bundle_R2 = secondMateZip.renamedOutput}\n\n}\n\n# ===================================\n#            MAIN STEP\n# ===================================\ntask runFastQC {\ninput {\n        Int    jobMemory = 6\n        Int    timeout   = 20\n        File   inputFastq\n        String modules = \"perl/5.28 java/8 fastqc/0.11.8\"\n}\n\ncommand <<<\n set -euo pipefail\n FASTQC=$(which fastqc)\n JAVA=$(which java)\n perl $FASTQC ~{inputFastq} --java=$JAVA --noextract --outdir \".\"\n>>>\n\nparameter_meta {\n jobMemory: \"Memory allocated to fastqc.\"\n inputFastq: \"Input fastq file, gzipped.\"\n modules: \"Names and versions of required modules.\"\n timeout: \"Timeout in hours, needed to override imposed limits.\"\n}\n\nruntime {\n  memory:  \"~{jobMemory} GB\"\n  modules: \"~{modules}\"\n  timeout: \"~{timeout}\"\n}\n\noutput {\n  File html_report_file = \"~{basename(inputFastq, '.fastq.gz')}_fastqc.html\"\n  File zip_bundle_file  = \"~{basename(inputFastq, '.fastq.gz')}_fastqc.zip\"\n}\n}\n\n# =================================================\n#      RENAMING STEP - IF WE HAVE CUSTOM PREFIX\n# =================================================\ntask renameOutput {\ninput {\n  Int  jobMemory = 2\n  File inputFile\n  String extension\n  String customPrefix\n  Int timeout    = 1\n}\n\nparameter_meta {\n inputFile: \"Input file, html or zip.\"\n extension: \"Extension for a file (without leading dot).\"\n customPrefix: \"Prefix for making a file.\"\n jobMemory: \"Memory allocated to this task.\"\n timeout: \"Timeout, in hours, needed to override imposed limits.\"\n}\n\ncommand <<<\n set -euo pipefail\n if [[ ~{basename(inputFile)} != \"~{customPrefix}.~{extension}\" ]];then \n   ln -s ~{inputFile} \"~{customPrefix}.~{extension}\"\n else\n   ln -s ~{inputFile}\n fi\n>>>\n\nruntime {\n  memory:  \"~{jobMemory} GB\"\n  timeout: \"~{timeout}\"\n}\n\n\noutput {\n  File? renamedOutput = \"~{customPrefix}.~{extension}\"\n}\n}\n",
+  "accessoryFiles": {}
 }

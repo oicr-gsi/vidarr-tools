@@ -2,8 +2,8 @@ import argparse
 import json
 import os
 import sys
+import re
 from typing import Dict, Any
-
 import WDL
 
 _output_mapping = [
@@ -108,10 +108,40 @@ def _map_inner_input(wdl_type: WDL.Type.Base, structures: Dict[str, Any]):
     raise ValueError(f"No conversion for {wdl_type}")
 
 
-def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
+def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, allow_complex: bool,
                 structures: WDL.Env.Bindings[WDL.StructTypeDef]):
+    output_metadata = doc.workflow.meta.get("output_meta", {}).get(output.name, {})
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
+            if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
+                
+                if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
+                        if isinstance(
+                            output_metadata,
+                            dict) and "vidarr_label" in output_metadata:
+                            return "file-with-labels"
+       
+                elif vidarr_type == "file-with-labels":
+                    vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos)
+                    vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos)
+                    
+                    # Extracting existing entries from output.expr.right
+                    existing_entries = output.expr.right.items
+
+                    # Constructing a list of existing entries
+                    existing_entries_list = []
+                    for item in existing_entries:
+                        existing_entries_list.append(item)
+
+                    # Adding the new (vidarr_label, vidarr_label_value) tuple
+                    existing_entries_list.append((vidarr_label, vidarr_label_value))
+
+                    # Creating a new map with the updated list of items
+                    new_map = WDL.Expr.Map(pos=output.expr.pos, items=existing_entries_list)
+                    output.expr.right = new_map
+
+                else:
+                    print("Warning: a label is assigned to a type other than file or a file-with-labels")   
             return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
@@ -126,7 +156,7 @@ def _map_output(wdl_type: WDL.Type.Base, allow_complex: bool,
                     keys[member_name] = "STRING"
                 else:
                     outputs[member_name] = _map_output(
-                        member_type, False, structures)
+                        doc, output, member_type, False, structures)
             return {"is": "list", "keys": keys, "outputs": outputs}
     raise ValueError(
         f"Vidarr cannot process output type {wdl_type} in output.")
@@ -171,10 +201,12 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         if isinstance(
                 output_metadata,
                 dict) and "vidarr_type" in output_metadata:
+            if "vidarr_label" in output_metadata:
+                print("Warning: There is a label inside output_meta that is being overriden by the specified vidarr_type")
             return output_metadata["vidarr_type"]
         else:
             return _map_output(
-                output.type, True, doc.struct_typedefs)
+                doc, output, output.type, True, doc.struct_typedefs)
 
     for wf_input in (doc.workflow.available_inputs or []):
         meta = doc.workflow.parameter_meta.get(wf_input.name)
@@ -207,6 +239,60 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         'workflow': doc.source_text,
         'accessoryFiles': {
             imported.uri: imported.doc.source_text for imported in doc.imports}}
+    
+    output_meta = doc.workflow.meta.get("output_meta", {})
+
+    output_lines = []
+
+    # Iterate over each output defined in the workflow
+    for output in doc.workflow.outputs:
+
+        output_line = str(output)
+
+        # Check if the output name exists in the output metadata
+        if output.name in output_meta:
+            output_metadata = output_meta[output.name]
+
+            if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
+                vidarr_label = output_metadata['vidarr_label']
+
+                if isinstance(output.type, WDL.Type.File) and not output.type.optional:
+
+                    # Construct the modified output line
+                    output_line = f"   Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
+                    
+                elif isinstance(output.type, WDL.Type.Pair) and \
+                    isinstance(output.type.left_type, WDL.Type.File) and \
+                    isinstance(output.type.right_type, WDL.Type.Map):
+
+                    output_line = f"    Pair[File, Map[String, String]] {output.name} = {output.expr}"
+
+        # Append output lines to a consistently updated list
+        output_lines.append(output_line)
+
+    # Define the pattern for searching and replacing the output block
+    pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
+
+    # Search for the pattern in the workflow
+    match = re.search(pattern, workflow['workflow'], re.DOTALL)
+
+    # If the pattern is found, perform the replacement
+    if match:
+
+        # Extracting the part of the workflow string where the output block is located
+        output_block_start = match.start(2)
+        output_block_end = match.end(2)
+        output_block_text = match.group(2)
+
+        # Join all outputs
+        modified_output_block_text = "\n".join(output_lines)
+
+        # Replace the output block text in the workflow
+        modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
+
+        # Update the workflow text with the modified output block
+        workflow['workflow'] = modified_workflow_text
+
     return workflow
 
 

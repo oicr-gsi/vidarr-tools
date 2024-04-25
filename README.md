@@ -120,6 +120,25 @@ workflow dosomething {
 `vidarr_type` and `vidarr_retry` can be combined. Only basic types (Booleans, dates, floats, integers, JSON, and
 strings) may be retried. Input files cannot be changed by retrying.
 
+`vidarr_label` can also be added to `output_meta` to label an output file. A label added to a WDL type `File` will upgrade it to a `Pair[File,Map[String,String]]` so that the vidarr output type will be `file-with-labels`.
+
+```
+workflow dosomething {
+   ...
+   output {
+     File thing = something
+  }
+  meta {
+    ...
+    output_meta: {
+      thing: {
+        vidarr_label: "counts"
+      }
+    }
+  }
+}
+```
+`vidarr_type` still takes priority and no changes to `vidarr_label` will override `vidarr_type`.
 
 ### vidarr-build
 

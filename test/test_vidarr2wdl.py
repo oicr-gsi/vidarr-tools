@@ -4,16 +4,25 @@ import os
 import vidarr.wdl
 
 
+def ordered(obj):
+    if isinstance(obj, dict):
+        return sorted((k, ordered(v)) for k, v in obj.items())
+    if isinstance(obj, list):
+        return sorted(ordered(x) for x in obj)
+    else:
+        return obj
+
+
 def compare_wdl(base_name: str) -> bool:
     with open(os.path.join(os.path.dirname(__file__), base_name + ".json"), "r") as golden:
-        assert vidarr.wdl.parse(
+        assert ordered(vidarr.wdl.parse(
             os.path.join(
                 os.path.dirname(__file__),
                 base_name +
-                ".wdl")) == json.load(golden)
+                ".wdl"))) == ordered(json.load(golden))
 
 
-def test_fastqc():
+def tests_fastqc():
     compare_wdl("fastqc")
 
 
@@ -35,3 +44,6 @@ def tests_dnaSeqQc():
 
 def tests_bmpp():
     compare_wdl("bamMergePreprocessing")
+
+def tests_empty():
+    compare_wdl("empty")
