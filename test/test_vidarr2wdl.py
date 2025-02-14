@@ -47,3 +47,6 @@ def tests_bmpp():
 
 def tests_empty():
     compare_wdl("empty")
+
+def tests_retry():
+    compare_wdl("crosscheckFingerprints_retry")
