@@ -209,7 +209,18 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 doc, output, output.type, True, doc.struct_typedefs)
 
     for wf_input in (doc.workflow.available_inputs or []):
-        meta = doc.workflow.parameter_meta.get(wf_input.name)
+        # `workflow.available_inputs` gets all inputs (workflow, task, import)
+        # `but `workflow.parameter_meta` only gets workflow inputs.
+        input_name = wf_input.name.split(".")
+        meta = None
+        if len(input_name) == 1:
+            meta = doc.workflow.parameter_meta.get(wf_input.name)
+        elif len(input_name) == 2:
+            task_name, parameter_name = input_name[0], input_name[1]
+            for task in doc.tasks:
+                if task.name == task_name:
+                    meta = task.parameter_meta.get(parameter_name)
+                    break
 
         if meta and isinstance(meta, dict) and "vidarr_type" in meta:
             vidarr_type = meta["vidarr_type"]
