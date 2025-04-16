@@ -169,7 +169,14 @@ def parse(wdl_file_path: str) -> Dict[str, Any]:
     :param wdl_file_path: the path to the WDL file; this must be a path on disk in case the WDL file imports other files
     :return: the Vidarr configuration object
     """
-    return convert(WDL.load(wdl_file_path))
+    try:
+        doc = WDL.load(wdl_file_path)
+    except (WDL.Error.MultipleValidationErrors, WDL.Error.SyntaxError, WDL.Error.ValidationError) as e:
+        errors = e.exceptions if isinstance(e, WDL.Error.MultipleValidationErrors) else [e]
+        error_messages = [f"Error {i + 1} at line={error.pos.line} and column={error.pos.column}:\n{error}" for i, error in enumerate(errors)]
+        raise ValueError(f"Unable to load {wdl_file_path} due to the following errors:\n{'\n'.join(error_messages)}") from e
+
+    return convert(doc)
 
 
 def convert(doc: WDL.Document) -> Dict[str, Any]:
