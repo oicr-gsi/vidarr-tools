@@ -1,6 +1,8 @@
 import json
 import os
 
+import pytest
+
 import vidarr.wdl
 
 
@@ -45,8 +47,17 @@ def tests_dnaSeqQc():
 def tests_bmpp():
     compare_wdl("bamMergePreprocessing")
 
+
 def tests_empty():
     compare_wdl("empty")
 
+
 def tests_retry():
     compare_wdl("crosscheckFingerprints_retry")
+
+
+def tests_bad():
+    wdl_path = os.path.join(os.path.dirname(__file__), "bad.wdl")
+    with pytest.raises(ValueError) as e:
+        vidarr.wdl.parse(wdl_path)
+    assert str(e.value) == f"Unable to load {wdl_path} due to the following errors:\nError 1 at line=13 and column=28:\nExpected Int instead of File"
