@@ -15,7 +15,7 @@ pip install --user pipenv
 2. Install dependencies
 
 ```shell
-pipenv install
+PIPENV_VENV_IN_PROJECT=1 PIP_IGNORE_INSTALLED=1 pipenv install
 ```
 
 If developing with vidarr-tools, install dev dependencies too
