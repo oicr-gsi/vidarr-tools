@@ -1,427 +1,427 @@
 {
-  "language": "WDL_1_0",
-  "outputs": {
-    "dnaSeqQC.log": "optional-file",
-    "dnaSeqQC.cutAdaptAllLogs": "optional-file",
-    "dnaSeqQC.result": "file"
-  },
-  "parameters": {
-    "dnaSeqQC.fastqR1": "file",
-    "dnaSeqQC.fastqR2": "file",
-    "dnaSeqQC.outputFileNamePrefix": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.adapterTrimmingLog_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.adapterTrimmingLog_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.indexBam_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.indexBam_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.indexBam_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.bamMerge_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.bamMerge_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.bamMerge_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.runBwaMem_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.runBwaMem_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.runBwaMem_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.runBwaMem_addParam": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.runBwaMem_bwaRef": "string",
-    "dnaSeqQC.bwaMem.runBwaMem_modules": "string",
-    "dnaSeqQC.bwaMem.adapterTrimming_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.adapterTrimming_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.adapterTrimming_addParam": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.adapterTrimming_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.slicerR2_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.slicerR2_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.slicerR2_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.slicerR1_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.slicerR1_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.slicerR1_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.countChunkSize_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.countChunkSize_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.readGroups": "string",
-    "dnaSeqQC.bwaMem.numChunk": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.doTrim": {
-      "is": "optional",
-      "inner": "boolean"
-    },
-    "dnaSeqQC.bwaMem.trimMinLength": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.trimMinQuality": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bwaMem.adapter1": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bwaMem.adapter2": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.collateResults_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.collateResults_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.collateResults_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.collateResults_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.cumulativeDistToHistogram_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.cumulativeDistToHistogram_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.cumulativeDistToHistogram_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.cumulativeDistToHistogram_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.runMosdepth_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.runMosdepth_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.runMosdepth_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.runMosdepth_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.bamQCMetrics_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.bamQCMetrics_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.bamQCMetrics_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.bamQCMetrics_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.bamQCMetrics_normalInsertMax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.bamQCMetrics_workflowVersion": "string",
-    "dnaSeqQC.bamQC.bamQCMetrics_refSizesBed": "string",
-    "dnaSeqQC.bamQC.bamQCMetrics_refFasta": "string",
-    "dnaSeqQC.bamQC.markDuplicates_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.markDuplicates_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.markDuplicates_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.markDuplicates_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.markDuplicates_picardMaxMemMb": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.markDuplicates_opticalDuplicatePixelDistance": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsampleRegion_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsampleRegion_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsampleRegion_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsampleRegion_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.downsample_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsample_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsample_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsample_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.downsample_randomSeed": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.downsample_downsampleSuffix": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_customRegions": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_intervalStart": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_baseInterval": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_chromosomes": {
-      "is": "optional",
-      "inner": {
-        "is": "list",
-        "inner": "string"
-      }
-    },
-    "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_threshold": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_preDSMultiplier": {
-      "is": "optional",
-      "inner": "floating"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_precision": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_minReadsRelative": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_minReadsAbsolute": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.findDownsampleParams_targetReads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.indexBamFile_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.indexBamFile_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.indexBamFile_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.indexBamFile_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.countInputReads_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.countInputReads_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.countInputReads_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.countInputReads_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.updateMetadata_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.updateMetadata_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.updateMetadata_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.updateMetadata_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.filter_timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.filter_threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.filter_jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.filter_modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "dnaSeqQC.bamQC.filter_minQuality": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "dnaSeqQC.bamQC.metadata": {
-      "is": "dictionary",
-      "key": "string",
-      "value": "string"
-    }
-  },
-  "workflow": "version 1.0\n\nimport \"imports/pull_bwaMem.wdl\" as bwaMem\nimport \"imports/pull_bamQC.wdl\" as bamQC\n\nworkflow dnaSeqQC {\n    input {\n        File fastqR1\n        File fastqR2\n        String outputFileNamePrefix = basename(fastqR1)\n    }\n\n    parameter_meta {\n        fastqR1: \"fastq file for read 1\"\n        fastqR2: \"fastq file for read 2\"\n        outputFileNamePrefix: \"Optional output prefix for the output\"\n    }\n\n    call bwaMem.bwaMem {\n        input:\n            fastqR1 = fastqR1,\n            fastqR2 = fastqR2,\n            outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call bamQC.bamQC {\n        input:\n            bamFile = bwaMem.bwaMemBam,\n            outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    meta {\n        author: \"Fenglin Chen\"\n        email: \"g3chen@oicr.on.ca\"\n        description: \"Calls the bwaMem-bamQC alignment as a single step.\"\n        dependencies: [\n        {\n            name: \"bwa/0.7.12\",\n            url: \"https://github.com/lh3/bwa/archive/0.7.12.tar.gz\"\n        },\n        {\n            name: \"samtools/1.9\",\n            url: \"https://github.com/samtools/samtools/archive/0.1.19.tar.gz\"\n        },\n        {\n            name: \"cutadapt/1.8.3\",\n            url: \"https://cutadapt.readthedocs.io/en/v1.8.3/\"\n        },\n        {\n            name: \"slicer/0.3.0\",\n            url: \"https://github.com/OpenGene/slicer/archive/v0.3.0.tar.gz\"\n        },\n        {\n            name: \"picard/2.21.2\",\n            url: \"https://broadinstitute.github.io/picard/command-line-overview.html\"\n        },\n        {\n            name: \"python/3.6\",\n            url: \"https://www.python.org/downloads/\"\n        },\n        {\n            name: \"bam-qc-metrics/0.2.5\",\n            url: \"https://github.com/oicr-gsi/bam-qc-metrics.git\"\n        },\n        {\n            name: \"mosdepth/0.2.9\",\n            url: \"https://github.com/brentp/mosdepth\"\n        }\n      ]\n      output_meta: {\n        log: \"log file for bwaMem task\",\n        cutAdaptAllLogs: \"log file for cutadapt task\",\n        result: \"bamQC report\"\n      }\n    }\n\n \n\n  output {File? log = bwaMem.log\nFile? cutAdaptAllLogs = bwaMem.cutAdaptAllLogs\nFile result = bamQC.result}\n}\n\n",
-  "accessoryFiles": {
-    "imports/pull_bwaMem.wdl": "version 1.0\n\nworkflow bwaMem {\n    input {\n        Int adapterTrimmingLog_timeout = 48\n        Int adapterTrimmingLog_jobMemory = 12\n        Int indexBam_timeout = 48\n        String indexBam_modules = \"samtools/1.9\"\n        Int indexBam_jobMemory = 12\n        Int bamMerge_timeout = 72\n        String bamMerge_modules = \"samtools/1.9\"\n        Int bamMerge_jobMemory = 32\n        Int runBwaMem_timeout = 96\n        Int runBwaMem_jobMemory = 32\n        Int runBwaMem_threads = 8\n        String? runBwaMem_addParam\n        String runBwaMem_bwaRef\n        String runBwaMem_modules\n        Int adapterTrimming_timeout = 48\n        Int adapterTrimming_jobMemory = 16\n        String? adapterTrimming_addParam\n        String adapterTrimming_modules = \"cutadapt/1.8.3\"\n        Int slicerR2_timeout = 48\n        Int slicerR2_jobMemory = 16\n        String slicerR2_modules = \"slicer/0.3.0\"\n        Int slicerR1_timeout = 48\n        Int slicerR1_jobMemory = 16\n        String slicerR1_modules = \"slicer/0.3.0\"\n        Int countChunkSize_timeout = 48\n        Int countChunkSize_jobMemory = 16\n        File fastqR1\n        File fastqR2\n        String readGroups\n        String outputFileNamePrefix = \"output\"\n        Int numChunk = 1\n        Boolean doTrim = true\n        Int trimMinLength = 1\n        Int trimMinQuality = 0\n        String adapter1 = \"AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC\"\n        String adapter2 = \"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT\"\n    }\n\n    parameter_meta {\n        adapterTrimmingLog_timeout: \"Hours before task timeout\"\n        adapterTrimmingLog_jobMemory: \"Memory allocated indexing job\"\n        indexBam_timeout: \"Hours before task timeout\"\n        indexBam_modules: \"Modules for running indexing job\"\n        indexBam_jobMemory: \"Memory allocated indexing job\"\n        bamMerge_timeout: \"Hours before task timeout\"\n        bamMerge_modules: \"Required environment modules\"\n        bamMerge_jobMemory: \"Memory allocated indexing job\"\n        runBwaMem_timeout: \"Hours before task timeout\"\n        runBwaMem_jobMemory: \"Memory allocated for this job\"\n        runBwaMem_threads: \"Requested CPU threads\"\n        runBwaMem_addParam: \"Additional BWA parameters\"\n        runBwaMem_bwaRef: \"The reference genome to align the sample with by BWA\"\n        runBwaMem_modules: \"Required environment modules\"\n        adapterTrimming_timeout: \"Hours before task timeout\"\n        adapterTrimming_jobMemory: \"Memory allocated for this job\"\n        adapterTrimming_addParam: \"Additional cutadapt parameters\"\n        adapterTrimming_modules: \"Required environment modules\"\n        slicerR2_timeout: \"Hours before task timeout\"\n        slicerR2_jobMemory: \"Memory allocated for this job\"\n        slicerR2_modules: \"Required environment modules\"\n        slicerR1_timeout: \"Hours before task timeout\"\n        slicerR1_jobMemory: \"Memory allocated for this job\"\n        slicerR1_modules: \"Required environment modules\"\n        countChunkSize_timeout: \"Hours before task timeout\"\n        countChunkSize_jobMemory: \"Memory allocated for this job\"\n        fastqR1: \"fastq file for read 1\"\n        fastqR2: \"fastq file for read 2\"\n        readGroups: \"Complete read group header line\"\n        outputFileNamePrefix: \"Prefix for output file\"\n        numChunk: \"number of chunks to split fastq file [1, no splitting]\"\n        doTrim: \"if true, adapters will be trimmed before alignment\"\n        trimMinLength: \"minimum length of reads to keep [1]\"\n        trimMinQuality: \"minimum quality of read ends to keep [0]\"\n        adapter1: \"adapter sequence to trim from read 1 [AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC]\"\n        adapter2: \"adapter sequence to trim from read 2 [AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT]\"\n\n    }\n\n    if (numChunk > 1) {\n        call countChunkSize {\n            input:\n            timeout = countChunkSize_timeout,\n            jobMemory = countChunkSize_jobMemory,\n            fastqR1 = fastqR1,\n            numChunk = numChunk\n        }\n    \n        call slicer as slicerR1 { \n            input: \n            timeout = slicerR1_timeout,\n            jobMemory = slicerR1_jobMemory,\n            modules = slicerR1_modules,\n            fastqR = fastqR1,\n            chunkSize = countChunkSize.chunkSize\n        }\n        call slicer as slicerR2 { \n            input: \n            timeout = slicerR2_timeout,\n            jobMemory = slicerR2_jobMemory,\n            modules = slicerR2_modules,\n            fastqR = fastqR2,\n            chunkSize = countChunkSize.chunkSize\n        }\n    }\n\n    Array[File] fastq1 = select_first([slicerR1.chunkFastq, [fastqR1]])\n    Array[File] fastq2 = select_first([slicerR2.chunkFastq, [fastqR2]])\n    Array[Pair[File,File]] outputs = zip(fastq1,fastq2)\n\n    scatter (p in outputs) {\n        if (doTrim) {\n            call adapterTrimming { \n                input:\n                timeout = adapterTrimming_timeout,\n                jobMemory = adapterTrimming_jobMemory,\n                addParam = adapterTrimming_addParam,\n                modules = adapterTrimming_modules,\n                fastqR1 = p.left,\n                fastqR2 = p.right,\n                trimMinLength = trimMinLength,\n                trimMinQuality = trimMinQuality,\n                adapter1 = adapter1,\n                adapter2 = adapter2\n            }\n        }\n        call runBwaMem  { \n                input: \n                timeout = runBwaMem_timeout,\n                jobMemory = runBwaMem_jobMemory,\n                threads = runBwaMem_threads,\n                addParam = runBwaMem_addParam,\n                bwaRef = runBwaMem_bwaRef,\n                modules = runBwaMem_modules,\n                read1s = select_first([adapterTrimming.resultR1, p.left]),\n                read2s = select_first([adapterTrimming.resultR2, p.right]),\n                readGroups = readGroups\n        }    \n    }\n\n    call bamMerge {\n        input:\n        timeout = bamMerge_timeout,\n        modules = bamMerge_modules,\n        jobMemory = bamMerge_jobMemory,\n        bams = runBwaMem.outputBam,\n        outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call indexBam { \n        input: \n        timeout = indexBam_timeout,\n        modules = indexBam_modules,\n        jobMemory = indexBam_jobMemory,\n        inputBam = bamMerge.outputMergedBam\n    }\n\n    if (doTrim) {\n        call adapterTrimmingLog {\n            input:\n            timeout = adapterTrimmingLog_timeout,\n            jobMemory = adapterTrimmingLog_jobMemory,\n            inputLogs = select_all(adapterTrimming.log),\n            outputFileNamePrefix = outputFileNamePrefix,\n            numChunk = numChunk\n        }\n    }\n\n    meta {\n        author: \"Xuemei Luo\"\n        email: \"xuemei.luo@oicr.on.ca\"\n        description: \"BwaMem Workflow version 2.0\"\n        dependencies: [\n        {\n            name: \"bwa/0.7.12\",\n            url: \"https://github.com/lh3/bwa/archive/0.7.12.tar.gz\"\n        },\n        {\n            name: \"samtools/1.9\",\n            url: \"https://github.com/samtools/samtools/archive/0.1.19.tar.gz\"\n        },\n        {\n            name: \"cutadapt/1.8.3\",\n            url: \"https://cutadapt.readthedocs.io/en/v1.8.3/\"\n        },\n        {\n            name: \"slicer/0.3.0\",\n            url: \"https://github.com/OpenGene/slicer/archive/v0.3.0.tar.gz\"\n        }\n      ]\n    }\n\n    output {\n        File bwaMemBam = bamMerge.outputMergedBam\n        File bwaMemIndex = indexBam.outputBai\n        File? log = adapterTrimmingLog.summaryLog\n        File? cutAdaptAllLogs = adapterTrimmingLog.allLogs\n    }\n}\n\n\ntask countChunkSize{\n    input {\n        File fastqR1\n        Int numChunk\n        Int jobMemory = 16\n        Int timeout = 48\n    }\n    \n    parameter_meta {\n        fastqR1: \"Fastq file for read 1\"\n        numChunk: \"Number of chunks to split fastq file\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    command <<<\n        set -euo pipefail\n        totalLines=$(zcat ~{fastqR1} | wc -l)\n        python -c \"from math import ceil; print int(ceil(($totalLines/4.0)/~{numChunk})*4)\"\n    >>>\n    \n    runtime {\n        memory: \"~{jobMemory} GB\"\n        timeout: \"~{timeout}\"\n    }\n    \n    output {\n        String chunkSize =read_string(stdout())\n    }\n\n    meta {\n        output_meta: {\n            chunkSize: \"output number of lines per chunk\"\n        }\n    }    \n   \n}\n\ntask slicer {\n    input {\n        File fastqR         \n        String chunkSize\n        String modules = \"slicer/0.3.0\"\n        Int jobMemory = 16\n        Int timeout = 48\n    }\n    \n    parameter_meta {\n        fastqR: \"Fastq file\"\n        chunkSize: \"Number of lines per chunk\"\n        modules: \"Required environment modules\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    command <<<\n        set -euo pipefail\n        slicer -i ~{fastqR} -l ~{chunkSize} --gzip \n    >>>\n    \n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    } \n    \n    output {\n        Array[File] chunkFastq = glob(\"*.fastq.gz\")\n    }\n\n    meta {\n        output_meta: {\n            chunkFastq: \"output fastq chunks\"\n        }\n    } \n  \n}\n\ntask adapterTrimming {\n    input {\n        File fastqR1\n        File fastqR2\n        String modules = \"cutadapt/1.8.3\"\n        Int trimMinLength\n        Int trimMinQuality\n        String adapter1\n        String adapter2\n        String? addParam\n        Int jobMemory = 16\n        Int timeout = 48\n    }\n    \n    parameter_meta {\n        fastqR1: \"Fastq file for read 1\"\n        fastqR2: \"Fastq file for read 2\"\n        trimMinLength: \"Minimum length of reads to keep\"\n        trimMinQuality: \"Minimum quality of read ends to keep\"\n        adapter1: \"Adapter sequence to trim from read 1\"\n        adapter2: \"Adapter sequence to trim from read 2\"\n        modules: \"Required environment modules\"\n        addParam: \"Additional cutadapt parameters\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    String resultFastqR1 = \"~{basename(fastqR1, \".fastq.gz\")}.trim.fastq.gz\"\n    String resultFastqR2 = \"~{basename(fastqR2, \".fastq.gz\")}.trim.fastq.gz\"\n    String resultLog = \"~{basename(fastqR1, \".fastq.gz\")}.log\"\n    \n    command <<<\n        set -euo pipefail\n        cutadapt -q ~{trimMinQuality} \\\n            -m ~{trimMinLength} \\\n            -a ~{adapter1}  \\\n            -A ~{adapter2} ~{addParam} \\\n            -o ~{resultFastqR1} \\\n            -p ~{resultFastqR2} \\\n            ~{fastqR1} \\\n            ~{fastqR2} > ~{resultLog}\n\n    >>>\n    \n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    } \n    \n    output { \n        File resultR1 = \"~{resultFastqR1}\"\n        File resultR2 = \"~{resultFastqR2}\"\n        File log =  \"~{resultLog}\"     \n    }\n\n    meta {\n        output_meta: {\n            resultR1: \"output fastq read 1 after trimming\",\n            resultR2: \"output fastq read 2 after trimming\",\n            log: \"output adpater trimming log\"\n        }\n    } \n   \n}    \n\n\ntask runBwaMem {\n    input {\n        File read1s\n        File read2s\n        String readGroups\n        String modules\n        String bwaRef\n        String? addParam\n        Int threads = 8\n        Int jobMemory = 32\n        Int timeout = 96\n    }\n\n    parameter_meta {\n        read1s: \"Fastq file for read 1\"\n        read2s: \"Fastq file for read 2\"\n        readGroups: \"Array of readgroup lines\"\n        bwaRef: \"The reference genome to align the sample with by BWA\"\n        modules: \"Required environment modules\"\n        addParam: \"Additional BWA parameters\"\n        threads: \"Requested CPU threads\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    String resultBam = \"~{basename(read1s)}.bam\"\n    String tmpDir = \"tmp/\"\n\n    command <<<\n        set -euo pipefail\n        mkdir -p ~{tmpDir}\n        bwa mem -M \\\n            -t ~{threads} ~{addParam}  \\\n            -R  ~{readGroups} \\\n            ~{bwaRef} \\\n            ~{read1s} \\\n            ~{read2s} \\\n        | \\\n        samtools sort -O bam -T ~{tmpDir} -o ~{resultBam} - \n    >>>\n\n    runtime {\n        modules: \"~{modules}\"\n        memory:  \"~{jobMemory} GB\"\n        cpu:     \"~{threads}\"\n        timeout: \"~{timeout}\"\n    }  \n    \n    output {\n        File outputBam = \"~{resultBam}\"\n    }\n\n    meta {\n        output_meta: {\n            outputBam: \"output bam aligned to genome\"\n        }\n    }\n\n}\n\ntask bamMerge{\n    input {\n        Array[File] bams\n        String outputFileNamePrefix\n        Int   jobMemory = 32\n        String modules  = \"samtools/1.9\"\n        Int timeout     = 72\n    }\n    parameter_meta {\n        bams:  \"Input bam files\"\n        outputFileNamePrefix: \"Prefix for output file\"\n        jobMemory: \"Memory allocated indexing job\"\n        modules:   \"Required environment modules\"\n        timeout:   \"Hours before task timeout\"    \n    }\n\n    String resultMergedBam = \"~{outputFileNamePrefix}.bam\"\n\n    command <<<\n        set -euo pipefail\n        samtools merge \\\n        -c \\\n        ~{resultMergedBam} \\\n        ~{sep=\" \" bams} \n    >>>\n\n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    }\n\n    output {\n        File outputMergedBam = \"~{resultMergedBam}\"\n    }\n\n    meta {\n        output_meta: {\n            outputMergedBam: \"output merged bam aligned to genome\"\n        }\n    }       \n}\n\ntask indexBam {\n    input {\n        File  inputBam\n        Int   jobMemory = 12\n        String modules  = \"samtools/1.9\"\n        Int timeout     = 48\n    }\n    parameter_meta {\n        inputBam:  \"Input bam file\"\n        jobMemory: \"Memory allocated indexing job\"\n        modules:   \"Modules for running indexing job\"\n        timeout:   \"Hours before task timeout\"\n    }\n\n    String resultBai = \"~{basename(inputBam)}.bai\"\n\n    command <<<\n        set -euo pipefail\n        samtools index ~{inputBam} ~{resultBai}\n    >>>\n\n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    }\n\n    output {\n        File outputBai = \"~{resultBai}\"\n    }\n\n    meta {\n        output_meta: {\n            outputBai: \"output index file for bam aligned to genome\"\n        }\n    }\n\n}\n\ntask adapterTrimmingLog {\n    input {\n        Array[File] inputLogs\n        String outputFileNamePrefix\n        Int   numChunk\n        Int   jobMemory = 12\n        Int timeout     = 48\n\n    }\n    parameter_meta {\n        inputLogs:  \"Input log files\"\n        outputFileNamePrefix: \"Prefix for output file\"\n        numChunk: \"Number of chunks to split fastq file\"\n        jobMemory: \"Memory allocated indexing job\"\n        timeout:   \"Hours before task timeout\"\n    }\n\n    String allLog = \"~{outputFileNamePrefix}.txt\"\n    String log = \"~{outputFileNamePrefix}.log\"\n\n    command <<<\n        set -euo pipefail\n        awk 'BEGINFILE {print \"###################################\\n\"}{print}' ~{sep=\" \" inputLogs} > ~{allLog}\n\n        totalRead=$(cat ~{allLog} | grep \"Total read pairs processed:\" | cut -d\":\" -f2 | sed 's/ //g; s/,//g' | awk '{x+=$1}END{print x}')\n        adapterR1=$(cat ~{allLog} | grep \" Read 1 with adapter:\" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentAdapterR1=$(awk -v A=\"${adapterR1}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        adapterR2=$(cat ~{allLog} | grep \" Read 2 with adapter:\" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentAdapterR2=$(awk -v A=\"${adapterR2}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        shortPairs=$(cat ~{allLog} | grep \"Pairs that were too short:\" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentShortPairs=$(awk -v A=\"${shortPairs}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        pairsWritten=$(cat ~{allLog} | grep \"Pairs written (passing filters): \" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentpairsWritten=$(awk -v A=\"${pairsWritten}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        totalBP=$(cat ~{allLog} | grep \"Total basepairs processed:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpR1=$(cat ~{allLog} | grep -A 2 \"Total basepairs processed:\" | grep \"Read 1:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpR2=$(cat ~{allLog} | grep -A 2 \"Total basepairs processed:\" | grep \"Read 2:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpQualitytrimmed=$(cat ~{allLog} | grep \"Quality-trimmed:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g; s/ (.*)//' | awk '{x+=$1}END{print x}')\n        percentQualitytrimmed=$(awk -v A=\"${bpQualitytrimmed}\" -v B=\"${totalBP}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        bpQualitytrimmedR1=$(cat ~{allLog} | grep -A 2 \"Quality-trimmed:\" | grep \"Read 1:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpQualitytrimmedR2=$(cat ~{allLog} | grep -A 2 \"Quality-trimmed:\" | grep \"Read 2:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpTotalWritten=$(cat ~{allLog} | grep \"Total written (filtered):\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g; s/ (.*)//' | awk '{x+=$1}END{print x}')\n        percentBPWritten=$(awk -v A=\"${bpTotalWritten}\" -v B=\"${totalBP}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        bpWrittenR1=$(cat ~{allLog} | grep -A 2 \"Total written (filtered):\" | grep \"Read 1:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpWrittenR2=$(cat ~{allLog} | grep -A 2 \"Total written (filtered):\" | grep \"Read 2:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n\n        echo -e \"This is a cutadapt summary from ~{numChunk} fastq chunks\\n\" > ~{log}\n        echo -e \"Total read pairs processed:\\t${totalRead}\" >> ~{log}\n        echo -e \"  Read 1 with adapter:\\t${adapterR1} (${percentAdapterR1}%)\" >> ~{log}\n        echo -e \"  Read 2 with adapter:\\t${adapterR2} (${percentAdapterR2}%)\" >> ~{log}\n        echo -e \"Pairs that were too short:\\t${shortPairs} (${percentShortPairs}%)\" >> ~{log}\n        echo -e \"Pairs written (passing filters):\\t${pairsWritten} (${percentpairsWritten}%)\\n\\n\" >> ~{log}\n        echo -e \"Total basepairs processed:\\t${totalBP} bp\" >> ~{log}\n        echo -e \"  Read 1:\\t${bpR1} bp\" >> ~{log}\n        echo -e \"  Read 2:\\t${bpR2} bp\" >> ~{log}\n        echo -e \"Quality-trimmed:\\t${bpQualitytrimmed} bp (${percentQualitytrimmed}%)\" >> ~{log}\n        echo -e \"  Read 1:\\t${bpQualitytrimmedR1} bp\" >> ~{log}\n        echo -e \"  Read 2:\\t${bpQualitytrimmedR2} bp\" >> ~{log}\n        echo -e \"Total written (filtered):\\t${bpTotalWritten} bp (${percentBPWritten}%)\" >> ~{log}\n        echo -e \"  Read 1:\\t${bpWrittenR1} bp\" >> ~{log}\n        echo -e \"  Read 2:\\t${bpWrittenR2} bp\" >> ~{log}\n    >>>\n\n    runtime {\n        memory: \"~{jobMemory} GB\"\n        timeout: \"~{timeout}\"\n    }\n  \n    output {\n        File summaryLog = \"~{log}\"\n        File allLogs = \"~{allLog}\"\n    }\n\n    meta {\n        output_meta: {\n            summaryLog: \"a summary log file for adapter trimming\",\n            allLogs: \"a file containing all logs for adapter trimming for each fastq chunk\"\n        }\n    }\n\n}\n \n",
-    "imports/pull_bamQC.wdl": "version 1.0\n\nworkflow bamQC {\n\n    input {\n    Int collateResults_timeout = 1\n    Int collateResults_threads = 4\n    Int collateResults_jobMemory = 8\n    String collateResults_modules = \"python/3.6\"\n    Int cumulativeDistToHistogram_timeout = 1\n    Int cumulativeDistToHistogram_threads = 4\n    Int cumulativeDistToHistogram_jobMemory = 8\n    String cumulativeDistToHistogram_modules = \"python/3.6\"\n    Int runMosdepth_timeout = 4\n    Int runMosdepth_threads = 4\n    Int runMosdepth_jobMemory = 16\n    String runMosdepth_modules = \"mosdepth/0.2.9\"\n    Int bamQCMetrics_timeout = 4\n    Int bamQCMetrics_threads = 4\n    Int bamQCMetrics_jobMemory = 16\n    String bamQCMetrics_modules = \"bam-qc-metrics/0.2.5\"\n    Int bamQCMetrics_normalInsertMax = 1500\n    String bamQCMetrics_workflowVersion\n    String bamQCMetrics_refSizesBed\n    String bamQCMetrics_refFasta\n    Int markDuplicates_timeout = 4\n    Int markDuplicates_threads = 4\n    Int markDuplicates_jobMemory = 16\n    String markDuplicates_modules = \"picard/2.21.2\"\n    Int markDuplicates_picardMaxMemMb = 6000\n    Int markDuplicates_opticalDuplicatePixelDistance = 100\n    Int downsampleRegion_timeout = 4\n    Int downsampleRegion_threads = 4\n    Int downsampleRegion_jobMemory = 16\n    String downsampleRegion_modules = \"samtools/1.9\"\n    Int downsample_timeout = 4\n    Int downsample_threads = 4\n    Int downsample_jobMemory = 16\n    String downsample_modules = \"samtools/1.9\"\n    Int downsample_randomSeed = 42\n    String downsample_downsampleSuffix = \"downsampled.bam\"\n    Int findDownsampleParamsMarkDup_timeout = 4\n    Int findDownsampleParamsMarkDup_threads = 4\n    Int findDownsampleParamsMarkDup_jobMemory = 16\n    String findDownsampleParamsMarkDup_modules = \"python/3.6\"\n    String findDownsampleParamsMarkDup_customRegions = \"\"\n    Int findDownsampleParamsMarkDup_intervalStart = 100000\n    Int findDownsampleParamsMarkDup_baseInterval = 15000\n    Array[String] findDownsampleParamsMarkDup_chromosomes = [\"chr12\", \"chr13\", \"chrXII\", \"chrXIII\"]\n    Int findDownsampleParamsMarkDup_threshold = 10000000\n    Int findDownsampleParams_timeout = 4\n    Int findDownsampleParams_threads = 4\n    Int findDownsampleParams_jobMemory = 16\n    String findDownsampleParams_modules = \"python/3.6\"\n    Float findDownsampleParams_preDSMultiplier = 1.5\n    Int findDownsampleParams_precision = 8\n    Int findDownsampleParams_minReadsRelative = 2\n    Int findDownsampleParams_minReadsAbsolute = 10000\n    Int findDownsampleParams_targetReads = 100000\n    Int indexBamFile_timeout = 4\n    Int indexBamFile_threads = 4\n    Int indexBamFile_jobMemory = 16\n    String indexBamFile_modules = \"samtools/1.9\"\n    Int countInputReads_timeout = 4\n    Int countInputReads_threads = 4\n    Int countInputReads_jobMemory = 16\n    String countInputReads_modules = \"samtools/1.9\"\n    Int updateMetadata_timeout = 4\n    Int updateMetadata_threads = 4\n    Int updateMetadata_jobMemory = 16\n    String updateMetadata_modules = \"python/3.6\"\n    Int filter_timeout = 4\n    Int filter_threads = 4\n    Int filter_jobMemory = 16\n    String filter_modules = \"samtools/1.9\"\n    Int filter_minQuality = 30\n    File bamFile\n    Map[String, String] metadata\n    String outputFileNamePrefix = \"bamQC\"\n    }\n\n    parameter_meta {\n        collateResults_timeout: \"hours before task timeout\"\n        collateResults_threads: \"Requested CPU threads\"\n        collateResults_jobMemory: \"Memory allocated for this job\"\n        collateResults_modules: \"required environment modules\"\n        cumulativeDistToHistogram_timeout: \"hours before task timeout\"\n        cumulativeDistToHistogram_threads: \"Requested CPU threads\"\n        cumulativeDistToHistogram_jobMemory: \"Memory allocated for this job\"\n        cumulativeDistToHistogram_modules: \"required environment modules\"\n        runMosdepth_timeout: \"hours before task timeout\"\n        runMosdepth_threads: \"Requested CPU threads\"\n        runMosdepth_jobMemory: \"Memory allocated for this job\"\n        runMosdepth_modules: \"required environment modules\"\n        bamQCMetrics_timeout: \"hours before task timeout\"\n        bamQCMetrics_threads: \"Requested CPU threads\"\n        bamQCMetrics_jobMemory: \"Memory allocated for this job\"\n        bamQCMetrics_modules: \"required environment modules\"\n        bamQCMetrics_normalInsertMax: \"Maximum of expected insert size range\"\n        bamQCMetrics_workflowVersion: \"Workflow version string\"\n        bamQCMetrics_refSizesBed: \"Path to human genome BED reference with chromosome sizes\"\n        bamQCMetrics_refFasta: \"Path to human genome FASTA reference\"\n        markDuplicates_timeout: \"hours before task timeout\"\n        markDuplicates_threads: \"Requested CPU threads\"\n        markDuplicates_jobMemory: \"Memory allocated for this job\"\n        markDuplicates_modules: \"required environment modules\"\n        markDuplicates_picardMaxMemMb: \"Memory requirement in MB for running Picard JAR\"\n        markDuplicates_opticalDuplicatePixelDistance: \"Maximum offset between optical duplicate clusters\"\n        downsampleRegion_timeout: \"hours before task timeout\"\n        downsampleRegion_threads: \"Requested CPU threads\"\n        downsampleRegion_jobMemory: \"Memory allocated for this job\"\n        downsampleRegion_modules: \"required environment modules\"\n        downsample_timeout: \"hours before task timeout\"\n        downsample_threads: \"Requested CPU threads\"\n        downsample_jobMemory: \"Memory allocated for this job\"\n        downsample_modules: \"required environment modules\"\n        downsample_randomSeed: \"Random seed for pre-downsampling (if any)\"\n        downsample_downsampleSuffix: \"Suffix for output file\"\n        findDownsampleParamsMarkDup_timeout: \"hours before task timeout\"\n        findDownsampleParamsMarkDup_threads: \"Requested CPU threads\"\n        findDownsampleParamsMarkDup_jobMemory: \"Memory allocated for this job\"\n        findDownsampleParamsMarkDup_modules: \"required environment modules\"\n        findDownsampleParamsMarkDup_customRegions: \"Custom downsample regions; overrides chromosome and interval parameters\"\n        findDownsampleParamsMarkDup_intervalStart: \"Start of interval in each chromosome, for very large BAMs\"\n        findDownsampleParamsMarkDup_baseInterval: \"Base width of interval in each chromosome, for very large BAMs\"\n        findDownsampleParamsMarkDup_chromosomes: \"Array of chromosome identifiers for downsampled subset\"\n        findDownsampleParamsMarkDup_threshold: \"Minimum number of reads to conduct downsampling\"\n        findDownsampleParams_timeout: \"hours before task timeout\"\n        findDownsampleParams_threads: \"Requested CPU threads\"\n        findDownsampleParams_jobMemory: \"Memory allocated for this job\"\n        findDownsampleParams_modules: \"required environment modules\"\n        findDownsampleParams_preDSMultiplier: \"Determines target size for pre-downsampled set (if any). Must have (preDSMultiplier) < (minReadsRelative).\"\n        findDownsampleParams_precision: \"Number of decimal places in fraction for pre-downsampling\"\n        findDownsampleParams_minReadsRelative: \"Minimum value of (inputReads)/(targetReads) to allow pre-downsampling\"\n        findDownsampleParams_minReadsAbsolute: \"Minimum value of targetReads to allow pre-downsampling\"\n        findDownsampleParams_targetReads: \"Desired number of reads in downsampled output\"\n        indexBamFile_timeout: \"hours before task timeout\"\n        indexBamFile_threads: \"Requested CPU threads\"\n        indexBamFile_jobMemory: \"Memory allocated for this job\"\n        indexBamFile_modules: \"required environment modules\"\n        countInputReads_timeout: \"hours before task timeout\"\n        countInputReads_threads: \"Requested CPU threads\"\n        countInputReads_jobMemory: \"Memory allocated for this job\"\n        countInputReads_modules: \"required environment modules\"\n        updateMetadata_timeout: \"hours before task timeout\"\n        updateMetadata_threads: \"Requested CPU threads\"\n        updateMetadata_jobMemory: \"Memory allocated for this job\"\n        updateMetadata_modules: \"required environment modules\"\n        filter_timeout: \"hours before task timeout\"\n        filter_threads: \"Requested CPU threads\"\n        filter_jobMemory: \"Memory allocated for this job\"\n        filter_modules: \"required environment modules\"\n        filter_minQuality: \"Minimum alignment quality to pass filter\"\n    bamFile: \"Input BAM file on which to compute QC metrics\"\n    metadata: \"JSON file containing metadata\"\n    outputFileNamePrefix: \"Prefix for output files\"\n    }\n\n    call filter {\n    input:\n    timeout = filter_timeout,\n    threads = filter_threads,\n    jobMemory = filter_jobMemory,\n    modules = filter_modules,\n    minQuality = filter_minQuality,\n    bamFile = bamFile,\n    outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call updateMetadata {\n    input:\n    timeout = updateMetadata_timeout,\n    threads = updateMetadata_threads,\n    jobMemory = updateMetadata_jobMemory,\n    modules = updateMetadata_modules,\n    metadata = metadata,\n    outputFileNamePrefix = outputFileNamePrefix,\n    totalInputReads = filter.totalInputReads,\n    nonPrimaryReads = filter.nonPrimaryReads,\n    unmappedReads = filter.unmappedReads,\n    lowQualityReads = filter.lowQualityReads\n    }\n\n    call countInputReads {\n    input:\n    timeout = countInputReads_timeout,\n    threads = countInputReads_threads,\n    jobMemory = countInputReads_jobMemory,\n    modules = countInputReads_modules,\n    bamFile = filter.filteredBam\n    }\n\n    call indexBamFile {\n    input:\n    timeout = indexBamFile_timeout,\n    threads = indexBamFile_threads,\n    jobMemory = indexBamFile_jobMemory,\n    modules = indexBamFile_modules,\n    bamFile = filter.filteredBam\n    }\n\n    call findDownsampleParams {\n    input:\n    timeout = findDownsampleParams_timeout,\n    threads = findDownsampleParams_threads,\n    jobMemory = findDownsampleParams_jobMemory,\n    modules = findDownsampleParams_modules,\n    preDSMultiplier = findDownsampleParams_preDSMultiplier,\n    precision = findDownsampleParams_precision,\n    minReadsRelative = findDownsampleParams_minReadsRelative,\n    minReadsAbsolute = findDownsampleParams_minReadsAbsolute,\n    targetReads = findDownsampleParams_targetReads,\n    outputFileNamePrefix = outputFileNamePrefix,\n    inputReads = countInputReads.result\n    }\n\n    call findDownsampleParamsMarkDup {\n    input:\n    timeout = findDownsampleParamsMarkDup_timeout,\n    threads = findDownsampleParamsMarkDup_threads,\n    jobMemory = findDownsampleParamsMarkDup_jobMemory,\n    modules = findDownsampleParamsMarkDup_modules,\n    customRegions = findDownsampleParamsMarkDup_customRegions,\n    intervalStart = findDownsampleParamsMarkDup_intervalStart,\n    baseInterval = findDownsampleParamsMarkDup_baseInterval,\n    chromosomes = findDownsampleParamsMarkDup_chromosomes,\n    threshold = findDownsampleParamsMarkDup_threshold,\n    outputFileNamePrefix = outputFileNamePrefix,\n    inputReads = countInputReads.result\n    }\n\n    Boolean ds = findDownsampleParams.status[\"ds\"]\n    Boolean dsMarkDup = findDownsampleParamsMarkDup.status\n\n    if (ds) {\n    call downsample {\n        input:\n        timeout = downsample_timeout,\n        threads = downsample_threads,\n        jobMemory = downsample_jobMemory,\n        modules = downsample_modules,\n        randomSeed = downsample_randomSeed,\n        downsampleSuffix = downsample_downsampleSuffix,\n        bamFile = filter.filteredBam,\n        outputFileNamePrefix = outputFileNamePrefix,\n        downsampleStatus = findDownsampleParams.status,\n        downsampleTargets = findDownsampleParams.targets\n    }\n    }\n\n    if (dsMarkDup) {\n    call downsampleRegion {\n        input:\n        timeout = downsampleRegion_timeout,\n        threads = downsampleRegion_threads,\n        jobMemory = downsampleRegion_jobMemory,\n        modules = downsampleRegion_modules,\n        bamFile = filter.filteredBam,\n        bamIndex = indexBamFile.index,\n        outputFileNamePrefix = outputFileNamePrefix,\n        region = findDownsampleParamsMarkDup.region\n    }\n    }\n\n    Array[File?] markDupInputs = [downsampleRegion.result, filter.filteredBam]\n    call markDuplicates {\n    input:\n    timeout = markDuplicates_timeout,\n    threads = markDuplicates_threads,\n    jobMemory = markDuplicates_jobMemory,\n    modules = markDuplicates_modules,\n    picardMaxMemMb = markDuplicates_picardMaxMemMb,\n    opticalDuplicatePixelDistance = markDuplicates_opticalDuplicatePixelDistance,\n    bamFile = select_first(markDupInputs),\n    outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call bamQCMetrics {\n    input:\n    timeout = bamQCMetrics_timeout,\n    threads = bamQCMetrics_threads,\n    jobMemory = bamQCMetrics_jobMemory,\n    modules = bamQCMetrics_modules,\n    normalInsertMax = bamQCMetrics_normalInsertMax,\n    workflowVersion = bamQCMetrics_workflowVersion,\n    refSizesBed = bamQCMetrics_refSizesBed,\n    refFasta = bamQCMetrics_refFasta,\n    bamFile = filter.filteredBam,\n    outputFileNamePrefix = outputFileNamePrefix,\n    markDuplicates = markDuplicates.result,\n    downsampled = ds,\n    bamFileDownsampled = downsample.result\n    }\n\n    call runMosdepth {\n    input:\n    timeout = runMosdepth_timeout,\n    threads = runMosdepth_threads,\n    jobMemory = runMosdepth_jobMemory,\n    modules = runMosdepth_modules,\n    bamFile = filter.filteredBam,\n    bamIndex = indexBamFile.index\n    }\n\n    call cumulativeDistToHistogram {\n    input:\n    timeout = cumulativeDistToHistogram_timeout,\n    threads = cumulativeDistToHistogram_threads,\n    jobMemory = cumulativeDistToHistogram_jobMemory,\n    modules = cumulativeDistToHistogram_modules,\n    globalDist = runMosdepth.globalDist,\n    summary = runMosdepth.summary\n    }\n\n    call collateResults {\n    input:\n    timeout = collateResults_timeout,\n    threads = collateResults_threads,\n    jobMemory = collateResults_jobMemory,\n    modules = collateResults_modules,\n    bamQCMetricsResult = bamQCMetrics.result,\n    metadata = updateMetadata.result,\n    histogram = cumulativeDistToHistogram.histogram,\n    outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    output {\n    File result = collateResults.result\n    }\n\n    meta {\n    author: \"Iain Bancarz\"\n    email: \"ibancarz@oicr.on.ca\"\n    description: \"QC metrics for BAM files\"\n    dependencies: [\n    {\n        name: \"samtools/1.9\",\n        url: \"https://github.com/samtools/samtools\"\n    },\n    {\n        name: \"picard/2.21.2\",\n        url: \"https://broadinstitute.github.io/picard/command-line-overview.html\"\n    },\n    {\n        name: \"python/3.6\",\n        url: \"https://www.python.org/downloads/\"\n    },\n    {\n        name: \"bam-qc-metrics/0.2.5\",\n        url: \"https://github.com/oicr-gsi/bam-qc-metrics.git\"\n    },\n        {\n        name: \"mosdepth/0.2.9\",\n        url: \"https://github.com/brentp/mosdepth\"\n    }\n    ]\n    }\n\n}\n\ntask bamQCMetrics {\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    File markDuplicates\n    Boolean downsampled\n    File? bamFileDownsampled\n    String refFasta\n    String refSizesBed\n    String workflowVersion\n    Int normalInsertMax = 1500\n    String modules = \"bam-qc-metrics/0.2.5\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned rnaSeqQC data. Not downsampled; may be filtered.\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    markDuplicates: \"Text file output from markDuplicates task\"\n    downsampled: \"True if downsampling has been applied\"\n    bamFileDownsampled: \"(Optional) downsampled subset of reads from bamFile.\"\n    refFasta: \"Path to human genome FASTA reference\"\n    refSizesBed: \"Path to human genome BED reference with chromosome sizes\"\n    workflowVersion: \"Workflow version string\"\n    normalInsertMax: \"Maximum of expected insert size range\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String dsInput = if downsampled then \"-S ~{bamFileDownsampled}\" else \"\"\n    String resultName = \"~{outputFileNamePrefix}.metrics.json\"\n\n    command <<<\n    run_bam_qc.py \\\n    -b ~{bamFile} \\\n    -d ~{markDuplicates} \\\n    --debug \\\n    -i ~{normalInsertMax} \\\n    -o ~{resultName} \\\n    -r ~{refFasta} \\\n    -t ~{refSizesBed} \\\n    -T . \\\n    -w ~{workflowVersion} \\\n    ~{dsInput}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{resultName}\"\n    }\n\n    meta {\n    output_meta: {\n            output1: \"JSON file with bam-qc-metrics output\"\n    }\n  }\n\n}\n\ntask collateResults {\n\n    input {\n    File bamQCMetricsResult\n    File histogram\n    File metadata\n    String outputFileNamePrefix\n    String modules = \"python/3.6\"\n    Int jobMemory = 8\n    Int threads = 4\n    Int timeout = 1\n    }\n\n    parameter_meta {\n    bamQCMetricsResult: \"JSON result file from bamQCMetrics\"\n    histogram: \"JSON file with coverage histogram\"\n    metadata: \"JSON file with additional metadata\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    String outputFileName = \"~{outputFileNamePrefix}.bamQC_results.json\"\n\n    command <<<\n        python3 <<CODE\n        import json\n        data = json.loads(open(\"~{bamQCMetricsResult}\").read())\n        histogram = json.loads(open(\"~{histogram}\").read())\n        data[\"coverage_histogram\"] = histogram\n        metadata = json.loads(open(\"~{metadata}\").read())\n        for key in metadata.keys():\n            data[key] = metadata[key]\n        out = open(\"~{outputFileName}\", \"w\")\n        json.dump(data, out, sort_keys=True)\n        out.close()\n        CODE\n    >>>\n\n    output {\n    File result = \"~{outputFileName}\"\n    }\n\n    meta {\n    output_meta: {\n            output1: \"JSON file of collated results\"\n    }\n    }\n}\n\ntask countInputReads {\n\n    input {\n    File bamFile\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned data\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    command <<<\n    samtools view -c ~{bamFile}\n    >>>\n    \n    output {\n    String result = read_string(stdout())\n    }\n\n    meta {\n    output_meta: {\n            output1: \"Number of reads in input BAM file\"\n    }\n    }\n}\n\ntask cumulativeDistToHistogram {\n\n    input {\n    File globalDist\n    File summary\n    String modules = \"python/3.6\"\n    Int jobMemory = 8\n    Int threads = 4\n    Int timeout = 1\n    }\n\n    parameter_meta {\n    globalDist: \"Global coverage distribution output from mosdepth\"\n    summary: \"Summary output from mosdepth\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String outFileName = \"coverage_histogram.json\"\n\n    # mosdepth writes a global coverage distribution with 3 columns:\n    # 1) Chromsome name, or \"total\" for overall totals\n    # 2) Depth of coverage\n    # 3) Probability of coverage less than or equal to (2)\n    # Want to convert the above cumulative probability distribution to a histogram\n    # The \"total\" section of the summary discards some information\n    # So, we process the outputs for each chromosome to construct the histogram\n\n    command <<<\n        python3 <<CODE\n        import csv, json\n        summary = open(\"~{summary}\").readlines()\n        globalDist = open(\"~{globalDist}\").readlines()\n        # read chromosome lengths from the summary\n        summaryReader = csv.reader(summary, delimiter=\"\\t\")\n        lengthByChr = {}\n        for row in summaryReader:\n            if row[0] == 'chrom' or row[0] == 'total':\n                continue # skip initial header row, and final total row\n            lengthByChr[row[0]] = int(row[1])\n        chromosomes = sorted(lengthByChr.keys())\n        # read the cumulative distribution for each chromosome\n        globalReader = csv.reader(globalDist, delimiter=\"\\t\")\n        cumDist = {}\n        for k in chromosomes:\n            cumDist[k] = {}\n        for row in globalReader:\n            if row[0]==\"total\":\n                continue\n            cumDist[row[0]][int(row[1])] = float(row[2])\n        # convert the cumulative distributions to non-cumulative and populate histogram\n        histogram = {}\n        for k in chromosomes:\n            depths = sorted(cumDist[k].keys())\n            dist = {}\n            for i in range(len(depths)-1):\n                depth = depths[i]\n                nextDepth = depths[i+1]\n                dist[depth] = cumDist[k][depth] - cumDist[k][nextDepth]\n            maxDepth = max(depths)\n            dist[maxDepth] = cumDist[k][maxDepth]\n            # now find the number of loci at each depth of coverage to construct the histogram\n            for depth in depths:\n                loci = int(round(dist[depth]*lengthByChr[k], 0))\n                histogram[depth] = histogram.get(depth, 0) + loci\n        # fill in zero values for missing depths\n        for i in range(max(histogram.keys())):\n            if i not in histogram:\n                histogram[i] = 0\n        out = open(\"~{outFileName}\", \"w\")\n        json.dump(histogram, out, sort_keys=True)\n        out.close()\n        CODE\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File histogram = \"~{outFileName}\"\n    }\n\n    meta {\n    output_meta: {\n        histogram: \"Coverage histogram in JSON format\"\n    }\n    }\n}\n\ntask downsample {\n\n    # random downsampling for QC metrics (excepting MarkDuplicates)\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    Map[String, Boolean] downsampleStatus\n    Map[String, String] downsampleTargets\n    String downsampleSuffix = \"downsampled.bam\"\n    Int randomSeed = 42\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned rnaSeqQC data\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    downsampleStatus: \"Map; whether to apply pre-downsampling and downsampling\"\n    downsampleTargets: \"Map; target number of reads for pre-downsampling and downsampling\"\n    downsampleSuffix: \"Suffix for output file\"\n    randomSeed: \"Random seed for pre-downsampling (if any)\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String resultName = \"~{outputFileNamePrefix}.~{downsampleSuffix}\"\n\n    # unpack downsample parameters\n    Boolean applyPreDownsample = downsampleStatus[\"pre_ds\"]\n    String preDownsampleTarget = downsampleTargets[\"pre_ds\"]\n    String downsampleTarget = downsampleTargets[\"ds\"]\n\n    # generate downsample commands\n    # preDownsample = fast, random selection of approximate total with samtools view\n    String preDownsample = \"samtools view -h -u -s ~{randomSeed}.~{preDownsampleTarget} | \"\n    String preDownsampleCommand = if applyPreDownsample then \"~{preDownsample}\" else \"\"\n    # downsample = slow, deterministic selection of exact total with samtools collate and sort\n    # see https://github.com/samtools/samtools/issues/931\n    String dsCollate = \"samtools collate -O --output-fmt sam - | \"\n    String dsAwk = \"awk '/^@/ { print; next } count < ~{downsampleTarget} || last == $1 { print; last = $1; count++ }' | \"\n    String dsSort = \"samtools sort -T downsample_sort - | \"\n    String downsampleCommand = \"~{dsCollate}~{dsAwk}~{dsSort}\"\n    \n    command <<<\n    set -e\n    set -o pipefail\n    samtools view -b -h ~{bamFile} | \\\n    ~{preDownsampleCommand} ~{downsampleCommand} \\\n    samtools view -b > ~{resultName}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{resultName}\"\n    }\n    \n    meta {\n    output_meta: {\n            result: \"BAM file downsampled to required number of reads\"\n    }\n    }\n\n}\n\ntask downsampleRegion {\n\n    # downsample a specific chromosomal region for MarkDuplicates\n    # this keeps a proportionate level of duplicates in the downsampled data\n\n    input {\n    File bamFile\n    File bamIndex\n    String outputFileNamePrefix\n    String region\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file\"\n    bamIndex: \"BAM index file in BAI format\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    region: \"Region argument for samtools\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String bamFileName = basename(bamFile)\n    String resultName = \"~{outputFileNamePrefix}.downsampledRegion.bam\"\n\n    # need to index the (filtered) BAM file before viewing a specific chromosome\n\n    command <<<\n    set -e\n    # ensure BAM file and index are symlinked to working directory\n    ln -s ~{bamFile}\n    ln -s ~{bamIndex}\n    samtools view -b -h ~{bamFileName} ~{region} > ~{resultName}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{resultName}\"\n    }\n\n    meta {\n    output_meta: {\n            result: \"BAM file downsampled to required number of reads\"\n    }\n    }\n\n}\n\ntask filter {\n\n    # filter out non-primary, unmapped, and low-quality aligned reads\n    # count the number of reads filtered out at each step\n    # return filtered read counts and the filtered BAM file\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    Int minQuality = 30\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned rnaSeqQC data\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    minQuality: \"Minimum alignment quality to pass filter\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String resultName = \"~{outputFileNamePrefix}.filtered.bam\"\n    String totalInputReadsFile = \"total_input_reads.txt\"\n    String totalNonPrimaryReadsFile = \"total_non_primary_reads.txt\"\n    String totalUnmappedReadsFile = \"total_unmapped_reads.txt\"\n    String totalLowQualityReadsFile = \"total_low_quality_reads.txt\"\n    String nonPrimaryReadsFile = \"non_primary_reads.bam\"\n    String unmappedReadsFile = \"unmapped_reads.bam\"\n    String lowQualityReadsFile = \"low_quality_reads.bam\"\n\n    # -F 2304 excludes secondary and supplementary alignments\n    # -F 4 excludes unmapped reads\n\n    command <<<\n    set -e\n    set -o pipefail\n    samtools view -h -b -F 2304 -U ~{nonPrimaryReadsFile} ~{bamFile} | \\\n    samtools view -h -b -F 4 -U ~{unmappedReadsFile} | \\\n    samtools view -h -b -q ~{minQuality} -U ~{lowQualityReadsFile} \\\n    > ~{resultName}\n    samtools view -c ~{bamFile} > ~{totalInputReadsFile}\n    samtools view -c ~{nonPrimaryReadsFile} > ~{totalNonPrimaryReadsFile}\n    samtools view -c ~{unmappedReadsFile} > ~{totalUnmappedReadsFile}\n    samtools view -c ~{lowQualityReadsFile} > ~{totalLowQualityReadsFile}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    # record read totals as String, not Int, to avoid integer overflow error\n    output {\n    String totalInputReads = read_string(\"~{totalInputReadsFile}\")\n    String nonPrimaryReads = read_string(\"~{totalNonPrimaryReadsFile}\")\n    String unmappedReads = read_string(\"~{totalUnmappedReadsFile}\")\n    String lowQualityReads = read_string(\"~{totalLowQualityReadsFile}\")\n    File filteredBam = \"~{resultName}\"\n    }\n\n    meta {\n    output_meta: {\n        totalInputReads: \"Total reads in original input BAM file\",\n        nonPrimaryReads: \"Total reads excluded as non-primary\",\n        unmappedReads: \"Total reads excluded as unmapped\",\n        lowQualityReads: \"Total reads excluded as low alignment quality\",\n            filteredBam: \"Filtered BAM file\"\n    }\n    }\n\n}\n\ntask findDownsampleParams {\n\n    input {\n    String outputFileNamePrefix\n    String inputReads\n    Int targetReads = 100000\n    Int minReadsAbsolute = 10000\n    Int minReadsRelative = 2\n    Int precision = 8\n    Float preDSMultiplier = 1.5\n    String modules = \"python/3.6\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    String statusFile = \"status.json\"\n    String targetsFile = \"targets.json\"\n\n    parameter_meta {\n    outputFileNamePrefix: \"Prefix for output file\"\n    inputReads: \"Number of reads in input bamFile (represented as string to avoid integer overflow)\"\n    targetReads: \"Desired number of reads in downsampled output\"\n    minReadsAbsolute: \"Minimum value of targetReads to allow pre-downsampling\"\n    minReadsRelative: \"Minimum value of (inputReads)/(targetReads) to allow pre-downsampling\"\n    precision: \"Number of decimal places in fraction for pre-downsampling\"\n    preDSMultiplier: \"Determines target size for pre-downsampled set (if any). Must have (preDSMultiplier) < (minReadsRelative).\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    # see comments in \"task downsample\" for effect of predownsampling and downsampling\n\n    # target for predownsampling with \"samtools view -s\" is expressed as a probability\n    # eg. to choose approximately 200 reads out of 10000, target = 0.02\n    # we convert to a fixed-precision target string for easier handling in BASH\n    # eg. 0.02 -> \"020000\"\n    # subsequently, we concatenate in the form {$RANDOM_SEED}.${TARGET}, eg. \"42.020000\"\n    # for consistency, express downsampling target (integer number of reads) as a string also\n    \n    command <<<\n        python3 <<CODE\n        import json, math, sys\n        readsIn = ~{inputReads}\n        readsTarget = ~{targetReads}\n        precision = ~{precision}\n        print(\"Input reads param =\", readsIn, file=sys.stderr)\n        print(\"Target reads param =\", readsTarget, file=sys.stderr)\n        minReadsAbsolute = ~{minReadsAbsolute}\n        minReadsRelative = ~{minReadsRelative}\n        preDownsampleMultiplier = ~{preDSMultiplier}\n        if readsIn <= readsTarget:\n          # absolutely no downsampling\n          applyPreDownsample = False\n          applyDownsample = False\n          preDownsampleTarget = \"no_pre_downsample\"\n          downSampleTarget = \"no_downsample\"\n        elif readsIn < readsTarget * minReadsRelative or readsTarget < minReadsAbsolute:\n          # no predownsampling\n          applyPreDownsample = False\n          applyDownsample = True\n          preDownsampleTarget = \"no_pre_downsample\"\n          downSampleTarget = str(readsTarget)\n        else:\n          # predownsampling and downsampling\n          applyPreDownsample = True\n          applyDownsample = True\n          probability = (readsTarget * preDownsampleMultiplier)/readsIn\n          formatString = \"{:0\"+str(precision)+\"d}\"\n          preDownsampleTarget = formatString.format(int(math.floor(probability * 10**precision)))\n          downSampleTarget = str(readsTarget)\n        status = {\n          \"pre_ds\": applyPreDownsample,\n          \"ds\": applyDownsample\n        }\n        targets = {\n          \"pre_ds\": preDownsampleTarget,\n          \"ds\": downSampleTarget\n        }\n        statusFile = open(\"~{statusFile}\", \"w\")\n        json.dump(status, statusFile)\n        statusFile.close()\n        targetFile = open(\"~{targetsFile}\", \"w\")\n        json.dump(targets, targetFile)\n        targetFile.close()\n        CODE\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    Map[String, Boolean] status = read_json(\"~{statusFile}\")\n    Map[String, String] targets = read_json(\"~{targetsFile}\")\n    }\n\n    meta {\n    output_meta: {\n            status: \"Boolean flags indicating whether to apply (pre)downsampling.\",\n            output2: \"Strings representing target number of reads for (pre)downsampling.\"\n    }\n    }\n}\n\ntask findDownsampleParamsMarkDup {\n\n    # downsampling parameters for MarkDuplicates; see filter_downsample.md for details\n    # choose a region of the genome instead of using random selection\n\n    # a BAM file is *very* approximately 10M reads per GB\n    # Current merged BAM files are unlikely to exceed 10**9 reads; but we scale up higher just in case\n\n    input {\n    String outputFileNamePrefix\n    String inputReads\n    Int threshold = 10000000\n    Array[String] chromosomes = [\"chr12\", \"chr13\", \"chrXII\", \"chrXIII\"]\n    Int baseInterval = 15000\n    Int intervalStart = 100000\n    String customRegions = \"\"\n    String modules = \"python/3.6\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    outputFileNamePrefix: \"Prefix for output file\"\n    inputReads: \"Number of reads in input bamFile\"\n    threshold: \"Minimum number of reads to conduct downsampling\"\n    chromosomes: \"Array of chromosome identifiers for downsampled subset\"\n    baseInterval: \"Base width of interval in each chromosome, for very large BAMs\"\n    intervalStart: \"Start of interval in each chromosome, for very large BAMs\"\n    customRegions: \"Custom downsample regions; overrides chromosome and interval parameters\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String outputStatus = \"~{outputFileNamePrefix}_status.txt\"\n    String outputRegion = \"~{outputFileNamePrefix}_region.txt\"\n    File chromosomesText = write_lines(chromosomes)\n\n    command <<<\n        python3 <<CODE\n        readsIn = ~{inputReads}\n        threshold = ~{threshold}\n        interval = ~{baseInterval}\n        start = ~{intervalStart} + 1 # start of sub-chromosome window, if needed; exclude telomeres\n        chromosomes = [line.strip() for line in open(\"~{chromosomesText}\").readlines()]\n        customRegions = \"~{customRegions}\" # overrides other chromosome/interval parameters\n        ds = True # True if downsampling, false otherwise\n        end = None # end of window, if needed\n        if readsIn <= threshold:\n            ds = False # no downsampling\n        elif readsIn <= threshold*10:\n            pass # default to chr12 & chr13 =~ 8% of genome\n        elif readsIn <= threshold*10**2:\n            end = start + interval*10**3 - 1 # default 2*15 million base window ~ 1% of genome\n        elif readsIn <= threshold*10**3:\n            end = start + interval*10**2 - 1\n        elif readsIn <= threshold*10**4:\n            end = start + interval*10 - 1\n        else:\n            end = start + interval - 1\n        if ds:\n            status = \"true\"\n            if customRegions != \"\":\n                region = customRegions\n            elif end == None:\n                region = \" \".join(chromosomes)\n            else:\n                regions = [\"%s:%i-%i\" % (chromosome, start, end) for chromosome in chromosomes ]\n                region = \" \".join(regions)\n        else:\n            status = \"false\"\n            region = \"\"\n        outStatus = open(\"~{outputStatus}\", \"w\")\n        print(status, file=outStatus)\n        outStatus.close()\n        outRegion = open(\"~{outputRegion}\", \"w\")\n        print(region, file=outRegion)\n        outRegion.close()\n        CODE\n    >>>\n\n    output {\n    Boolean status = read_boolean(\"~{outputStatus}\")\n    String region = read_string(\"~{outputRegion}\")\n    }\n\n    meta {\n    output_meta: {\n        status: \"Boolean flag, indicates whether downsampling is required\",\n        region: \"String to specify downsampled region for samtools\"\n    }\n    }\n}\n\ntask indexBamFile {\n\n    input {\n    File bamFile\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned data\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    String bamName = basename(bamFile)\n    String indexName = \"~{bamName}.bai\"\n    \n    command <<<\n    samtools index -b ~{bamFile} ~{indexName}\n    >>>\n    \n    output {\n    File index = indexName\n    }\n\n    meta {\n    output_meta: {\n            index: \"Index file in BAI format\"\n    }\n  }\n\n}\n\ntask markDuplicates {\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    Int opticalDuplicatePixelDistance=100\n    Int picardMaxMemMb=6000\n    String modules = \"picard/2.21.2\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    # See GR-899 for opticalDuplicatePixelDistance\n\n    parameter_meta {\n    bamFile: \"Input BAM file, after filtering and downsampling (if any)\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    opticalDuplicatePixelDistance: \"Maximum offset between optical duplicate clusters\"\n    picardMaxMemMb: \"Memory requirement in MB for running Picard JAR\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String outFileBam = \"~{outputFileNamePrefix}.markDuplicates.bam\"\n    String outFileText = \"~{outputFileNamePrefix}.markDuplicates.txt\"\n\n    command <<<\n    java -Xmx~{picardMaxMemMb}M \\\n    -jar ${PICARD_ROOT}/picard.jar \\\n    MarkDuplicates \\\n    INPUT=~{bamFile} \\\n    OUTPUT=~{outFileBam} \\\n    VALIDATION_STRINGENCY=SILENT \\\n    TMP_DIR=${PWD} \\\n    METRICS_FILE=~{outFileText} \\\n    OPTICAL_DUPLICATE_PIXEL_DISTANCE=~{opticalDuplicatePixelDistance}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{outFileText}\"\n    }\n\n    meta {\n    output_meta: {\n            result: \"Text file with Picard markDuplicates metrics\"\n    }\n    }\n\n}\n\ntask runMosdepth {\n\n    input {\n    File bamFile\n    File bamIndex\n    String modules = \"mosdepth/0.2.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned data\"\n    bamIndex: \"Index file in samtools .bai format\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    String bamFileName = basename(bamFile)\n\n    command <<<\n    set -eo pipefail\n    # ensure BAM file and index are symlinked to working directory\n    ln -s ~{bamFile}\n    ln -s ~{bamIndex}\n    # run mosdepth\n    MOSDEPTH_PRECISION=8 mosdepth -x -n -t 3 bamqc ~{bamFileName}\n    >>>\n\n    output {\n    File globalDist = \"bamqc.mosdepth.global.dist.txt\"\n    File summary = \"bamqc.mosdepth.summary.txt\"\n    }\n\n    meta {\n    output_meta: {\n            globalDist: \"Global distribution of coverage\",\n        summary: \"Total bases in coverage\"\n    }\n  }\n\n}\n\ntask updateMetadata {\n\n    # add extra fields to the metadata JSON file\n\n    input {\n    Map[String, String] metadata\n    String outputFileNamePrefix\n    String totalInputReads\n    String nonPrimaryReads\n    String unmappedReads\n    String lowQualityReads\n    String modules = \"python/3.6\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    metadata: \"Key/value map of input metadata\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    totalInputReads: \"Total reads in original input BAM file\"\n    nonPrimaryReads: \"Total reads excluded as non-primary\"\n    unmappedReads: \"Total reads excluded as unmapped\"\n    lowQualityReads: \"Total reads excluded as low alignment quality\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    File metadataJson = write_json(metadata)\n    String outFileName = \"~{outputFileNamePrefix}.updated_metadata.json\"\n\n    # Read totals are Strings in WDL to avoid integer overflow in Cromwell\n    # Python3 can handle arbitrarily large integers\n\n    command <<<\n        python3 <<CODE\n        import json\n        metadata = json.loads(open(\"~{metadataJson}\").read())\n        metadata[\"total input reads meta\"] = ~{totalInputReads}\n        metadata[\"non-primary reads meta\"] = ~{nonPrimaryReads}\n        metadata[\"unmapped reads meta\"] = ~{unmappedReads}\n        metadata[\"low-quality reads meta\"] = ~{lowQualityReads}\n        outFile = open(\"~{outFileName}\", \"w\")\n        json.dump(metadata, outFile)\n        outFile.close()\n        CODE\n    >>>\n\n    output {\n    File result = \"~{outFileName}\"\n    }\n\n    meta {\n    output_meta: {\n            result: \"JSON file with updated metadata\"\n    }\n    }\n}\n"
-  }
+    "accessoryFiles": {
+        "imports/pull_bamQC.wdl": "version 1.0\n\nworkflow bamQC {\n\n    input {\n    Int collateResults_timeout = 1\n    Int collateResults_threads = 4\n    Int collateResults_jobMemory = 8\n    String collateResults_modules = \"python/3.6\"\n    Int cumulativeDistToHistogram_timeout = 1\n    Int cumulativeDistToHistogram_threads = 4\n    Int cumulativeDistToHistogram_jobMemory = 8\n    String cumulativeDistToHistogram_modules = \"python/3.6\"\n    Int runMosdepth_timeout = 4\n    Int runMosdepth_threads = 4\n    Int runMosdepth_jobMemory = 16\n    String runMosdepth_modules = \"mosdepth/0.2.9\"\n    Int bamQCMetrics_timeout = 4\n    Int bamQCMetrics_threads = 4\n    Int bamQCMetrics_jobMemory = 16\n    String bamQCMetrics_modules = \"bam-qc-metrics/0.2.5\"\n    Int bamQCMetrics_normalInsertMax = 1500\n    String bamQCMetrics_workflowVersion\n    String bamQCMetrics_refSizesBed\n    String bamQCMetrics_refFasta\n    Int markDuplicates_timeout = 4\n    Int markDuplicates_threads = 4\n    Int markDuplicates_jobMemory = 16\n    String markDuplicates_modules = \"picard/2.21.2\"\n    Int markDuplicates_picardMaxMemMb = 6000\n    Int markDuplicates_opticalDuplicatePixelDistance = 100\n    Int downsampleRegion_timeout = 4\n    Int downsampleRegion_threads = 4\n    Int downsampleRegion_jobMemory = 16\n    String downsampleRegion_modules = \"samtools/1.9\"\n    Int downsample_timeout = 4\n    Int downsample_threads = 4\n    Int downsample_jobMemory = 16\n    String downsample_modules = \"samtools/1.9\"\n    Int downsample_randomSeed = 42\n    String downsample_downsampleSuffix = \"downsampled.bam\"\n    Int findDownsampleParamsMarkDup_timeout = 4\n    Int findDownsampleParamsMarkDup_threads = 4\n    Int findDownsampleParamsMarkDup_jobMemory = 16\n    String findDownsampleParamsMarkDup_modules = \"python/3.6\"\n    String findDownsampleParamsMarkDup_customRegions = \"\"\n    Int findDownsampleParamsMarkDup_intervalStart = 100000\n    Int findDownsampleParamsMarkDup_baseInterval = 15000\n    Array[String] findDownsampleParamsMarkDup_chromosomes = [\"chr12\", \"chr13\", \"chrXII\", \"chrXIII\"]\n    Int findDownsampleParamsMarkDup_threshold = 10000000\n    Int findDownsampleParams_timeout = 4\n    Int findDownsampleParams_threads = 4\n    Int findDownsampleParams_jobMemory = 16\n    String findDownsampleParams_modules = \"python/3.6\"\n    Float findDownsampleParams_preDSMultiplier = 1.5\n    Int findDownsampleParams_precision = 8\n    Int findDownsampleParams_minReadsRelative = 2\n    Int findDownsampleParams_minReadsAbsolute = 10000\n    Int findDownsampleParams_targetReads = 100000\n    Int indexBamFile_timeout = 4\n    Int indexBamFile_threads = 4\n    Int indexBamFile_jobMemory = 16\n    String indexBamFile_modules = \"samtools/1.9\"\n    Int countInputReads_timeout = 4\n    Int countInputReads_threads = 4\n    Int countInputReads_jobMemory = 16\n    String countInputReads_modules = \"samtools/1.9\"\n    Int updateMetadata_timeout = 4\n    Int updateMetadata_threads = 4\n    Int updateMetadata_jobMemory = 16\n    String updateMetadata_modules = \"python/3.6\"\n    Int filter_timeout = 4\n    Int filter_threads = 4\n    Int filter_jobMemory = 16\n    String filter_modules = \"samtools/1.9\"\n    Int filter_minQuality = 30\n    File bamFile\n    Map[String, String] metadata\n    String outputFileNamePrefix = \"bamQC\"\n    }\n\n    parameter_meta {\n        collateResults_timeout: \"hours before task timeout\"\n        collateResults_threads: \"Requested CPU threads\"\n        collateResults_jobMemory: \"Memory allocated for this job\"\n        collateResults_modules: \"required environment modules\"\n        cumulativeDistToHistogram_timeout: \"hours before task timeout\"\n        cumulativeDistToHistogram_threads: \"Requested CPU threads\"\n        cumulativeDistToHistogram_jobMemory: \"Memory allocated for this job\"\n        cumulativeDistToHistogram_modules: \"required environment modules\"\n        runMosdepth_timeout: \"hours before task timeout\"\n        runMosdepth_threads: \"Requested CPU threads\"\n        runMosdepth_jobMemory: \"Memory allocated for this job\"\n        runMosdepth_modules: \"required environment modules\"\n        bamQCMetrics_timeout: \"hours before task timeout\"\n        bamQCMetrics_threads: \"Requested CPU threads\"\n        bamQCMetrics_jobMemory: \"Memory allocated for this job\"\n        bamQCMetrics_modules: \"required environment modules\"\n        bamQCMetrics_normalInsertMax: \"Maximum of expected insert size range\"\n        bamQCMetrics_workflowVersion: \"Workflow version string\"\n        bamQCMetrics_refSizesBed: \"Path to human genome BED reference with chromosome sizes\"\n        bamQCMetrics_refFasta: \"Path to human genome FASTA reference\"\n        markDuplicates_timeout: \"hours before task timeout\"\n        markDuplicates_threads: \"Requested CPU threads\"\n        markDuplicates_jobMemory: \"Memory allocated for this job\"\n        markDuplicates_modules: \"required environment modules\"\n        markDuplicates_picardMaxMemMb: \"Memory requirement in MB for running Picard JAR\"\n        markDuplicates_opticalDuplicatePixelDistance: \"Maximum offset between optical duplicate clusters\"\n        downsampleRegion_timeout: \"hours before task timeout\"\n        downsampleRegion_threads: \"Requested CPU threads\"\n        downsampleRegion_jobMemory: \"Memory allocated for this job\"\n        downsampleRegion_modules: \"required environment modules\"\n        downsample_timeout: \"hours before task timeout\"\n        downsample_threads: \"Requested CPU threads\"\n        downsample_jobMemory: \"Memory allocated for this job\"\n        downsample_modules: \"required environment modules\"\n        downsample_randomSeed: \"Random seed for pre-downsampling (if any)\"\n        downsample_downsampleSuffix: \"Suffix for output file\"\n        findDownsampleParamsMarkDup_timeout: \"hours before task timeout\"\n        findDownsampleParamsMarkDup_threads: \"Requested CPU threads\"\n        findDownsampleParamsMarkDup_jobMemory: \"Memory allocated for this job\"\n        findDownsampleParamsMarkDup_modules: \"required environment modules\"\n        findDownsampleParamsMarkDup_customRegions: \"Custom downsample regions; overrides chromosome and interval parameters\"\n        findDownsampleParamsMarkDup_intervalStart: \"Start of interval in each chromosome, for very large BAMs\"\n        findDownsampleParamsMarkDup_baseInterval: \"Base width of interval in each chromosome, for very large BAMs\"\n        findDownsampleParamsMarkDup_chromosomes: \"Array of chromosome identifiers for downsampled subset\"\n        findDownsampleParamsMarkDup_threshold: \"Minimum number of reads to conduct downsampling\"\n        findDownsampleParams_timeout: \"hours before task timeout\"\n        findDownsampleParams_threads: \"Requested CPU threads\"\n        findDownsampleParams_jobMemory: \"Memory allocated for this job\"\n        findDownsampleParams_modules: \"required environment modules\"\n        findDownsampleParams_preDSMultiplier: \"Determines target size for pre-downsampled set (if any). Must have (preDSMultiplier) < (minReadsRelative).\"\n        findDownsampleParams_precision: \"Number of decimal places in fraction for pre-downsampling\"\n        findDownsampleParams_minReadsRelative: \"Minimum value of (inputReads)/(targetReads) to allow pre-downsampling\"\n        findDownsampleParams_minReadsAbsolute: \"Minimum value of targetReads to allow pre-downsampling\"\n        findDownsampleParams_targetReads: \"Desired number of reads in downsampled output\"\n        indexBamFile_timeout: \"hours before task timeout\"\n        indexBamFile_threads: \"Requested CPU threads\"\n        indexBamFile_jobMemory: \"Memory allocated for this job\"\n        indexBamFile_modules: \"required environment modules\"\n        countInputReads_timeout: \"hours before task timeout\"\n        countInputReads_threads: \"Requested CPU threads\"\n        countInputReads_jobMemory: \"Memory allocated for this job\"\n        countInputReads_modules: \"required environment modules\"\n        updateMetadata_timeout: \"hours before task timeout\"\n        updateMetadata_threads: \"Requested CPU threads\"\n        updateMetadata_jobMemory: \"Memory allocated for this job\"\n        updateMetadata_modules: \"required environment modules\"\n        filter_timeout: \"hours before task timeout\"\n        filter_threads: \"Requested CPU threads\"\n        filter_jobMemory: \"Memory allocated for this job\"\n        filter_modules: \"required environment modules\"\n        filter_minQuality: \"Minimum alignment quality to pass filter\"\n    bamFile: \"Input BAM file on which to compute QC metrics\"\n    metadata: \"JSON file containing metadata\"\n    outputFileNamePrefix: \"Prefix for output files\"\n    }\n\n    call filter {\n    input:\n    timeout = filter_timeout,\n    threads = filter_threads,\n    jobMemory = filter_jobMemory,\n    modules = filter_modules,\n    minQuality = filter_minQuality,\n    bamFile = bamFile,\n    outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call updateMetadata {\n    input:\n    timeout = updateMetadata_timeout,\n    threads = updateMetadata_threads,\n    jobMemory = updateMetadata_jobMemory,\n    modules = updateMetadata_modules,\n    metadata = metadata,\n    outputFileNamePrefix = outputFileNamePrefix,\n    totalInputReads = filter.totalInputReads,\n    nonPrimaryReads = filter.nonPrimaryReads,\n    unmappedReads = filter.unmappedReads,\n    lowQualityReads = filter.lowQualityReads\n    }\n\n    call countInputReads {\n    input:\n    timeout = countInputReads_timeout,\n    threads = countInputReads_threads,\n    jobMemory = countInputReads_jobMemory,\n    modules = countInputReads_modules,\n    bamFile = filter.filteredBam\n    }\n\n    call indexBamFile {\n    input:\n    timeout = indexBamFile_timeout,\n    threads = indexBamFile_threads,\n    jobMemory = indexBamFile_jobMemory,\n    modules = indexBamFile_modules,\n    bamFile = filter.filteredBam\n    }\n\n    call findDownsampleParams {\n    input:\n    timeout = findDownsampleParams_timeout,\n    threads = findDownsampleParams_threads,\n    jobMemory = findDownsampleParams_jobMemory,\n    modules = findDownsampleParams_modules,\n    preDSMultiplier = findDownsampleParams_preDSMultiplier,\n    precision = findDownsampleParams_precision,\n    minReadsRelative = findDownsampleParams_minReadsRelative,\n    minReadsAbsolute = findDownsampleParams_minReadsAbsolute,\n    targetReads = findDownsampleParams_targetReads,\n    outputFileNamePrefix = outputFileNamePrefix,\n    inputReads = countInputReads.result\n    }\n\n    call findDownsampleParamsMarkDup {\n    input:\n    timeout = findDownsampleParamsMarkDup_timeout,\n    threads = findDownsampleParamsMarkDup_threads,\n    jobMemory = findDownsampleParamsMarkDup_jobMemory,\n    modules = findDownsampleParamsMarkDup_modules,\n    customRegions = findDownsampleParamsMarkDup_customRegions,\n    intervalStart = findDownsampleParamsMarkDup_intervalStart,\n    baseInterval = findDownsampleParamsMarkDup_baseInterval,\n    chromosomes = findDownsampleParamsMarkDup_chromosomes,\n    threshold = findDownsampleParamsMarkDup_threshold,\n    outputFileNamePrefix = outputFileNamePrefix,\n    inputReads = countInputReads.result\n    }\n\n    Boolean ds = findDownsampleParams.status[\"ds\"]\n    Boolean dsMarkDup = findDownsampleParamsMarkDup.status\n\n    if (ds) {\n    call downsample {\n        input:\n        timeout = downsample_timeout,\n        threads = downsample_threads,\n        jobMemory = downsample_jobMemory,\n        modules = downsample_modules,\n        randomSeed = downsample_randomSeed,\n        downsampleSuffix = downsample_downsampleSuffix,\n        bamFile = filter.filteredBam,\n        outputFileNamePrefix = outputFileNamePrefix,\n        downsampleStatus = findDownsampleParams.status,\n        downsampleTargets = findDownsampleParams.targets\n    }\n    }\n\n    if (dsMarkDup) {\n    call downsampleRegion {\n        input:\n        timeout = downsampleRegion_timeout,\n        threads = downsampleRegion_threads,\n        jobMemory = downsampleRegion_jobMemory,\n        modules = downsampleRegion_modules,\n        bamFile = filter.filteredBam,\n        bamIndex = indexBamFile.index,\n        outputFileNamePrefix = outputFileNamePrefix,\n        region = findDownsampleParamsMarkDup.region\n    }\n    }\n\n    Array[File?] markDupInputs = [downsampleRegion.result, filter.filteredBam]\n    call markDuplicates {\n    input:\n    timeout = markDuplicates_timeout,\n    threads = markDuplicates_threads,\n    jobMemory = markDuplicates_jobMemory,\n    modules = markDuplicates_modules,\n    picardMaxMemMb = markDuplicates_picardMaxMemMb,\n    opticalDuplicatePixelDistance = markDuplicates_opticalDuplicatePixelDistance,\n    bamFile = select_first(markDupInputs),\n    outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call bamQCMetrics {\n    input:\n    timeout = bamQCMetrics_timeout,\n    threads = bamQCMetrics_threads,\n    jobMemory = bamQCMetrics_jobMemory,\n    modules = bamQCMetrics_modules,\n    normalInsertMax = bamQCMetrics_normalInsertMax,\n    workflowVersion = bamQCMetrics_workflowVersion,\n    refSizesBed = bamQCMetrics_refSizesBed,\n    refFasta = bamQCMetrics_refFasta,\n    bamFile = filter.filteredBam,\n    outputFileNamePrefix = outputFileNamePrefix,\n    markDuplicates = markDuplicates.result,\n    downsampled = ds,\n    bamFileDownsampled = downsample.result\n    }\n\n    call runMosdepth {\n    input:\n    timeout = runMosdepth_timeout,\n    threads = runMosdepth_threads,\n    jobMemory = runMosdepth_jobMemory,\n    modules = runMosdepth_modules,\n    bamFile = filter.filteredBam,\n    bamIndex = indexBamFile.index\n    }\n\n    call cumulativeDistToHistogram {\n    input:\n    timeout = cumulativeDistToHistogram_timeout,\n    threads = cumulativeDistToHistogram_threads,\n    jobMemory = cumulativeDistToHistogram_jobMemory,\n    modules = cumulativeDistToHistogram_modules,\n    globalDist = runMosdepth.globalDist,\n    summary = runMosdepth.summary\n    }\n\n    call collateResults {\n    input:\n    timeout = collateResults_timeout,\n    threads = collateResults_threads,\n    jobMemory = collateResults_jobMemory,\n    modules = collateResults_modules,\n    bamQCMetricsResult = bamQCMetrics.result,\n    metadata = updateMetadata.result,\n    histogram = cumulativeDistToHistogram.histogram,\n    outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    output {\n    File result = collateResults.result\n    }\n\n    meta {\n    author: \"Iain Bancarz\"\n    email: \"ibancarz@oicr.on.ca\"\n    description: \"QC metrics for BAM files\"\n    dependencies: [\n    {\n        name: \"samtools/1.9\",\n        url: \"https://github.com/samtools/samtools\"\n    },\n    {\n        name: \"picard/2.21.2\",\n        url: \"https://broadinstitute.github.io/picard/command-line-overview.html\"\n    },\n    {\n        name: \"python/3.6\",\n        url: \"https://www.python.org/downloads/\"\n    },\n    {\n        name: \"bam-qc-metrics/0.2.5\",\n        url: \"https://github.com/oicr-gsi/bam-qc-metrics.git\"\n    },\n        {\n        name: \"mosdepth/0.2.9\",\n        url: \"https://github.com/brentp/mosdepth\"\n    }\n    ]\n    }\n\n}\n\ntask bamQCMetrics {\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    File markDuplicates\n    Boolean downsampled\n    File? bamFileDownsampled\n    String refFasta\n    String refSizesBed\n    String workflowVersion\n    Int normalInsertMax = 1500\n    String modules = \"bam-qc-metrics/0.2.5\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned rnaSeqQC data. Not downsampled; may be filtered.\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    markDuplicates: \"Text file output from markDuplicates task\"\n    downsampled: \"True if downsampling has been applied\"\n    bamFileDownsampled: \"(Optional) downsampled subset of reads from bamFile.\"\n    refFasta: \"Path to human genome FASTA reference\"\n    refSizesBed: \"Path to human genome BED reference with chromosome sizes\"\n    workflowVersion: \"Workflow version string\"\n    normalInsertMax: \"Maximum of expected insert size range\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String dsInput = if downsampled then \"-S ~{bamFileDownsampled}\" else \"\"\n    String resultName = \"~{outputFileNamePrefix}.metrics.json\"\n\n    command <<<\n    run_bam_qc.py \\\n    -b ~{bamFile} \\\n    -d ~{markDuplicates} \\\n    --debug \\\n    -i ~{normalInsertMax} \\\n    -o ~{resultName} \\\n    -r ~{refFasta} \\\n    -t ~{refSizesBed} \\\n    -T . \\\n    -w ~{workflowVersion} \\\n    ~{dsInput}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{resultName}\"\n    }\n\n    meta {\n    output_meta: {\n            output1: \"JSON file with bam-qc-metrics output\"\n    }\n  }\n\n}\n\ntask collateResults {\n\n    input {\n    File bamQCMetricsResult\n    File histogram\n    File metadata\n    String outputFileNamePrefix\n    String modules = \"python/3.6\"\n    Int jobMemory = 8\n    Int threads = 4\n    Int timeout = 1\n    }\n\n    parameter_meta {\n    bamQCMetricsResult: \"JSON result file from bamQCMetrics\"\n    histogram: \"JSON file with coverage histogram\"\n    metadata: \"JSON file with additional metadata\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    String outputFileName = \"~{outputFileNamePrefix}.bamQC_results.json\"\n\n    command <<<\n        python3 <<CODE\n        import json\n        data = json.loads(open(\"~{bamQCMetricsResult}\").read())\n        histogram = json.loads(open(\"~{histogram}\").read())\n        data[\"coverage_histogram\"] = histogram\n        metadata = json.loads(open(\"~{metadata}\").read())\n        for key in metadata.keys():\n            data[key] = metadata[key]\n        out = open(\"~{outputFileName}\", \"w\")\n        json.dump(data, out, sort_keys=True)\n        out.close()\n        CODE\n    >>>\n\n    output {\n    File result = \"~{outputFileName}\"\n    }\n\n    meta {\n    output_meta: {\n            output1: \"JSON file of collated results\"\n    }\n    }\n}\n\ntask countInputReads {\n\n    input {\n    File bamFile\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned data\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    command <<<\n    samtools view -c ~{bamFile}\n    >>>\n    \n    output {\n    String result = read_string(stdout())\n    }\n\n    meta {\n    output_meta: {\n            output1: \"Number of reads in input BAM file\"\n    }\n    }\n}\n\ntask cumulativeDistToHistogram {\n\n    input {\n    File globalDist\n    File summary\n    String modules = \"python/3.6\"\n    Int jobMemory = 8\n    Int threads = 4\n    Int timeout = 1\n    }\n\n    parameter_meta {\n    globalDist: \"Global coverage distribution output from mosdepth\"\n    summary: \"Summary output from mosdepth\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String outFileName = \"coverage_histogram.json\"\n\n    # mosdepth writes a global coverage distribution with 3 columns:\n    # 1) Chromsome name, or \"total\" for overall totals\n    # 2) Depth of coverage\n    # 3) Probability of coverage less than or equal to (2)\n    # Want to convert the above cumulative probability distribution to a histogram\n    # The \"total\" section of the summary discards some information\n    # So, we process the outputs for each chromosome to construct the histogram\n\n    command <<<\n        python3 <<CODE\n        import csv, json\n        summary = open(\"~{summary}\").readlines()\n        globalDist = open(\"~{globalDist}\").readlines()\n        # read chromosome lengths from the summary\n        summaryReader = csv.reader(summary, delimiter=\"\\t\")\n        lengthByChr = {}\n        for row in summaryReader:\n            if row[0] == 'chrom' or row[0] == 'total':\n                continue # skip initial header row, and final total row\n            lengthByChr[row[0]] = int(row[1])\n        chromosomes = sorted(lengthByChr.keys())\n        # read the cumulative distribution for each chromosome\n        globalReader = csv.reader(globalDist, delimiter=\"\\t\")\n        cumDist = {}\n        for k in chromosomes:\n            cumDist[k] = {}\n        for row in globalReader:\n            if row[0]==\"total\":\n                continue\n            cumDist[row[0]][int(row[1])] = float(row[2])\n        # convert the cumulative distributions to non-cumulative and populate histogram\n        histogram = {}\n        for k in chromosomes:\n            depths = sorted(cumDist[k].keys())\n            dist = {}\n            for i in range(len(depths)-1):\n                depth = depths[i]\n                nextDepth = depths[i+1]\n                dist[depth] = cumDist[k][depth] - cumDist[k][nextDepth]\n            maxDepth = max(depths)\n            dist[maxDepth] = cumDist[k][maxDepth]\n            # now find the number of loci at each depth of coverage to construct the histogram\n            for depth in depths:\n                loci = int(round(dist[depth]*lengthByChr[k], 0))\n                histogram[depth] = histogram.get(depth, 0) + loci\n        # fill in zero values for missing depths\n        for i in range(max(histogram.keys())):\n            if i not in histogram:\n                histogram[i] = 0\n        out = open(\"~{outFileName}\", \"w\")\n        json.dump(histogram, out, sort_keys=True)\n        out.close()\n        CODE\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File histogram = \"~{outFileName}\"\n    }\n\n    meta {\n    output_meta: {\n        histogram: \"Coverage histogram in JSON format\"\n    }\n    }\n}\n\ntask downsample {\n\n    # random downsampling for QC metrics (excepting MarkDuplicates)\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    Map[String, Boolean] downsampleStatus\n    Map[String, String] downsampleTargets\n    String downsampleSuffix = \"downsampled.bam\"\n    Int randomSeed = 42\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned rnaSeqQC data\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    downsampleStatus: \"Map; whether to apply pre-downsampling and downsampling\"\n    downsampleTargets: \"Map; target number of reads for pre-downsampling and downsampling\"\n    downsampleSuffix: \"Suffix for output file\"\n    randomSeed: \"Random seed for pre-downsampling (if any)\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String resultName = \"~{outputFileNamePrefix}.~{downsampleSuffix}\"\n\n    # unpack downsample parameters\n    Boolean applyPreDownsample = downsampleStatus[\"pre_ds\"]\n    String preDownsampleTarget = downsampleTargets[\"pre_ds\"]\n    String downsampleTarget = downsampleTargets[\"ds\"]\n\n    # generate downsample commands\n    # preDownsample = fast, random selection of approximate total with samtools view\n    String preDownsample = \"samtools view -h -u -s ~{randomSeed}.~{preDownsampleTarget} | \"\n    String preDownsampleCommand = if applyPreDownsample then \"~{preDownsample}\" else \"\"\n    # downsample = slow, deterministic selection of exact total with samtools collate and sort\n    # see https://github.com/samtools/samtools/issues/931\n    String dsCollate = \"samtools collate -O --output-fmt sam - | \"\n    String dsAwk = \"awk '/^@/ { print; next } count < ~{downsampleTarget} || last == $1 { print; last = $1; count++ }' | \"\n    String dsSort = \"samtools sort -T downsample_sort - | \"\n    String downsampleCommand = \"~{dsCollate}~{dsAwk}~{dsSort}\"\n    \n    command <<<\n    set -e\n    set -o pipefail\n    samtools view -b -h ~{bamFile} | \\\n    ~{preDownsampleCommand} ~{downsampleCommand} \\\n    samtools view -b > ~{resultName}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{resultName}\"\n    }\n    \n    meta {\n    output_meta: {\n            result: \"BAM file downsampled to required number of reads\"\n    }\n    }\n\n}\n\ntask downsampleRegion {\n\n    # downsample a specific chromosomal region for MarkDuplicates\n    # this keeps a proportionate level of duplicates in the downsampled data\n\n    input {\n    File bamFile\n    File bamIndex\n    String outputFileNamePrefix\n    String region\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file\"\n    bamIndex: \"BAM index file in BAI format\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    region: \"Region argument for samtools\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String bamFileName = basename(bamFile)\n    String resultName = \"~{outputFileNamePrefix}.downsampledRegion.bam\"\n\n    # need to index the (filtered) BAM file before viewing a specific chromosome\n\n    command <<<\n    set -e\n    # ensure BAM file and index are symlinked to working directory\n    ln -s ~{bamFile}\n    ln -s ~{bamIndex}\n    samtools view -b -h ~{bamFileName} ~{region} > ~{resultName}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{resultName}\"\n    }\n\n    meta {\n    output_meta: {\n            result: \"BAM file downsampled to required number of reads\"\n    }\n    }\n\n}\n\ntask filter {\n\n    # filter out non-primary, unmapped, and low-quality aligned reads\n    # count the number of reads filtered out at each step\n    # return filtered read counts and the filtered BAM file\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    Int minQuality = 30\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned rnaSeqQC data\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    minQuality: \"Minimum alignment quality to pass filter\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String resultName = \"~{outputFileNamePrefix}.filtered.bam\"\n    String totalInputReadsFile = \"total_input_reads.txt\"\n    String totalNonPrimaryReadsFile = \"total_non_primary_reads.txt\"\n    String totalUnmappedReadsFile = \"total_unmapped_reads.txt\"\n    String totalLowQualityReadsFile = \"total_low_quality_reads.txt\"\n    String nonPrimaryReadsFile = \"non_primary_reads.bam\"\n    String unmappedReadsFile = \"unmapped_reads.bam\"\n    String lowQualityReadsFile = \"low_quality_reads.bam\"\n\n    # -F 2304 excludes secondary and supplementary alignments\n    # -F 4 excludes unmapped reads\n\n    command <<<\n    set -e\n    set -o pipefail\n    samtools view -h -b -F 2304 -U ~{nonPrimaryReadsFile} ~{bamFile} | \\\n    samtools view -h -b -F 4 -U ~{unmappedReadsFile} | \\\n    samtools view -h -b -q ~{minQuality} -U ~{lowQualityReadsFile} \\\n    > ~{resultName}\n    samtools view -c ~{bamFile} > ~{totalInputReadsFile}\n    samtools view -c ~{nonPrimaryReadsFile} > ~{totalNonPrimaryReadsFile}\n    samtools view -c ~{unmappedReadsFile} > ~{totalUnmappedReadsFile}\n    samtools view -c ~{lowQualityReadsFile} > ~{totalLowQualityReadsFile}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    # record read totals as String, not Int, to avoid integer overflow error\n    output {\n    String totalInputReads = read_string(\"~{totalInputReadsFile}\")\n    String nonPrimaryReads = read_string(\"~{totalNonPrimaryReadsFile}\")\n    String unmappedReads = read_string(\"~{totalUnmappedReadsFile}\")\n    String lowQualityReads = read_string(\"~{totalLowQualityReadsFile}\")\n    File filteredBam = \"~{resultName}\"\n    }\n\n    meta {\n    output_meta: {\n        totalInputReads: \"Total reads in original input BAM file\",\n        nonPrimaryReads: \"Total reads excluded as non-primary\",\n        unmappedReads: \"Total reads excluded as unmapped\",\n        lowQualityReads: \"Total reads excluded as low alignment quality\",\n            filteredBam: \"Filtered BAM file\"\n    }\n    }\n\n}\n\ntask findDownsampleParams {\n\n    input {\n    String outputFileNamePrefix\n    String inputReads\n    Int targetReads = 100000\n    Int minReadsAbsolute = 10000\n    Int minReadsRelative = 2\n    Int precision = 8\n    Float preDSMultiplier = 1.5\n    String modules = \"python/3.6\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    String statusFile = \"status.json\"\n    String targetsFile = \"targets.json\"\n\n    parameter_meta {\n    outputFileNamePrefix: \"Prefix for output file\"\n    inputReads: \"Number of reads in input bamFile (represented as string to avoid integer overflow)\"\n    targetReads: \"Desired number of reads in downsampled output\"\n    minReadsAbsolute: \"Minimum value of targetReads to allow pre-downsampling\"\n    minReadsRelative: \"Minimum value of (inputReads)/(targetReads) to allow pre-downsampling\"\n    precision: \"Number of decimal places in fraction for pre-downsampling\"\n    preDSMultiplier: \"Determines target size for pre-downsampled set (if any). Must have (preDSMultiplier) < (minReadsRelative).\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    # see comments in \"task downsample\" for effect of predownsampling and downsampling\n\n    # target for predownsampling with \"samtools view -s\" is expressed as a probability\n    # eg. to choose approximately 200 reads out of 10000, target = 0.02\n    # we convert to a fixed-precision target string for easier handling in BASH\n    # eg. 0.02 -> \"020000\"\n    # subsequently, we concatenate in the form {$RANDOM_SEED}.${TARGET}, eg. \"42.020000\"\n    # for consistency, express downsampling target (integer number of reads) as a string also\n    \n    command <<<\n        python3 <<CODE\n        import json, math, sys\n        readsIn = ~{inputReads}\n        readsTarget = ~{targetReads}\n        precision = ~{precision}\n        print(\"Input reads param =\", readsIn, file=sys.stderr)\n        print(\"Target reads param =\", readsTarget, file=sys.stderr)\n        minReadsAbsolute = ~{minReadsAbsolute}\n        minReadsRelative = ~{minReadsRelative}\n        preDownsampleMultiplier = ~{preDSMultiplier}\n        if readsIn <= readsTarget:\n          # absolutely no downsampling\n          applyPreDownsample = False\n          applyDownsample = False\n          preDownsampleTarget = \"no_pre_downsample\"\n          downSampleTarget = \"no_downsample\"\n        elif readsIn < readsTarget * minReadsRelative or readsTarget < minReadsAbsolute:\n          # no predownsampling\n          applyPreDownsample = False\n          applyDownsample = True\n          preDownsampleTarget = \"no_pre_downsample\"\n          downSampleTarget = str(readsTarget)\n        else:\n          # predownsampling and downsampling\n          applyPreDownsample = True\n          applyDownsample = True\n          probability = (readsTarget * preDownsampleMultiplier)/readsIn\n          formatString = \"{:0\"+str(precision)+\"d}\"\n          preDownsampleTarget = formatString.format(int(math.floor(probability * 10**precision)))\n          downSampleTarget = str(readsTarget)\n        status = {\n          \"pre_ds\": applyPreDownsample,\n          \"ds\": applyDownsample\n        }\n        targets = {\n          \"pre_ds\": preDownsampleTarget,\n          \"ds\": downSampleTarget\n        }\n        statusFile = open(\"~{statusFile}\", \"w\")\n        json.dump(status, statusFile)\n        statusFile.close()\n        targetFile = open(\"~{targetsFile}\", \"w\")\n        json.dump(targets, targetFile)\n        targetFile.close()\n        CODE\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    Map[String, Boolean] status = read_json(\"~{statusFile}\")\n    Map[String, String] targets = read_json(\"~{targetsFile}\")\n    }\n\n    meta {\n    output_meta: {\n            status: \"Boolean flags indicating whether to apply (pre)downsampling.\",\n            output2: \"Strings representing target number of reads for (pre)downsampling.\"\n    }\n    }\n}\n\ntask findDownsampleParamsMarkDup {\n\n    # downsampling parameters for MarkDuplicates; see filter_downsample.md for details\n    # choose a region of the genome instead of using random selection\n\n    # a BAM file is *very* approximately 10M reads per GB\n    # Current merged BAM files are unlikely to exceed 10**9 reads; but we scale up higher just in case\n\n    input {\n    String outputFileNamePrefix\n    String inputReads\n    Int threshold = 10000000\n    Array[String] chromosomes = [\"chr12\", \"chr13\", \"chrXII\", \"chrXIII\"]\n    Int baseInterval = 15000\n    Int intervalStart = 100000\n    String customRegions = \"\"\n    String modules = \"python/3.6\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    outputFileNamePrefix: \"Prefix for output file\"\n    inputReads: \"Number of reads in input bamFile\"\n    threshold: \"Minimum number of reads to conduct downsampling\"\n    chromosomes: \"Array of chromosome identifiers for downsampled subset\"\n    baseInterval: \"Base width of interval in each chromosome, for very large BAMs\"\n    intervalStart: \"Start of interval in each chromosome, for very large BAMs\"\n    customRegions: \"Custom downsample regions; overrides chromosome and interval parameters\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String outputStatus = \"~{outputFileNamePrefix}_status.txt\"\n    String outputRegion = \"~{outputFileNamePrefix}_region.txt\"\n    File chromosomesText = write_lines(chromosomes)\n\n    command <<<\n        python3 <<CODE\n        readsIn = ~{inputReads}\n        threshold = ~{threshold}\n        interval = ~{baseInterval}\n        start = ~{intervalStart} + 1 # start of sub-chromosome window, if needed; exclude telomeres\n        chromosomes = [line.strip() for line in open(\"~{chromosomesText}\").readlines()]\n        customRegions = \"~{customRegions}\" # overrides other chromosome/interval parameters\n        ds = True # True if downsampling, false otherwise\n        end = None # end of window, if needed\n        if readsIn <= threshold:\n            ds = False # no downsampling\n        elif readsIn <= threshold*10:\n            pass # default to chr12 & chr13 =~ 8% of genome\n        elif readsIn <= threshold*10**2:\n            end = start + interval*10**3 - 1 # default 2*15 million base window ~ 1% of genome\n        elif readsIn <= threshold*10**3:\n            end = start + interval*10**2 - 1\n        elif readsIn <= threshold*10**4:\n            end = start + interval*10 - 1\n        else:\n            end = start + interval - 1\n        if ds:\n            status = \"true\"\n            if customRegions != \"\":\n                region = customRegions\n            elif end == None:\n                region = \" \".join(chromosomes)\n            else:\n                regions = [\"%s:%i-%i\" % (chromosome, start, end) for chromosome in chromosomes ]\n                region = \" \".join(regions)\n        else:\n            status = \"false\"\n            region = \"\"\n        outStatus = open(\"~{outputStatus}\", \"w\")\n        print(status, file=outStatus)\n        outStatus.close()\n        outRegion = open(\"~{outputRegion}\", \"w\")\n        print(region, file=outRegion)\n        outRegion.close()\n        CODE\n    >>>\n\n    output {\n    Boolean status = read_boolean(\"~{outputStatus}\")\n    String region = read_string(\"~{outputRegion}\")\n    }\n\n    meta {\n    output_meta: {\n        status: \"Boolean flag, indicates whether downsampling is required\",\n        region: \"String to specify downsampled region for samtools\"\n    }\n    }\n}\n\ntask indexBamFile {\n\n    input {\n    File bamFile\n    String modules = \"samtools/1.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned data\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    String bamName = basename(bamFile)\n    String indexName = \"~{bamName}.bai\"\n    \n    command <<<\n    samtools index -b ~{bamFile} ~{indexName}\n    >>>\n    \n    output {\n    File index = indexName\n    }\n\n    meta {\n    output_meta: {\n            index: \"Index file in BAI format\"\n    }\n  }\n\n}\n\ntask markDuplicates {\n\n    input {\n    File bamFile\n    String outputFileNamePrefix\n    Int opticalDuplicatePixelDistance=100\n    Int picardMaxMemMb=6000\n    String modules = \"picard/2.21.2\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    # See GR-899 for opticalDuplicatePixelDistance\n\n    parameter_meta {\n    bamFile: \"Input BAM file, after filtering and downsampling (if any)\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    opticalDuplicatePixelDistance: \"Maximum offset between optical duplicate clusters\"\n    picardMaxMemMb: \"Memory requirement in MB for running Picard JAR\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    String outFileBam = \"~{outputFileNamePrefix}.markDuplicates.bam\"\n    String outFileText = \"~{outputFileNamePrefix}.markDuplicates.txt\"\n\n    command <<<\n    java -Xmx~{picardMaxMemMb}M \\\n    -jar ${PICARD_ROOT}/picard.jar \\\n    MarkDuplicates \\\n    INPUT=~{bamFile} \\\n    OUTPUT=~{outFileBam} \\\n    VALIDATION_STRINGENCY=SILENT \\\n    TMP_DIR=${PWD} \\\n    METRICS_FILE=~{outFileText} \\\n    OPTICAL_DUPLICATE_PIXEL_DISTANCE=~{opticalDuplicatePixelDistance}\n    >>>\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    output {\n    File result = \"~{outFileText}\"\n    }\n\n    meta {\n    output_meta: {\n            result: \"Text file with Picard markDuplicates metrics\"\n    }\n    }\n\n}\n\ntask runMosdepth {\n\n    input {\n    File bamFile\n    File bamIndex\n    String modules = \"mosdepth/0.2.9\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    bamFile: \"Input BAM file of aligned data\"\n    bamIndex: \"Index file in samtools .bai format\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    String bamFileName = basename(bamFile)\n\n    command <<<\n    set -eo pipefail\n    # ensure BAM file and index are symlinked to working directory\n    ln -s ~{bamFile}\n    ln -s ~{bamIndex}\n    # run mosdepth\n    MOSDEPTH_PRECISION=8 mosdepth -x -n -t 3 bamqc ~{bamFileName}\n    >>>\n\n    output {\n    File globalDist = \"bamqc.mosdepth.global.dist.txt\"\n    File summary = \"bamqc.mosdepth.summary.txt\"\n    }\n\n    meta {\n    output_meta: {\n            globalDist: \"Global distribution of coverage\",\n        summary: \"Total bases in coverage\"\n    }\n  }\n\n}\n\ntask updateMetadata {\n\n    # add extra fields to the metadata JSON file\n\n    input {\n    Map[String, String] metadata\n    String outputFileNamePrefix\n    String totalInputReads\n    String nonPrimaryReads\n    String unmappedReads\n    String lowQualityReads\n    String modules = \"python/3.6\"\n    Int jobMemory = 16\n    Int threads = 4\n    Int timeout = 4\n    }\n\n    parameter_meta {\n    metadata: \"Key/value map of input metadata\"\n    outputFileNamePrefix: \"Prefix for output file\"\n    totalInputReads: \"Total reads in original input BAM file\"\n    nonPrimaryReads: \"Total reads excluded as non-primary\"\n    unmappedReads: \"Total reads excluded as unmapped\"\n    lowQualityReads: \"Total reads excluded as low alignment quality\"\n    modules: \"required environment modules\"\n    jobMemory: \"Memory allocated for this job\"\n    threads: \"Requested CPU threads\"\n    timeout: \"hours before task timeout\"\n    }\n\n    runtime {\n    modules: \"~{modules}\"\n    memory:  \"~{jobMemory} GB\"\n    cpu:     \"~{threads}\"\n    timeout: \"~{timeout}\"\n    }\n\n    File metadataJson = write_json(metadata)\n    String outFileName = \"~{outputFileNamePrefix}.updated_metadata.json\"\n\n    # Read totals are Strings in WDL to avoid integer overflow in Cromwell\n    # Python3 can handle arbitrarily large integers\n\n    command <<<\n        python3 <<CODE\n        import json\n        metadata = json.loads(open(\"~{metadataJson}\").read())\n        metadata[\"total input reads meta\"] = ~{totalInputReads}\n        metadata[\"non-primary reads meta\"] = ~{nonPrimaryReads}\n        metadata[\"unmapped reads meta\"] = ~{unmappedReads}\n        metadata[\"low-quality reads meta\"] = ~{lowQualityReads}\n        outFile = open(\"~{outFileName}\", \"w\")\n        json.dump(metadata, outFile)\n        outFile.close()\n        CODE\n    >>>\n\n    output {\n    File result = \"~{outFileName}\"\n    }\n\n    meta {\n    output_meta: {\n            result: \"JSON file with updated metadata\"\n    }\n    }\n}\n",
+        "imports/pull_bwaMem.wdl": "version 1.0\n\nworkflow bwaMem {\n    input {\n        Int adapterTrimmingLog_timeout = 48\n        Int adapterTrimmingLog_jobMemory = 12\n        Int indexBam_timeout = 48\n        String indexBam_modules = \"samtools/1.9\"\n        Int indexBam_jobMemory = 12\n        Int bamMerge_timeout = 72\n        String bamMerge_modules = \"samtools/1.9\"\n        Int bamMerge_jobMemory = 32\n        Int runBwaMem_timeout = 96\n        Int runBwaMem_jobMemory = 32\n        Int runBwaMem_threads = 8\n        String? runBwaMem_addParam\n        String runBwaMem_bwaRef\n        String runBwaMem_modules\n        Int adapterTrimming_timeout = 48\n        Int adapterTrimming_jobMemory = 16\n        String? adapterTrimming_addParam\n        String adapterTrimming_modules = \"cutadapt/1.8.3\"\n        Int slicerR2_timeout = 48\n        Int slicerR2_jobMemory = 16\n        String slicerR2_modules = \"slicer/0.3.0\"\n        Int slicerR1_timeout = 48\n        Int slicerR1_jobMemory = 16\n        String slicerR1_modules = \"slicer/0.3.0\"\n        Int countChunkSize_timeout = 48\n        Int countChunkSize_jobMemory = 16\n        File fastqR1\n        File fastqR2\n        String readGroups\n        String outputFileNamePrefix = \"output\"\n        Int numChunk = 1\n        Boolean doTrim = true\n        Int trimMinLength = 1\n        Int trimMinQuality = 0\n        String adapter1 = \"AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC\"\n        String adapter2 = \"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT\"\n    }\n\n    parameter_meta {\n        adapterTrimmingLog_timeout: \"Hours before task timeout\"\n        adapterTrimmingLog_jobMemory: \"Memory allocated indexing job\"\n        indexBam_timeout: \"Hours before task timeout\"\n        indexBam_modules: \"Modules for running indexing job\"\n        indexBam_jobMemory: \"Memory allocated indexing job\"\n        bamMerge_timeout: \"Hours before task timeout\"\n        bamMerge_modules: \"Required environment modules\"\n        bamMerge_jobMemory: \"Memory allocated indexing job\"\n        runBwaMem_timeout: \"Hours before task timeout\"\n        runBwaMem_jobMemory: \"Memory allocated for this job\"\n        runBwaMem_threads: \"Requested CPU threads\"\n        runBwaMem_addParam: \"Additional BWA parameters\"\n        runBwaMem_bwaRef: \"The reference genome to align the sample with by BWA\"\n        runBwaMem_modules: \"Required environment modules\"\n        adapterTrimming_timeout: \"Hours before task timeout\"\n        adapterTrimming_jobMemory: \"Memory allocated for this job\"\n        adapterTrimming_addParam: \"Additional cutadapt parameters\"\n        adapterTrimming_modules: \"Required environment modules\"\n        slicerR2_timeout: \"Hours before task timeout\"\n        slicerR2_jobMemory: \"Memory allocated for this job\"\n        slicerR2_modules: \"Required environment modules\"\n        slicerR1_timeout: \"Hours before task timeout\"\n        slicerR1_jobMemory: \"Memory allocated for this job\"\n        slicerR1_modules: \"Required environment modules\"\n        countChunkSize_timeout: \"Hours before task timeout\"\n        countChunkSize_jobMemory: \"Memory allocated for this job\"\n        fastqR1: \"fastq file for read 1\"\n        fastqR2: \"fastq file for read 2\"\n        readGroups: \"Complete read group header line\"\n        outputFileNamePrefix: \"Prefix for output file\"\n        numChunk: \"number of chunks to split fastq file [1, no splitting]\"\n        doTrim: \"if true, adapters will be trimmed before alignment\"\n        trimMinLength: \"minimum length of reads to keep [1]\"\n        trimMinQuality: \"minimum quality of read ends to keep [0]\"\n        adapter1: \"adapter sequence to trim from read 1 [AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC]\"\n        adapter2: \"adapter sequence to trim from read 2 [AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT]\"\n\n    }\n\n    if (numChunk > 1) {\n        call countChunkSize {\n            input:\n            timeout = countChunkSize_timeout,\n            jobMemory = countChunkSize_jobMemory,\n            fastqR1 = fastqR1,\n            numChunk = numChunk\n        }\n    \n        call slicer as slicerR1 { \n            input: \n            timeout = slicerR1_timeout,\n            jobMemory = slicerR1_jobMemory,\n            modules = slicerR1_modules,\n            fastqR = fastqR1,\n            chunkSize = countChunkSize.chunkSize\n        }\n        call slicer as slicerR2 { \n            input: \n            timeout = slicerR2_timeout,\n            jobMemory = slicerR2_jobMemory,\n            modules = slicerR2_modules,\n            fastqR = fastqR2,\n            chunkSize = countChunkSize.chunkSize\n        }\n    }\n\n    Array[File] fastq1 = select_first([slicerR1.chunkFastq, [fastqR1]])\n    Array[File] fastq2 = select_first([slicerR2.chunkFastq, [fastqR2]])\n    Array[Pair[File,File]] outputs = zip(fastq1,fastq2)\n\n    scatter (p in outputs) {\n        if (doTrim) {\n            call adapterTrimming { \n                input:\n                timeout = adapterTrimming_timeout,\n                jobMemory = adapterTrimming_jobMemory,\n                addParam = adapterTrimming_addParam,\n                modules = adapterTrimming_modules,\n                fastqR1 = p.left,\n                fastqR2 = p.right,\n                trimMinLength = trimMinLength,\n                trimMinQuality = trimMinQuality,\n                adapter1 = adapter1,\n                adapter2 = adapter2\n            }\n        }\n        call runBwaMem  { \n                input: \n                timeout = runBwaMem_timeout,\n                jobMemory = runBwaMem_jobMemory,\n                threads = runBwaMem_threads,\n                addParam = runBwaMem_addParam,\n                bwaRef = runBwaMem_bwaRef,\n                modules = runBwaMem_modules,\n                read1s = select_first([adapterTrimming.resultR1, p.left]),\n                read2s = select_first([adapterTrimming.resultR2, p.right]),\n                readGroups = readGroups\n        }    \n    }\n\n    call bamMerge {\n        input:\n        timeout = bamMerge_timeout,\n        modules = bamMerge_modules,\n        jobMemory = bamMerge_jobMemory,\n        bams = runBwaMem.outputBam,\n        outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call indexBam { \n        input: \n        timeout = indexBam_timeout,\n        modules = indexBam_modules,\n        jobMemory = indexBam_jobMemory,\n        inputBam = bamMerge.outputMergedBam\n    }\n\n    if (doTrim) {\n        call adapterTrimmingLog {\n            input:\n            timeout = adapterTrimmingLog_timeout,\n            jobMemory = adapterTrimmingLog_jobMemory,\n            inputLogs = select_all(adapterTrimming.log),\n            outputFileNamePrefix = outputFileNamePrefix,\n            numChunk = numChunk\n        }\n    }\n\n    meta {\n        author: \"Xuemei Luo\"\n        email: \"xuemei.luo@oicr.on.ca\"\n        description: \"BwaMem Workflow version 2.0\"\n        dependencies: [\n        {\n            name: \"bwa/0.7.12\",\n            url: \"https://github.com/lh3/bwa/archive/0.7.12.tar.gz\"\n        },\n        {\n            name: \"samtools/1.9\",\n            url: \"https://github.com/samtools/samtools/archive/0.1.19.tar.gz\"\n        },\n        {\n            name: \"cutadapt/1.8.3\",\n            url: \"https://cutadapt.readthedocs.io/en/v1.8.3/\"\n        },\n        {\n            name: \"slicer/0.3.0\",\n            url: \"https://github.com/OpenGene/slicer/archive/v0.3.0.tar.gz\"\n        }\n      ]\n    }\n\n    output {\n        File bwaMemBam = bamMerge.outputMergedBam\n        File bwaMemIndex = indexBam.outputBai\n        File? log = adapterTrimmingLog.summaryLog\n        File? cutAdaptAllLogs = adapterTrimmingLog.allLogs\n    }\n}\n\n\ntask countChunkSize{\n    input {\n        File fastqR1\n        Int numChunk\n        Int jobMemory = 16\n        Int timeout = 48\n    }\n    \n    parameter_meta {\n        fastqR1: \"Fastq file for read 1\"\n        numChunk: \"Number of chunks to split fastq file\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    command <<<\n        set -euo pipefail\n        totalLines=$(zcat ~{fastqR1} | wc -l)\n        python -c \"from math import ceil; print int(ceil(($totalLines/4.0)/~{numChunk})*4)\"\n    >>>\n    \n    runtime {\n        memory: \"~{jobMemory} GB\"\n        timeout: \"~{timeout}\"\n    }\n    \n    output {\n        String chunkSize =read_string(stdout())\n    }\n\n    meta {\n        output_meta: {\n            chunkSize: \"output number of lines per chunk\"\n        }\n    }    \n   \n}\n\ntask slicer {\n    input {\n        File fastqR         \n        String chunkSize\n        String modules = \"slicer/0.3.0\"\n        Int jobMemory = 16\n        Int timeout = 48\n    }\n    \n    parameter_meta {\n        fastqR: \"Fastq file\"\n        chunkSize: \"Number of lines per chunk\"\n        modules: \"Required environment modules\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    command <<<\n        set -euo pipefail\n        slicer -i ~{fastqR} -l ~{chunkSize} --gzip \n    >>>\n    \n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    } \n    \n    output {\n        Array[File] chunkFastq = glob(\"*.fastq.gz\")\n    }\n\n    meta {\n        output_meta: {\n            chunkFastq: \"output fastq chunks\"\n        }\n    } \n  \n}\n\ntask adapterTrimming {\n    input {\n        File fastqR1\n        File fastqR2\n        String modules = \"cutadapt/1.8.3\"\n        Int trimMinLength\n        Int trimMinQuality\n        String adapter1\n        String adapter2\n        String? addParam\n        Int jobMemory = 16\n        Int timeout = 48\n    }\n    \n    parameter_meta {\n        fastqR1: \"Fastq file for read 1\"\n        fastqR2: \"Fastq file for read 2\"\n        trimMinLength: \"Minimum length of reads to keep\"\n        trimMinQuality: \"Minimum quality of read ends to keep\"\n        adapter1: \"Adapter sequence to trim from read 1\"\n        adapter2: \"Adapter sequence to trim from read 2\"\n        modules: \"Required environment modules\"\n        addParam: \"Additional cutadapt parameters\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    String resultFastqR1 = \"~{basename(fastqR1, \".fastq.gz\")}.trim.fastq.gz\"\n    String resultFastqR2 = \"~{basename(fastqR2, \".fastq.gz\")}.trim.fastq.gz\"\n    String resultLog = \"~{basename(fastqR1, \".fastq.gz\")}.log\"\n    \n    command <<<\n        set -euo pipefail\n        cutadapt -q ~{trimMinQuality} \\\n            -m ~{trimMinLength} \\\n            -a ~{adapter1}  \\\n            -A ~{adapter2} ~{addParam} \\\n            -o ~{resultFastqR1} \\\n            -p ~{resultFastqR2} \\\n            ~{fastqR1} \\\n            ~{fastqR2} > ~{resultLog}\n\n    >>>\n    \n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    } \n    \n    output { \n        File resultR1 = \"~{resultFastqR1}\"\n        File resultR2 = \"~{resultFastqR2}\"\n        File log =  \"~{resultLog}\"     \n    }\n\n    meta {\n        output_meta: {\n            resultR1: \"output fastq read 1 after trimming\",\n            resultR2: \"output fastq read 2 after trimming\",\n            log: \"output adpater trimming log\"\n        }\n    } \n   \n}    \n\n\ntask runBwaMem {\n    input {\n        File read1s\n        File read2s\n        String readGroups\n        String modules\n        String bwaRef\n        String? addParam\n        Int threads = 8\n        Int jobMemory = 32\n        Int timeout = 96\n    }\n\n    parameter_meta {\n        read1s: \"Fastq file for read 1\"\n        read2s: \"Fastq file for read 2\"\n        readGroups: \"Array of readgroup lines\"\n        bwaRef: \"The reference genome to align the sample with by BWA\"\n        modules: \"Required environment modules\"\n        addParam: \"Additional BWA parameters\"\n        threads: \"Requested CPU threads\"\n        jobMemory: \"Memory allocated for this job\"\n        timeout: \"Hours before task timeout\"\n    }\n    \n    String resultBam = \"~{basename(read1s)}.bam\"\n    String tmpDir = \"tmp/\"\n\n    command <<<\n        set -euo pipefail\n        mkdir -p ~{tmpDir}\n        bwa mem -M \\\n            -t ~{threads} ~{addParam}  \\\n            -R  ~{readGroups} \\\n            ~{bwaRef} \\\n            ~{read1s} \\\n            ~{read2s} \\\n        | \\\n        samtools sort -O bam -T ~{tmpDir} -o ~{resultBam} - \n    >>>\n\n    runtime {\n        modules: \"~{modules}\"\n        memory:  \"~{jobMemory} GB\"\n        cpu:     \"~{threads}\"\n        timeout: \"~{timeout}\"\n    }  \n    \n    output {\n        File outputBam = \"~{resultBam}\"\n    }\n\n    meta {\n        output_meta: {\n            outputBam: \"output bam aligned to genome\"\n        }\n    }\n\n}\n\ntask bamMerge{\n    input {\n        Array[File] bams\n        String outputFileNamePrefix\n        Int   jobMemory = 32\n        String modules  = \"samtools/1.9\"\n        Int timeout     = 72\n    }\n    parameter_meta {\n        bams:  \"Input bam files\"\n        outputFileNamePrefix: \"Prefix for output file\"\n        jobMemory: \"Memory allocated indexing job\"\n        modules:   \"Required environment modules\"\n        timeout:   \"Hours before task timeout\"    \n    }\n\n    String resultMergedBam = \"~{outputFileNamePrefix}.bam\"\n\n    command <<<\n        set -euo pipefail\n        samtools merge \\\n        -c \\\n        ~{resultMergedBam} \\\n        ~{sep=\" \" bams} \n    >>>\n\n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    }\n\n    output {\n        File outputMergedBam = \"~{resultMergedBam}\"\n    }\n\n    meta {\n        output_meta: {\n            outputMergedBam: \"output merged bam aligned to genome\"\n        }\n    }       \n}\n\ntask indexBam {\n    input {\n        File  inputBam\n        Int   jobMemory = 12\n        String modules  = \"samtools/1.9\"\n        Int timeout     = 48\n    }\n    parameter_meta {\n        inputBam:  \"Input bam file\"\n        jobMemory: \"Memory allocated indexing job\"\n        modules:   \"Modules for running indexing job\"\n        timeout:   \"Hours before task timeout\"\n    }\n\n    String resultBai = \"~{basename(inputBam)}.bai\"\n\n    command <<<\n        set -euo pipefail\n        samtools index ~{inputBam} ~{resultBai}\n    >>>\n\n    runtime {\n        memory: \"~{jobMemory} GB\"\n        modules: \"~{modules}\"\n        timeout: \"~{timeout}\"\n    }\n\n    output {\n        File outputBai = \"~{resultBai}\"\n    }\n\n    meta {\n        output_meta: {\n            outputBai: \"output index file for bam aligned to genome\"\n        }\n    }\n\n}\n\ntask adapterTrimmingLog {\n    input {\n        Array[File] inputLogs\n        String outputFileNamePrefix\n        Int   numChunk\n        Int   jobMemory = 12\n        Int timeout     = 48\n\n    }\n    parameter_meta {\n        inputLogs:  \"Input log files\"\n        outputFileNamePrefix: \"Prefix for output file\"\n        numChunk: \"Number of chunks to split fastq file\"\n        jobMemory: \"Memory allocated indexing job\"\n        timeout:   \"Hours before task timeout\"\n    }\n\n    String allLog = \"~{outputFileNamePrefix}.txt\"\n    String log = \"~{outputFileNamePrefix}.log\"\n\n    command <<<\n        set -euo pipefail\n        awk 'BEGINFILE {print \"###################################\\n\"}{print}' ~{sep=\" \" inputLogs} > ~{allLog}\n\n        totalRead=$(cat ~{allLog} | grep \"Total read pairs processed:\" | cut -d\":\" -f2 | sed 's/ //g; s/,//g' | awk '{x+=$1}END{print x}')\n        adapterR1=$(cat ~{allLog} | grep \" Read 1 with adapter:\" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentAdapterR1=$(awk -v A=\"${adapterR1}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        adapterR2=$(cat ~{allLog} | grep \" Read 2 with adapter:\" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentAdapterR2=$(awk -v A=\"${adapterR2}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        shortPairs=$(cat ~{allLog} | grep \"Pairs that were too short:\" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentShortPairs=$(awk -v A=\"${shortPairs}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        pairsWritten=$(cat ~{allLog} | grep \"Pairs written (passing filters): \" | cut -d \":\" -f2 | sed 's/^[ \\t]*//; s/ (.*)//; s/,//g'| awk '{x+=$1}END{print x}')\n        percentpairsWritten=$(awk -v A=\"${pairsWritten}\" -v B=\"${totalRead}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        totalBP=$(cat ~{allLog} | grep \"Total basepairs processed:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpR1=$(cat ~{allLog} | grep -A 2 \"Total basepairs processed:\" | grep \"Read 1:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpR2=$(cat ~{allLog} | grep -A 2 \"Total basepairs processed:\" | grep \"Read 2:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpQualitytrimmed=$(cat ~{allLog} | grep \"Quality-trimmed:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g; s/ (.*)//' | awk '{x+=$1}END{print x}')\n        percentQualitytrimmed=$(awk -v A=\"${bpQualitytrimmed}\" -v B=\"${totalBP}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        bpQualitytrimmedR1=$(cat ~{allLog} | grep -A 2 \"Quality-trimmed:\" | grep \"Read 1:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpQualitytrimmedR2=$(cat ~{allLog} | grep -A 2 \"Quality-trimmed:\" | grep \"Read 2:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpTotalWritten=$(cat ~{allLog} | grep \"Total written (filtered):\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g; s/ (.*)//' | awk '{x+=$1}END{print x}')\n        percentBPWritten=$(awk -v A=\"${bpTotalWritten}\" -v B=\"${totalBP}\" 'BEGIN {printf \"%0.1f\\n\", A*100.0/B}')\n        bpWrittenR1=$(cat ~{allLog} | grep -A 2 \"Total written (filtered):\" | grep \"Read 1:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n        bpWrittenR2=$(cat ~{allLog} | grep -A 2 \"Total written (filtered):\" | grep \"Read 2:\" | cut -d\":\" -f2 | sed 's/^[ \\t]*//; s/ bp//; s/,//g' | awk '{x+=$1}END{print x}')\n\n        echo -e \"This is a cutadapt summary from ~{numChunk} fastq chunks\\n\" > ~{log}\n        echo -e \"Total read pairs processed:\\t${totalRead}\" >> ~{log}\n        echo -e \"  Read 1 with adapter:\\t${adapterR1} (${percentAdapterR1}%)\" >> ~{log}\n        echo -e \"  Read 2 with adapter:\\t${adapterR2} (${percentAdapterR2}%)\" >> ~{log}\n        echo -e \"Pairs that were too short:\\t${shortPairs} (${percentShortPairs}%)\" >> ~{log}\n        echo -e \"Pairs written (passing filters):\\t${pairsWritten} (${percentpairsWritten}%)\\n\\n\" >> ~{log}\n        echo -e \"Total basepairs processed:\\t${totalBP} bp\" >> ~{log}\n        echo -e \"  Read 1:\\t${bpR1} bp\" >> ~{log}\n        echo -e \"  Read 2:\\t${bpR2} bp\" >> ~{log}\n        echo -e \"Quality-trimmed:\\t${bpQualitytrimmed} bp (${percentQualitytrimmed}%)\" >> ~{log}\n        echo -e \"  Read 1:\\t${bpQualitytrimmedR1} bp\" >> ~{log}\n        echo -e \"  Read 2:\\t${bpQualitytrimmedR2} bp\" >> ~{log}\n        echo -e \"Total written (filtered):\\t${bpTotalWritten} bp (${percentBPWritten}%)\" >> ~{log}\n        echo -e \"  Read 1:\\t${bpWrittenR1} bp\" >> ~{log}\n        echo -e \"  Read 2:\\t${bpWrittenR2} bp\" >> ~{log}\n    >>>\n\n    runtime {\n        memory: \"~{jobMemory} GB\"\n        timeout: \"~{timeout}\"\n    }\n  \n    output {\n        File summaryLog = \"~{log}\"\n        File allLogs = \"~{allLog}\"\n    }\n\n    meta {\n        output_meta: {\n            summaryLog: \"a summary log file for adapter trimming\",\n            allLogs: \"a file containing all logs for adapter trimming for each fastq chunk\"\n        }\n    }\n\n}\n \n"
+    },
+    "language": "WDL_1_0",
+    "outputs": {
+        "dnaSeqQC.cutAdaptAllLogs": "optional-file",
+        "dnaSeqQC.log": "optional-file",
+        "dnaSeqQC.result": "file"
+    },
+    "parameters": {
+        "dnaSeqQC.bamQC.bamQCMetrics_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_normalInsertMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_refFasta": "string",
+        "dnaSeqQC.bamQC.bamQCMetrics_refSizesBed": "string",
+        "dnaSeqQC.bamQC.bamQCMetrics_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.bamQCMetrics_workflowVersion": "string",
+        "dnaSeqQC.bamQC.collateResults_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.collateResults_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.collateResults_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.collateResults_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.countInputReads_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.cumulativeDistToHistogram_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsampleRegion_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_downsampleSuffix": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_randomSeed": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.downsample_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_minQuality": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.filter_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_baseInterval": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_chromosomes": {
+            "inner": {
+                "inner": "string",
+                "is": "list"
+            },
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_customRegions": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_intervalStart": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_threshold": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParamsMarkDup_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_minReadsAbsolute": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_minReadsRelative": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_preDSMultiplier": {
+            "inner": "floating",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_precision": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_targetReads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.findDownsampleParams_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.indexBamFile_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_opticalDuplicatePixelDistance": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_picardMaxMemMb": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.markDuplicates_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.metadata": {
+            "is": "dictionary",
+            "key": "string",
+            "value": "string"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.runMosdepth_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bamQC.updateMetadata_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapter1": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapter2": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimmingLog_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimmingLog_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_addParam": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.adapterTrimming_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.bamMerge_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.bamMerge_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.bamMerge_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.countChunkSize_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.countChunkSize_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.doTrim": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.indexBam_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.indexBam_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.indexBam_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.numChunk": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.readGroups": "string",
+        "dnaSeqQC.bwaMem.runBwaMem_addParam": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.runBwaMem_bwaRef": "string",
+        "dnaSeqQC.bwaMem.runBwaMem_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.runBwaMem_modules": "string",
+        "dnaSeqQC.bwaMem.runBwaMem_threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.runBwaMem_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR1_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR1_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR1_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR2_jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR2_modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.slicerR2_timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.trimMinLength": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.bwaMem.trimMinQuality": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "dnaSeqQC.fastqR1": "file",
+        "dnaSeqQC.fastqR2": "file",
+        "dnaSeqQC.outputFileNamePrefix": {
+            "inner": "string",
+            "is": "optional"
+        }
+    },
+    "workflow": "version 1.0\n\nimport \"imports/pull_bwaMem.wdl\" as bwaMem\nimport \"imports/pull_bamQC.wdl\" as bamQC\n\nworkflow dnaSeqQC {\n    input {\n        File fastqR1\n        File fastqR2\n        String outputFileNamePrefix = basename(fastqR1)\n    }\n\n    parameter_meta {\n        fastqR1: \"fastq file for read 1\"\n        fastqR2: \"fastq file for read 2\"\n        outputFileNamePrefix: \"Optional output prefix for the output\"\n    }\n\n    call bwaMem.bwaMem {\n        input:\n            fastqR1 = fastqR1,\n            fastqR2 = fastqR2,\n            outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    call bamQC.bamQC {\n        input:\n            bamFile = bwaMem.bwaMemBam,\n            outputFileNamePrefix = outputFileNamePrefix\n    }\n\n    meta {\n        author: \"Fenglin Chen\"\n        email: \"g3chen@oicr.on.ca\"\n        description: \"Calls the bwaMem-bamQC alignment as a single step.\"\n        dependencies: [\n        {\n            name: \"bwa/0.7.12\",\n            url: \"https://github.com/lh3/bwa/archive/0.7.12.tar.gz\"\n        },\n        {\n            name: \"samtools/1.9\",\n            url: \"https://github.com/samtools/samtools/archive/0.1.19.tar.gz\"\n        },\n        {\n            name: \"cutadapt/1.8.3\",\n            url: \"https://cutadapt.readthedocs.io/en/v1.8.3/\"\n        },\n        {\n            name: \"slicer/0.3.0\",\n            url: \"https://github.com/OpenGene/slicer/archive/v0.3.0.tar.gz\"\n        },\n        {\n            name: \"picard/2.21.2\",\n            url: \"https://broadinstitute.github.io/picard/command-line-overview.html\"\n        },\n        {\n            name: \"python/3.6\",\n            url: \"https://www.python.org/downloads/\"\n        },\n        {\n            name: \"bam-qc-metrics/0.2.5\",\n            url: \"https://github.com/oicr-gsi/bam-qc-metrics.git\"\n        },\n        {\n            name: \"mosdepth/0.2.9\",\n            url: \"https://github.com/brentp/mosdepth\"\n        }\n      ]\n      output_meta: {\n        log: \"log file for bwaMem task\",\n        cutAdaptAllLogs: \"log file for cutadapt task\",\n        result: \"bamQC report\"\n      }\n    }\n\n \n\n  output {File? log = bwaMem.log\nFile? cutAdaptAllLogs = bwaMem.cutAdaptAllLogs\nFile result = bamQC.result}\n}\n\n"
 }
