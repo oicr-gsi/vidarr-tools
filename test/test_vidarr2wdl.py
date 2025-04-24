@@ -16,12 +16,11 @@ def ordered(obj):
 
 
 def compare_wdl(base_name: str) -> bool:
-    with open(os.path.join(os.path.dirname(__file__), base_name + ".json"), "r") as golden:
-        assert ordered(vidarr.wdl.parse(
-            os.path.join(
-                os.path.dirname(__file__),
-                base_name +
-                ".wdl"))) == ordered(json.load(golden))
+    golden_file = os.path.join(os.path.dirname(__file__), base_name + ".json")
+    expected = ordered(json.load(open(golden_file)))
+    wdl_file = os.path.join(os.path.dirname(__file__), base_name + ".wdl")
+    actual = ordered(vidarr.wdl.parse(wdl_file))
+    assert actual == expected
 
 
 def tests_fastqc():

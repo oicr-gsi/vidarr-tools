@@ -38,24 +38,36 @@ parameter_meta {
 meta {
     author: "Peter Ruzanov"
     email: "peter.ruzanov@oicr.on.ca"
-    description: "Niassa-wrapped Cromwell (widdle) workflow for running FastQC tools on paired or unpaired reads."
+    description: "Cromwell (WDL) workflow for running FastQC tools on paired or unpaired reads.\n![fastqc flowchart](docs/fastqc-wf.png)\n"
     dependencies: [
       {
-        name: "fastqc/0.11.8",
+        name: "fastqc/0.11.9",
         url: "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"
       }
     ]
     output_meta: {
-      html_report_R1: "HTML report for the first mate fastq file.",
-      zip_bundle_R1: "zipped report from FastQC for the first mate reads.",
-      html_report_R2: "HTML report for read second mate fastq file.",
-      zip_bundle_R2: "zipped report from FastQC for the second mate reads."
+      html_report_R1: {
+           description: "HTML report for the first mate fastq file.",
+           vidarr_label: "html_report_R1"
+      },
+      zip_bundle_R1: {
+           description: "zipped report from FastQC for the first mate reads.",
+           vidarr_label: "zip_bundle_R1"
+      },
+      html_report_R2: {
+           description: "HTML report for read second mate fastq file.",
+           vidarr_label: "html_report_R2"
+      },
+      zip_bundle_R2: {
+           description: "zipped report from FastQC for the second mate reads.",
+           vidarr_label: "zip_bundle_R2"
+      }
     }
 }
 
 output {
- File? html_report_R1  = firstMateHtml.renamedOutput
- File? zip_bundle_R1   = firstMateZip.renamedOutput
+ File html_report_R1  = firstMateHtml.renamedOutput
+ File zip_bundle_R1   = firstMateZip.renamedOutput
  File? html_report_R2 = secondMateHtml.renamedOutput
  File? zip_bundle_R2  = secondMateZip.renamedOutput
 }
@@ -69,19 +81,24 @@ task runFastQC {
 input {
         Int    jobMemory = 6
         Int    timeout   = 20
+        Int    javaHeap  = 4
+        Int?   threads
         File   inputFastq
-        String modules = "perl/5.28 java/8 fastqc/0.11.8"
+        String modules = "perl/5.28 java/11 fastqc/0.11.9"
 }
 
 command <<<
  set -euo pipefail
  FASTQC=$(which fastqc)
  JAVA=$(which java)
- perl $FASTQC ~{inputFastq} --java=$JAVA --noextract --outdir "."
+ export _JAVA_OPTIONS=-Xmx~{javaHeap}G
+ perl $FASTQC ~{inputFastq} --java=$JAVA ~{"-t" + threads}--noextract --outdir "."
 >>>
 
 parameter_meta {
  jobMemory: "Memory allocated to fastqc."
+ javaHeap: "Memory allocated to java heap, in G."
+ threads: "Threads param for fastqc"
  inputFastq: "Input fastq file, gzipped."
  modules: "Names and versions of required modules."
  timeout: "Timeout in hours, needed to override imposed limits."
@@ -135,6 +152,6 @@ runtime {
 
 
 output {
-  File? renamedOutput = "~{customPrefix}.~{extension}"
+  File renamedOutput = "~{customPrefix}.~{extension}"
 }
 }

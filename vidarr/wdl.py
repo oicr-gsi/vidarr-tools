@@ -114,17 +114,14 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
     for (vidarr_wdl_type, vidarr_type) in _output_mapping:
         if wdl_type == vidarr_wdl_type:
             if isinstance(output_metadata, dict) and "vidarr_label" in output_metadata:
-                
                 if isinstance(wdl_type, WDL.Type.File) and not output.type.optional:
-                        if isinstance(
-                            output_metadata,
-                            dict) and "vidarr_label" in output_metadata:
-                            return "file-with-labels"
-       
+                    return "file-with-labels"
+                elif isinstance(wdl_type, WDL.Type.File) and output.type.optional:
+                    return "optional-file-with-labels"
                 elif vidarr_type == "file-with-labels":
                     vidarr_label = WDL.Expr.String(parts=['"', 'vidarr_label', '"'], pos=output.expr.right.items[0][0].pos)
                     vidarr_label_value = WDL.Expr.String(parts=['"', output_metadata['vidarr_label'], '"'], pos=output.expr.right.items[0][0].pos)
-                    
+
                     # Extracting existing entries from output.expr.right
                     existing_entries = output.expr.right.items
 
@@ -141,7 +138,7 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
                     output.expr.right = new_map
 
                 else:
-                    print("Warning: a label is assigned to a type other than file or a file-with-labels")   
+                    raise ValueError(f"vidarr_label does not support {wdl_type}")
             return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
@@ -244,6 +241,55 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
 
         workflow_inputs[doc.workflow.name + "." + wf_input.name] = vidarr_type
 
+    output_meta = doc.workflow.meta.get("output_meta", {})
+
+    wdl_doc = doc.source_lines
+    add_empty_optional_pair_for_vidarr_labels = False
+    # Iterate over each output defined in the workflow
+    for output in doc.workflow.outputs:
+
+        # Check if the output name exists in the output metadata
+        if output.name in output_meta:
+            output_metadata = output_meta[output.name]
+
+            if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
+                vidarr_label = output_metadata['vidarr_label']
+
+                source_line = output.pos.line - 1
+                start_position = output.pos.column - 1
+                end_position = output.pos.end_column - 1
+
+                if isinstance(output.type, WDL.Type.File) and not output.type.optional:
+                    output_line = (f'Pair[File, Map[String, String]] {output.name} = '
+                                   f'({output.expr}, {{"vidarr_label": "{vidarr_label}"}})')
+                elif isinstance(output.type, WDL.Type.File) and output.type.optional:
+                    # Here we need to convert File? to Pair[File, Map[String,String]]?, but the WDL workflow that we are working
+                    # with does not have a Pair[File, Map[String,String]]? to reference, and nor does Cromwell (WDL 1.0) support
+                    # "None". So we create/inject an empty_optional_pair (see add_empty_optional_pair_for_vidarr_labels block) and
+                    # reference this if the output file we're considering is not defined (optional) and we need to return an
+                    # empty optional Pair[...]?.
+                    # In the future if Cromwell supports WDL 1.2, this can be updated to:
+                    # Pair[File, Map[String,String]]? maybeOutputPair =
+                    #   if defined(maybeOutputFile) ( select_first([maybeOutputFile]), {"vidarr_label", vidarr_label_value} )
+                    #   else None
+                    # and the add_empty_optional_pair_for_vidarr_labels block removed.
+                    add_empty_optional_pair_for_vidarr_labels = True
+                    output_line = (f'Pair[File, Map[String,String]]? {output.name} = '
+                                   f'if defined({output.expr}) then '
+                                   f'(select_first([{output.expr}]), {{"vidarr_label": "{vidarr_label}"}}) '
+                                   f'else empty_optional_pair')
+                else:
+                    raise ValueError(f"vidarr_label does not support {output.type}")
+
+                wdl_doc[source_line] = wdl_doc[source_line][:start_position] + output_line + wdl_doc[source_line][end_position + 1:]
+
+    if add_empty_optional_pair_for_vidarr_labels:
+        workflow_section_end_position = doc.workflow.pos.end_line - 1
+        # if(...) Pair[...] empty_optional_pair results in the type for empty_optional_pair being updated to Pair[...]?
+        # see https://github.com/openwdl/wdl/blob/legacy/versions/1.0/SPEC.md#conditionals for more details
+        output_line = f'if (false) {{ Pair[File, Map[String,String]] empty_optional_pair = ("",{{}}) }}'
+        wdl_doc.insert(workflow_section_end_position - 1, output_line)
+
     workflow = {
         'language': 'WDL_' + str(
             doc.wdl_version).replace(
@@ -254,62 +300,9 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                 read_output(output)
             for output in doc.workflow.outputs},
         'parameters': workflow_inputs,
-        'workflow': doc.source_text,
+        'workflow': '\n'.join(wdl_doc),
         'accessoryFiles': {
             imported.uri: imported.doc.source_text for imported in doc.imports}}
-    
-    output_meta = doc.workflow.meta.get("output_meta", {})
-
-    output_lines = []
-
-    # Iterate over each output defined in the workflow
-    for output in doc.workflow.outputs:
-
-        output_line = str(output)
-
-        # Check if the output name exists in the output metadata
-        if output.name in output_meta:
-            output_metadata = output_meta[output.name]
-
-            if isinstance(output_metadata, dict) and 'vidarr_label' in output_metadata:
-                vidarr_label = output_metadata['vidarr_label']
-
-                if isinstance(output.type, WDL.Type.File) and not output.type.optional:
-
-                    # Construct the modified output line
-                    output_line = f"   Pair[File, Map[String, String]] {output.name} = ({output.expr}, {{\"vidarr_label\": \"{vidarr_label}\"}})"
-                    
-                elif isinstance(output.type, WDL.Type.Pair) and \
-                    isinstance(output.type.left_type, WDL.Type.File) and \
-                    isinstance(output.type.right_type, WDL.Type.Map):
-
-                    output_line = f"    Pair[File, Map[String, String]] {output.name} = {output.expr}"
-
-        # Append output lines to a consistently updated list
-        output_lines.append(output_line)
-
-    # Define the pattern for searching and replacing the output block
-    pattern = r"(?:workflow)([\s\S]*?)(?:output\s*{)([\s\S]*?)(?:\}\s*\n)"
-
-    # Search for the pattern in the workflow
-    match = re.search(pattern, workflow['workflow'], re.DOTALL)
-
-    # If the pattern is found, perform the replacement
-    if match:
-
-        # Extracting the part of the workflow string where the output block is located
-        output_block_start = match.start(2)
-        output_block_end = match.end(2)
-        output_block_text = match.group(2)
-
-        # Join all outputs
-        modified_output_block_text = "\n".join(output_lines)
-
-        # Replace the output block text in the workflow
-        modified_workflow_text = workflow['workflow'][:output_block_start] + modified_output_block_text + workflow['workflow'][output_block_end:]
-
-        # Update the workflow text with the modified output block
-        workflow['workflow'] = modified_workflow_text
 
     return workflow
 

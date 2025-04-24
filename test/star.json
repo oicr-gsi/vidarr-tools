@@ -1,168 +1,168 @@
 {
-  "language": "WDL_1_0",
-  "outputs": {
-    "star.starBam": "file",
-    "star.starIndex": "file",
-    "star.transcriptomeBam": "file",
-    "star.starChimeric": "file",
-    "star.geneReadFile": "file"
-  },
-  "parameters": {
-    "star.inputGroups": {
-      "is": "list",
-      "inner": {
-        "is": "object",
-        "fields": {
-          "fastqR1": "file",
-          "fastqR2": "file",
-          "readGroup": "string"
-        }
-      }
+    "accessoryFiles": {},
+    "language": "WDL_1_0",
+    "outputs": {
+        "star.geneReadFile": "file",
+        "star.starBam": "file",
+        "star.starChimeric": "file",
+        "star.starIndex": "file",
+        "star.transcriptomeBam": "file"
     },
-    "star.outputFileNamePrefix": "string",
-    "star.test": {
-      "is": "object",
-      "fields": {
-        "optionalContent": {
-          "is": "optional",
-          "inner": "file"
+    "parameters": {
+        "star.indexBam.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
         },
-        "content": "file"
-      }
+        "star.indexBam.modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.indexBam.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.inputGroups": {
+            "inner": {
+                "fields": {
+                    "fastqR1": "file",
+                    "fastqR2": "file",
+                    "readGroup": "string"
+                },
+                "is": "object"
+            },
+            "is": "list"
+        },
+        "star.outputFileNamePrefix": "string",
+        "star.runStar.addParam": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.alignIntMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.alignMatGapMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.alignSJDBOvMin": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimJunOvMin": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimMulmapNmax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimMulmapScoRan": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimNonchimScoDMin": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimOutJunForm": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimOutType": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.chimScoJunNonGTAG": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimScoreDropMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimScoreSeparation": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimSegmentReadGapMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimSegmin": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.chimericjunctionSuffix": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.genereadSuffix": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.genomeIndexDir": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.jobMemory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.multiMax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.outFilterMultimapNmax": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.peOvMMp": {
+            "inner": "floating",
+            "is": "optional"
+        },
+        "star.runStar.peOvNbasesMin": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.saSparsed": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.starSuffix": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.runStar.transcriptomeSuffix": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "star.runStar.uniqMAPQ": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "star.test": {
+            "fields": {
+                "content": "file",
+                "optionalContent": {
+                    "inner": "file",
+                    "is": "optional"
+                }
+            },
+            "is": "object"
+        }
     },
-    "star.runStar.genomeIndexDir": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.starSuffix": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.transcriptomeSuffix": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.chimericjunctionSuffix": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.genereadSuffix": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.addParam": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.chimOutType": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.runStar.outFilterMultimapNmax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimScoreDropMax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.uniqMAPQ": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.saSparsed": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.multiMax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimSegmin": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimJunOvMin": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.alignSJDBOvMin": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.alignMatGapMax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.alignIntMax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimMulmapScoRan": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimScoJunNonGTAG": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimScoreSeparation": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimMulmapNmax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimNonchimScoDMin": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimOutJunForm": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.peOvNbasesMin": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.chimSegmentReadGapMax": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.peOvMMp": {
-      "is": "optional",
-      "inner": "floating"
-    },
-    "star.runStar.threads": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.runStar.timeout": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.indexBam.jobMemory": {
-      "is": "optional",
-      "inner": "integer"
-    },
-    "star.indexBam.modules": {
-      "is": "optional",
-      "inner": "string"
-    },
-    "star.indexBam.timeout": {
-      "is": "optional",
-      "inner": "integer"
-    }
-  },
-  "workflow": "version 1.0\n\nstruct InputGroup {\n  File fastqR1\n  File fastqR2\n  String readGroup\n}\n\nstruct Test {\n  File? optionalContent\n  File content\n}\n\nworkflow star {\n  input {\n    Array[InputGroup] inputGroups\n    String outputFileNamePrefix\n    Test test\n  }\n\n  scatter (ig in inputGroups) {\n    File read1s       = ig.fastqR1\n    File read2s       = ig.fastqR2\n    String readGroups = ig.readGroup\n  }\n\n  parameter_meta {\n    inputGroups: \"Array of fastq files to align with STAR and the merged filename\"\n    outputFileNamePrefix: \"Prefix for filename\"\n  }\n\n  call runStar {\n    input:\n    read1s = read1s,\n    read2s = read2s,\n    readGroups = readGroups,\n    outputFileNamePrefix = outputFileNamePrefix,\n    test = test\n  }\n\n  call indexBam {\n   input:\n   inputBam = runStar.outputBam }\n\n  meta {\n   author: \"Peter Ruzanov, Alexander Fortuna\"\n   email: \"peter.ruzanov@oicr.on.ca, alexander.fortuna@oicr.on.ca\"\n   description: \"STAR 2.1\"\n   dependencies: [\n      {\n        name: \"star/2.7.6a\",\n        url: \"https://github.com/alexdobin/STAR\"\n      },\n      {\n        name: \"picard/2.19.2\",\n        url: \"https://broadinstitute.github.io/picard/\"\n      }\n    ]\n}\n\noutput {File starBam = runStar.outputBam\nFile starIndex = indexBam.outputBai\nFile transcriptomeBam = runStar.transcriptomeBam\nFile starChimeric = runStar.outputChimeric\nFile geneReadFile = runStar.geneReads}\n}\n\n# ==========================================\n#  TASK 1 of 2: run STAR aligner\n# ==========================================\ntask runStar {\ninput {\n  Test test\n  Array[File]+ read1s\n  Array[File]+ read2s\n  Array[String]+ readGroups\n  String genomeIndexDir = \"$HG38_STAR_INDEX100_ROOT/\"\n  String outputFileNamePrefix\n  String starSuffix = \"Aligned.sortedByCoord.out\"\n  String transcriptomeSuffix = \"Aligned.toTranscriptome.out\"\n  String chimericjunctionSuffix = \"Chimeric.out\"\n  String genereadSuffix = \"ReadsPerGene.out\"\n  String? addParam\n  String modules = \"star/2.7.6a hg38-star-index100/2.7.6a\"\n  String chimOutType = \"WithinBAM HardClip Junctions\"\n  Int outFilterMultimapNmax = 50\n  Int chimScoreDropMax = 30\n  Int uniqMAPQ = 255\n  Int saSparsed = 2\n  Int multiMax = -1\n  Int chimSegmin = 10\n  Int chimJunOvMin = 10\n  Int alignSJDBOvMin = 10\n  Int alignMatGapMax = 100000\n  Int alignIntMax = 100000\n  Int chimMulmapScoRan = 3\n  Int chimScoJunNonGTAG = 0\n  Int chimScoreSeparation = 1\n  Int chimMulmapNmax = 50\n  Int chimNonchimScoDMin = 10\n  Int? chimOutJunForm\n  Int peOvNbasesMin = 10\n  Int chimSegmentReadGapMax = 3\n  Float peOvMMp = 0.1\n  Int threads = 6\n  Int jobMemory = 64\n  Int timeout = 72\n}\n\nparameter_meta {\n read1s: \"array of read1s\"\n read2s: \"array of read2s\"\n readGroups: \"array of readgroup lines\"\n starSuffix: \"Suffix for sorted file\"\n genomeIndexDir: \"Path to STAR index\"\n transcriptomeSuffix: \"Suffix for transcriptome-aligned file\"\n chimericjunctionSuffix: \"Suffix for chimeric junction file\"\n genereadSuffix: \"ReadsPerGene file suffix\"\n addParam: \"Additional STAR parameters\"\n modules: \"modules for running STAR\"\n uniqMAPQ: \"Score for unique mappers\"\n saSparsed: \"saSparsed parameter for STAR\"\n multiMax: \"multiMax parameter for STAR\"\n chimSegmin: \"minimum length of chimeric segment length\"\n chimJunOvMin: \"minimum overhang for a chimeric junction\"\n chimOutType: \"Indicate where chimeric reads are to be written\"\n alignSJDBOvMin: \"minimum overhang for annotated spliced alignments\"\n alignMatGapMax: \"maximum gap between two mates\"\n alignIntMax: \"maximum intron size\"\n chimMulmapScoRan: \"the score range for multi-mapping chimeras below the best chimeric score\"\n chimScoJunNonGTAG: \"penalty for a non-GTAG chimeric junction\"\n outFilterMultimapNmax: \"max number of multiple alignments allowed for a read: if exceeded, the read is considered unmapped\"\n chimMulmapNmax: \"maximum number of chimeric multi-alignments\"\n chimNonchimScoDMin: \"to trigger chimeric detection, the drop in the best non-chimeric alignment score with respect to the read length has to be greater than this value\"\n chimOutJunForm: \"flag to add metadata to chimeric junction output for functionality with starFusion - 1 for metadata, 0 for no metadata\"\n peOvNbasesMin: \"minimum number of overlap bases to trigger mates merging and realignment\"\n peOvMMp: \"maximum proportion of mismatched bases in the overlap area\"\n chimScoreDropMax: \"max drop (difference) of chimeric score (the sum of scores of allchimeric segments) from the read length\"\n chimScoreSeparation: \"minimum difference (separation) between the best chimeric score and the next one\"\n chimSegmentReadGapMax: \"maximum gap in the read sequence between chimeric segments\"\n threads: \"Requested CPU threads\"\n jobMemory: \"Memory allocated for this job\"\n timeout: \"hours before task timeout\"\n}\n\n# missing --clip3pAdapterSeq $adaptors\ncommand <<<\n set -euo pipefail\n\n STAR --twopassMode Basic \\\n      --genomeDir ~{genomeIndexDir} \\\n      --readFilesIn ~{sep=\",\" read1s} ~{sep=\",\" read2s} \\\n      --readFilesCommand zcat \\\n      --outFilterIntronMotifs RemoveNoncanonical \\\n      --outFileNamePrefix ~{outputFileNamePrefix}. \\\n      --outSAMmultNmax ~{multiMax} \\\n      --outSAMattrRGline ~{sep=\" , \" readGroups} \\\n      --outSAMstrandField intronMotif \\\n      --outSAMmapqUnique  ~{uniqMAPQ} \\\n      --outSAMunmapped Within KeepPairs \\\n      --genomeSAsparseD ~{saSparsed} \\\n      --outSAMtype BAM SortedByCoordinate \\\n      --quantMode TranscriptomeSAM GeneCounts \\\n      --chimSegmentMin ~{chimSegmin} \\\n      --chimJunctionOverhangMin ~{chimJunOvMin} \\\n      --alignSJDBoverhangMin ~{alignSJDBOvMin} \\\n      --alignMatesGapMax ~{alignMatGapMax} \\\n      --alignIntronMax ~{alignIntMax} \\\n      --alignSJstitchMismatchNmax 5 -1 5 5 \\\n      --chimMultimapScoreRange ~{chimMulmapScoRan} \\\n      --chimScoreJunctionNonGTAG ~{chimScoJunNonGTAG} \\\n      --chimMultimapNmax ~{chimMulmapNmax} \\\n      --chimNonchimScoreDropMin ~{chimNonchimScoDMin} \\\n      ~{\"--chimOutJunctionFormat \" + chimOutJunForm} \\\n      --peOverlapNbasesMin ~{peOvNbasesMin} \\\n      --peOverlapMMp ~{peOvMMp} \\\n      --outFilterMultimapNmax ~{outFilterMultimapNmax} \\\n      --runThreadN ~{threads} --chimOutType ~{chimOutType} \\\n      --chimScoreDropMax ~{chimScoreDropMax} \\\n      --chimScoreSeparation ~{chimScoreSeparation} \\\n      --chimSegmentReadGapMax ~{chimSegmentReadGapMax} ~{addParam}\n\n awk 'NR<2{print $0;next}{print $0| \"sort -V\"}' ~{outputFileNamePrefix}.~{chimericjunctionSuffix}.junction \\\n > tmp && mv tmp ~{outputFileNamePrefix}.~{chimericjunctionSuffix}.junction\n\n>>>\n\nruntime {\n  memory:  \"~{jobMemory} GB\"\n  modules: \"~{modules}\"\n  cpu:     \"~{threads}\"\n  timeout: \"~{timeout}\"\n}\n\noutput {\n File outputBam        = \"~{outputFileNamePrefix}.~{starSuffix}.bam\"\n File outputChimeric   = \"~{outputFileNamePrefix}.~{chimericjunctionSuffix}.junction\"\n File transcriptomeBam = \"~{outputFileNamePrefix}.~{transcriptomeSuffix}.bam\"\n File geneReads        = \"~{outputFileNamePrefix}.~{genereadSuffix}.tab\"\n}\n\nmeta {\n  output_meta: {\n    outputBam:        \"Output bam aligned to genome\",\n      outputChimeric:   \"Output chimeric junctions file\",\n    transcriptomeBam: \"Output bam aligned to transcriptome\",\n    geneReads:        \"Output raw read counts per transcript\"\n  }\n}\n\n}\n\n# ==========================================\n#  TASK 2 of 2: index bam file with picard\n# ==========================================\ntask indexBam {\ninput {\n  File  inputBam\n  Int   jobMemory = 12\n  String modules  = \"picard/2.19.2\"\n  Int timeout     = 48\n}\n\nparameter_meta {\n inputBam:  \"Input bam file\"\n jobMemory: \"Memory allocated indexing job\"\n modules:   \"modules for running indexing job\"\n timeout:   \"hours before task timeout\"\n}\n\ncommand <<<\n java -Xmx~{jobMemory-6}G -jar $PICARD_ROOT/picard.jar BuildBamIndex \\\n                              VALIDATION_STRINGENCY=LENIENT \\\n                              OUTPUT=\"~{basename(inputBam, '.bam')}.bai\" \\\n                              INPUT=~{inputBam}\n>>>\n\nruntime {\n  memory: \"~{jobMemory} GB\"\n  modules: \"~{modules}\"\n  timeout: \"~{timeout}\"\n}\n\noutput {\n  File outputBai = \"~{basename(inputBam, '.bam')}.bai\"\n}\n\nmeta {\n  output_meta: {\n    outputBai: \"Output index file for bam aligned to genome\"\n  }\n}\n\n}",
-  "accessoryFiles": {}
+    "workflow": "version 1.0\n\nstruct InputGroup {\n  File fastqR1\n  File fastqR2\n  String readGroup\n}\n\nstruct Test {\n  File? optionalContent\n  File content\n}\n\nworkflow star {\n  input {\n    Array[InputGroup] inputGroups\n    String outputFileNamePrefix\n    Test test\n  }\n\n  scatter (ig in inputGroups) {\n    File read1s       = ig.fastqR1\n    File read2s       = ig.fastqR2\n    String readGroups = ig.readGroup\n  }\n\n  parameter_meta {\n    inputGroups: \"Array of fastq files to align with STAR and the merged filename\"\n    outputFileNamePrefix: \"Prefix for filename\"\n  }\n\n  call runStar {\n    input:\n    read1s = read1s,\n    read2s = read2s,\n    readGroups = readGroups,\n    outputFileNamePrefix = outputFileNamePrefix,\n    test = test\n  }\n\n  call indexBam {\n   input:\n   inputBam = runStar.outputBam }\n\n  meta {\n   author: \"Peter Ruzanov, Alexander Fortuna\"\n   email: \"peter.ruzanov@oicr.on.ca, alexander.fortuna@oicr.on.ca\"\n   description: \"STAR 2.1\"\n   dependencies: [\n      {\n        name: \"star/2.7.6a\",\n        url: \"https://github.com/alexdobin/STAR\"\n      },\n      {\n        name: \"picard/2.19.2\",\n        url: \"https://broadinstitute.github.io/picard/\"\n      }\n    ]\n}\n\noutput {\n  File starBam          = runStar.outputBam\n  File starIndex        = indexBam.outputBai\n  File transcriptomeBam = runStar.transcriptomeBam\n  File starChimeric     = runStar.outputChimeric\n  File geneReadFile     = runStar.geneReads\n }\n}\n\n# ==========================================\n#  TASK 1 of 2: run STAR aligner\n# ==========================================\ntask runStar {\ninput {\n  Test test\n  Array[File]+ read1s\n  Array[File]+ read2s\n  Array[String]+ readGroups\n  String genomeIndexDir = \"$HG38_STAR_INDEX100_ROOT/\"\n  String outputFileNamePrefix\n  String starSuffix = \"Aligned.sortedByCoord.out\"\n  String transcriptomeSuffix = \"Aligned.toTranscriptome.out\"\n  String chimericjunctionSuffix = \"Chimeric.out\"\n  String genereadSuffix = \"ReadsPerGene.out\"\n  String? addParam\n  String modules = \"star/2.7.6a hg38-star-index100/2.7.6a\"\n  String chimOutType = \"WithinBAM HardClip Junctions\"\n  Int outFilterMultimapNmax = 50\n  Int chimScoreDropMax = 30\n  Int uniqMAPQ = 255\n  Int saSparsed = 2\n  Int multiMax = -1\n  Int chimSegmin = 10\n  Int chimJunOvMin = 10\n  Int alignSJDBOvMin = 10\n  Int alignMatGapMax = 100000\n  Int alignIntMax = 100000\n  Int chimMulmapScoRan = 3\n  Int chimScoJunNonGTAG = 0\n  Int chimScoreSeparation = 1\n  Int chimMulmapNmax = 50\n  Int chimNonchimScoDMin = 10\n  Int? chimOutJunForm\n  Int peOvNbasesMin = 10\n  Int chimSegmentReadGapMax = 3\n  Float peOvMMp = 0.1\n  Int threads = 6\n  Int jobMemory = 64\n  Int timeout = 72\n}\n\nparameter_meta {\n read1s: \"array of read1s\"\n read2s: \"array of read2s\"\n readGroups: \"array of readgroup lines\"\n starSuffix: \"Suffix for sorted file\"\n genomeIndexDir: \"Path to STAR index\"\n transcriptomeSuffix: \"Suffix for transcriptome-aligned file\"\n chimericjunctionSuffix: \"Suffix for chimeric junction file\"\n genereadSuffix: \"ReadsPerGene file suffix\"\n addParam: \"Additional STAR parameters\"\n modules: \"modules for running STAR\"\n uniqMAPQ: \"Score for unique mappers\"\n saSparsed: \"saSparsed parameter for STAR\"\n multiMax: \"multiMax parameter for STAR\"\n chimSegmin: \"minimum length of chimeric segment length\"\n chimJunOvMin: \"minimum overhang for a chimeric junction\"\n chimOutType: \"Indicate where chimeric reads are to be written\"\n alignSJDBOvMin: \"minimum overhang for annotated spliced alignments\"\n alignMatGapMax: \"maximum gap between two mates\"\n alignIntMax: \"maximum intron size\"\n chimMulmapScoRan: \"the score range for multi-mapping chimeras below the best chimeric score\"\n chimScoJunNonGTAG: \"penalty for a non-GTAG chimeric junction\"\n outFilterMultimapNmax: \"max number of multiple alignments allowed for a read: if exceeded, the read is considered unmapped\"\n chimMulmapNmax: \"maximum number of chimeric multi-alignments\"\n chimNonchimScoDMin: \"to trigger chimeric detection, the drop in the best non-chimeric alignment score with respect to the read length has to be greater than this value\"\n chimOutJunForm: \"flag to add metadata to chimeric junction output for functionality with starFusion - 1 for metadata, 0 for no metadata\"\n peOvNbasesMin: \"minimum number of overlap bases to trigger mates merging and realignment\"\n peOvMMp: \"maximum proportion of mismatched bases in the overlap area\"\n chimScoreDropMax: \"max drop (difference) of chimeric score (the sum of scores of allchimeric segments) from the read length\"\n chimScoreSeparation: \"minimum difference (separation) between the best chimeric score and the next one\"\n chimSegmentReadGapMax: \"maximum gap in the read sequence between chimeric segments\"\n threads: \"Requested CPU threads\"\n jobMemory: \"Memory allocated for this job\"\n timeout: \"hours before task timeout\"\n}\n\n# missing --clip3pAdapterSeq $adaptors\ncommand <<<\n set -euo pipefail\n\n STAR --twopassMode Basic \\\n      --genomeDir ~{genomeIndexDir} \\\n      --readFilesIn ~{sep=\",\" read1s} ~{sep=\",\" read2s} \\\n      --readFilesCommand zcat \\\n      --outFilterIntronMotifs RemoveNoncanonical \\\n      --outFileNamePrefix ~{outputFileNamePrefix}. \\\n      --outSAMmultNmax ~{multiMax} \\\n      --outSAMattrRGline ~{sep=\" , \" readGroups} \\\n      --outSAMstrandField intronMotif \\\n      --outSAMmapqUnique  ~{uniqMAPQ} \\\n      --outSAMunmapped Within KeepPairs \\\n      --genomeSAsparseD ~{saSparsed} \\\n      --outSAMtype BAM SortedByCoordinate \\\n      --quantMode TranscriptomeSAM GeneCounts \\\n      --chimSegmentMin ~{chimSegmin} \\\n      --chimJunctionOverhangMin ~{chimJunOvMin} \\\n      --alignSJDBoverhangMin ~{alignSJDBOvMin} \\\n      --alignMatesGapMax ~{alignMatGapMax} \\\n      --alignIntronMax ~{alignIntMax} \\\n      --alignSJstitchMismatchNmax 5 -1 5 5 \\\n      --chimMultimapScoreRange ~{chimMulmapScoRan} \\\n      --chimScoreJunctionNonGTAG ~{chimScoJunNonGTAG} \\\n      --chimMultimapNmax ~{chimMulmapNmax} \\\n      --chimNonchimScoreDropMin ~{chimNonchimScoDMin} \\\n      ~{\"--chimOutJunctionFormat \" + chimOutJunForm} \\\n      --peOverlapNbasesMin ~{peOvNbasesMin} \\\n      --peOverlapMMp ~{peOvMMp} \\\n      --outFilterMultimapNmax ~{outFilterMultimapNmax} \\\n      --runThreadN ~{threads} --chimOutType ~{chimOutType} \\\n      --chimScoreDropMax ~{chimScoreDropMax} \\\n      --chimScoreSeparation ~{chimScoreSeparation} \\\n      --chimSegmentReadGapMax ~{chimSegmentReadGapMax} ~{addParam}\n\n awk 'NR<2{print $0;next}{print $0| \"sort -V\"}' ~{outputFileNamePrefix}.~{chimericjunctionSuffix}.junction \\\n > tmp && mv tmp ~{outputFileNamePrefix}.~{chimericjunctionSuffix}.junction\n\n>>>\n\nruntime {\n  memory:  \"~{jobMemory} GB\"\n  modules: \"~{modules}\"\n  cpu:     \"~{threads}\"\n  timeout: \"~{timeout}\"\n}\n\noutput {\n File outputBam        = \"~{outputFileNamePrefix}.~{starSuffix}.bam\"\n File outputChimeric   = \"~{outputFileNamePrefix}.~{chimericjunctionSuffix}.junction\"\n File transcriptomeBam = \"~{outputFileNamePrefix}.~{transcriptomeSuffix}.bam\"\n File geneReads        = \"~{outputFileNamePrefix}.~{genereadSuffix}.tab\"\n}\n\nmeta {\n  output_meta: {\n    outputBam:        \"Output bam aligned to genome\",\n      outputChimeric:   \"Output chimeric junctions file\",\n    transcriptomeBam: \"Output bam aligned to transcriptome\",\n    geneReads:        \"Output raw read counts per transcript\"\n  }\n}\n\n}\n\n# ==========================================\n#  TASK 2 of 2: index bam file with picard\n# ==========================================\ntask indexBam {\ninput {\n  File  inputBam\n  Int   jobMemory = 12\n  String modules  = \"picard/2.19.2\"\n  Int timeout     = 48\n}\n\nparameter_meta {\n inputBam:  \"Input bam file\"\n jobMemory: \"Memory allocated indexing job\"\n modules:   \"modules for running indexing job\"\n timeout:   \"hours before task timeout\"\n}\n\ncommand <<<\n java -Xmx~{jobMemory-6}G -jar $PICARD_ROOT/picard.jar BuildBamIndex \\\n                              VALIDATION_STRINGENCY=LENIENT \\\n                              OUTPUT=\"~{basename(inputBam, '.bam')}.bai\" \\\n                              INPUT=~{inputBam}\n>>>\n\nruntime {\n  memory: \"~{jobMemory} GB\"\n  modules: \"~{modules}\"\n  timeout: \"~{timeout}\"\n}\n\noutput {\n  File outputBai = \"~{basename(inputBam, '.bam')}.bai\"\n}\n\nmeta {\n  output_meta: {\n    outputBai: \"Output index file for bam aligned to genome\"\n  }\n}\n\n}"
 }
