@@ -263,6 +263,16 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
                     output_line = (f'Pair[File, Map[String, String]] {output.name} = '
                                    f'({output.expr}, {{"vidarr_label": "{vidarr_label}"}})')
                 elif isinstance(output.type, WDL.Type.File) and output.type.optional:
+                    # Here we need to convert File? to Pair[File, Map[String,String]]?, but the WDL workflow that we are working
+                    # with does not have a Pair[File, Map[String,String]]? to reference, and nor does Cromwell (WDL 1.0) support
+                    # "None". So we create/inject an empty_optional_pair (see add_empty_optional_pair_for_vidarr_labels block) and
+                    # reference this if the output file we're considering is not defined (optional) and we need to return an
+                    # empty optional Pair[...]?.
+                    # In the future if Cromwell supports WDL 1.2, this can be updated to:
+                    # Pair[File, Map[String,String]]? maybeOutputPair =
+                    #   if defined(maybeOutputFile) ( select_first([maybeOutputFile]), {"vidarr_label", vidarr_label_value} )
+                    #   else None
+                    # and the add_empty_optional_pair_for_vidarr_labels block removed.
                     add_empty_optional_pair_for_vidarr_labels = True
                     output_line = (f'Pair[File, Map[String,String]]? {output.name} = '
                                    f'if defined({output.expr}) then '
@@ -275,6 +285,8 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
 
     if add_empty_optional_pair_for_vidarr_labels:
         workflow_section_end_position = doc.workflow.pos.end_line - 1
+        # if(...) Pair[...] empty_optional_pair results in the type for empty_optional_pair being updated to Pair[...]?
+        # see https://github.com/openwdl/wdl/blob/legacy/versions/1.0/SPEC.md#conditionals for more details
         output_line = f'if (false) {{ Pair[File, Map[String,String]] empty_optional_pair = ("",{{}}) }}'
         wdl_doc.insert(workflow_section_end_position - 1, output_line)
 
