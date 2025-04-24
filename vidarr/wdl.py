@@ -138,7 +138,7 @@ def _map_output(doc: WDL.Document, output: WDL.Decl, wdl_type: WDL.Type.Base, al
                     output.expr.right = new_map
 
                 else:
-                    raise ValueError(f"vidarr_labels does not support {wdl_type}")
+                    raise ValueError(f"vidarr_label does not support {wdl_type}")
             return vidarr_type
     if allow_complex and isinstance(wdl_type, WDL.Type.Array):
         (inner,) = wdl_type.parameters
