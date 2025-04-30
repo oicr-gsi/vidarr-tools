@@ -288,7 +288,7 @@ def convert(doc: WDL.Document) -> Dict[str, Any]:
         # if(...) Pair[...] empty_optional_pair results in the type for empty_optional_pair being updated to Pair[...]?
         # see https://github.com/openwdl/wdl/blob/legacy/versions/1.0/SPEC.md#conditionals for more details
         output_line = f'if (false) {{ Pair[File, Map[String,String]] empty_optional_pair = ("",{{}}) }}'
-        wdl_doc.insert(workflow_section_end_position - 1, output_line)
+        wdl_doc.insert(workflow_section_end_position, output_line)
 
     workflow = {
         'language': 'WDL_' + str(
