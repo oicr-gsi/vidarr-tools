@@ -44,8 +44,16 @@ esac
 RELEASE_VERSION=${MAJOR}.${MINOR}.${PATCH}
 
 echo "${RELEASE_VERSION}" > ${VERSION_FILE}
-PIPENV_VENV_IN_PROJECT=1 pipenv --quiet install --dev
+
+# remove existing venv to reduce remove any build machine/environment specific issues
+pipenv --quiet --rm 2>/dev/null || true
+
+# install into project dir (ignored by .gitignore) and any installed ignore system deps
+PIPENV_VENV_IN_PROJECT=1 PIP_IGNORE_INSTALLED=1 pipenv --quiet install --dev
+
+# run unit tests
 pipenv --quiet run pytest
+
 git commit -a -m "Release ${RELEASE_VERSION}"
 git tag -a v${RELEASE_VERSION} -m "vidarr-tools v${RELEASE_VERSION} release"
 echo "${RELEASE_VERSION}+dev" > ${VERSION_FILE}
