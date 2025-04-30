@@ -1,0 +1,102 @@
+{
+    "accessoryFiles": {},
+    "language": "WDL_1_0",
+    "outputs": {
+        "methylDackel.extract_CHGbedgraph": "optional-file",
+        "methylDackel.extract_CHHbedgraph": "optional-file",
+        "methylDackel.extract_CpGbedgraph": "file",
+        "methylDackel.mbias_svg": "optional-file-with-labels",
+        "methylDackel.mbias_tsv": "optional-file-with-labels"
+    },
+    "parameters": {
+        "methylDackel.bai": "file",
+        "methylDackel.bam": "file",
+        "methylDackel.concatMbiasTsvFiles.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.concatMbiasTsvFiles.modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "methylDackel.concatMbiasTsvFiles.threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.concatMbiasTsvFiles.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.doMbias": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "methylDackel.extractChromosomes.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.extractChromosomes.modules": {
+            "inner": "string",
+            "is": "optional"
+        },
+        "methylDackel.extractChromosomes.threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.extractChromosomes.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.doCHG": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.doCHH": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.mergeContext": {
+            "inner": "boolean",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.minDepth": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.minimumMAPQ": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.minimumuQualityPhred": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelExtract.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelMbias.memory": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelMbias.threads": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.methylDackelMbias.timeout": {
+            "inner": "integer",
+            "is": "optional"
+        },
+        "methylDackel.outputFileNamePrefix": "string",
+        "methylDackel.reference": "string"
+    },
+    "workflow": "version 1.0\n\nstruct GenomeResources {\n    String fasta\n    String genomeModule\n}\n\nworkflow methylDackel {\n    input {\n        File bam\n        File bai\n        String outputFileNamePrefix\n        String reference\n        Boolean doMbias = true\n    }\n\n    parameter_meta {\n        bam: \"The bam file for methyl analysis\"\n        bai: \"The index for input bam\"\n        outputFileNamePrefix: \"Prefix for output files\"\n        reference: \"The genome reference build\"\n        doMbias: \"Whether run Mbias or not \"\n    }\n\n    Map[String, GenomeResources] resources = {\n        \"hg38\": {\n            \"fasta\": \"$HG38_EM_SEQ_ROOT/hg38_random.fa\",\n            \"genomeModule\": \"hg38-em-seq/p12-2022-10-17\"\n        }\n    }\n\n    GenomeResources ref = resources[reference]\n\n    call methylDackelExtract {\n        input:\n            bam = bam,\n            bai = bai,\n            outputFileNamePrefix = outputFileNamePrefix,\n            fasta = ref.fasta,\n            modules = \"methyldackel/0.6.1 ~{ref.genomeModule}\"\n    }\n\n    if ( doMbias ){\n        call extractChromosomes{\n            input:\n            bam = bam\n        }\n\n        scatter ( chr in extractChromosomes.chromosomes ) {\n            call methylDackelMbias {\n                input:\n                    bam = bam,\n                    bai = bai,\n                    chr = chr,\n                    fasta = ref.fasta,\n                    outputFileNamePrefix = outputFileNamePrefix,\n                    modules = \"methyldackel/0.6.1 samtools/1.16.1 ~{ref.genomeModule}\"\n            }\n        }      \n    \n        Array[File?] mbiasTsvs = methylDackelMbias.mbias_tsv\n        Array[File?] mbiasSvg = methylDackelMbias.mbias_svg_files\n\n        if (length(mbiasSvg) > 0) {\n            File? mbias_svg_output = mbiasSvg[0]\n        }\n\n        call concatMbiasTsvFiles {\n            input:\n                inputTsvs = mbiasTsvs,\n                outputFileNamePrefix = outputFileNamePrefix\n        }\n    }\n\n    meta {\n        author: \"Gavin Peng\"\n        email: \"gpeng@oicr.on.ca\"\n        description: \"Workflow to run methylDackel, will process a coordinate-sorted and indexed BAM or CRAM file containing some form of BS-seq or EM-seq alignments and extract per-base methylation metrics from them. The extract task generates bedGraph files, by default generates only CpG metrics, option can be set to also generate CHH and CHG metrics. Mbias task generates tsv file for methylation bias metrics and a svg graph for visualizing mbias (only for chromosome 1 here).\"\n        dependencies: [\n         {\n            name: \"methyldackel/0.6.1\",\n            url: \"https://github.com/dpryan79/MethylDackel\"\n                        }\n        ]\n        output_meta: {\n            extract_bedgraph: {\n                description: \"bedGraph output from methylDackelExtract\",\n                vidarr_label: \"extract_bedgraph\"\n            },\n            mbias_tsv: {\n                description: \"mbias tsv output from methylDackelMbias\",\n                vidarr_label: \"mbias_tsv\"\n            },\n            mbias_svg: {\n                description: \"svg plot files from methylDackelMbias\",\n                vidarr_label: \"mbias_svg\"\n            }\n        }\n    }\n\n    output {\n        File extract_CpGbedgraph = methylDackelExtract.CpG_graph\n        File? extract_CHGbedgraph = methylDackelExtract.CHG_graph\n        File? extract_CHHbedgraph = methylDackelExtract.CHH_graph\n        Pair[File, Map[String,String]]? mbias_tsv = if defined(concatMbiasTsvFiles.combinedTsv) then (select_first([concatMbiasTsvFiles.combinedTsv]), {\"vidarr_label\": \"mbias_tsv\"}) else empty_optional_pair\n        Pair[File, Map[String,String]]? mbias_svg = if defined(mbias_svg_output) then (select_first([mbias_svg_output]), {\"vidarr_label\": \"mbias_svg\"}) else empty_optional_pair\n    }\nif (false) { Pair[File, Map[String,String]] empty_optional_pair = (\"\",{}) }\n}\n\ntask extractChromosomes {\n    input {\n        File bam\n        Int timeout = 1\n        Int memory = 1\n        Int threads = 1\n        String modules = \"samtools/1.16.1\"\n    }\n\n    parameter_meta {\n        timeout: \"The hours until the task is killed\"\n        memory: \"The GB of memory provided to the task\"\n        threads: \"The number of threads the task has access to\"\n        modules: \"The modules that will be loaded\"\n    }\n\n    command <<<\n        samtools view -H ~{bam} | grep @SQ | cut -f2 | sed 's/SN://' | grep -E -v '(_random|chrUn|chrM|MT|_alt|_fix|_decoy|_PATCH|_HSCHR|NC_|_EBV|EBV|phiX|pUC19|lambda|_scaffold)'\n    >>>\n\n    output {\n        Array[String] chromosomes = read_lines(stdout())\n    }\n\n    runtime {\n        modules: \"~{modules}\"\n        memory:  \"~{memory} GB\"\n        cpu:     \"~{threads}\"\n        timeout: \"~{timeout}\"\n    }\n}\n\ntask methylDackelExtract {\n    input {\n        File bam\n        File bai\n        String outputFileNamePrefix\n        String fasta\n        Boolean doCHH = false\n        Boolean doCHG = false\n        Boolean mergeContext = false\n        Int? minimumuQualityPhred\n        Int? minimumMAPQ\n        Int? minDepth \n        Int timeout = 8\n        Int memory = 16\n        Int threads = 8\n        String modules\n    }\n\n    parameter_meta {\n        bam: \"The bam file to analyze\"\n        bai: \"The .bai index of the bam file\"\n        outputFileNamePrefix: \"Output file name prefix\"\n        fasta: \"FastA file used for alignment\"\n        doCHH: \"whether enable CHH metrics\"\n        doCHG: \"whether enable CHG metrics\"\n        mergeContext: \"whether merge context in bedgraph\"\n        minimumuQualityPhred: \"minimumu sequencing quality phred score\"\n        minimumMAPQ: \"minimum MAPQ score\"\n        minDepth: \"region with minimum depth needed to be included in analysis\"\n        timeout: \"The hours until the task is killed\"\n        memory: \"The GB of memory provided to the task\"\n        threads: \"The number of threads the task has access to\"\n        modules: \"The modules that will be loaded\"\n    }\n    String optionCHH = if doCHH then \"--CHH\" else \"\"\n    String optionCHG = if doCHG then \"--CHG\" else \"\"\n    String optionMergeContext = if mergeContext then \"--mergeContext\" else \"\"\n    String filterMAPQ = if defined(minimumMAPQ) then \"-q ~{minimumMAPQ}\" else \"\"\n    String filterQalityPhred = if defined(minimumuQualityPhred) then \"-p ~{minimumuQualityPhred}\" else \"\"\n    String filterminDepth = if defined(minDepth) then \"--minDepth ~{minDepth}\" else \"\"\n\n     command <<<\n        set -euo pipefail\n        MethylDackel extract ~{filterMAPQ} ~{filterQalityPhred} ~{filterminDepth} ~{optionMergeContext} ~{optionCHH} ~{optionCHG} -@ ~{threads} ~{fasta} ~{bam} -o ~{outputFileNamePrefix}.methyldackel\n        \n    >>>\n\n    output {\n        File CpG_graph = \"~{outputFileNamePrefix}.methyldackel_CpG.bedGraph\"\n        File? CHG_graph = \"~{outputFileNamePrefix}.methyldackel_CHG.bedGraph\"\n        File? CHH_graph = \"~{outputFileNamePrefix}.methyldackel_CHH.bedGraph\"\n    }\n\n    meta {\n        output_meta: {\n            CpG_graph: \"The MethylDackel result bedGraph for CpG sequence context\",\n            CHG_graph: \"The MethylDackel result bedGraph for CHG sequence context\",\n            CHH_graph: \"The MethylDackel result bedGraph for CHH sequence context\"\n        }\n    }\n\n    runtime {\n        modules: \"~{modules}\"\n        memory:  \"~{memory} GB\"\n        cpu:     \"~{threads}\"\n        timeout: \"~{timeout}\"\n    }\n}\n\ntask methylDackelMbias {\n    input {\n        File bam\n        File bai\n        String chr\n        String fasta\n        String outputFileNamePrefix\n        String modules\n        Int timeout = 12\n        Int memory = 8\n        Int threads = 8\n    }\n\n    parameter_meta {\n        bam: \"The bam file to analyze\"\n        bai: \"The .bai index of the bam file\"\n        chr: \"The region to call methylDackel mbias\"\n        fasta: \"FastA file used for alignment\"\n        outputFileNamePrefix: \"Output file name prefix\"\n        timeout: \"The hours until the task is killed\"\n        memory: \"The GB of memory provided to the task\"\n        threads: \"The number of threads the task has access to\"\n        modules: \"The modules that will be loaded\"\n    }\n\n    command <<<\n        MethylDackel mbias --txt -r ~{chr} ~{fasta} ~{bam} ~{outputFileNamePrefix}.mbias > output_mbias.tsv\n        tar  -czf ~{outputFileNamePrefix}_mbias.svgs.tar.gz *.svg\n    >>>\n\n    output {\n        File? mbias_tsv = \"output_mbias.tsv\"\n        File? mbias_svg_files = \"~{outputFileNamePrefix}_mbias.svgs.tar.gz\"\n    }\n    \n    meta {\n        output_meta: {\n            mbias_tsv: \"mbias tsv output from methylDackelMbias\",\n            mbias_svg_files: \"svg plot files from methylDackelMbias\"\n        }\n    }\n    \n    runtime {\n        modules: \"~{modules}\"\n        memory:  \"~{memory} GB\"\n        cpu:     \"~{threads}\"\n        timeout: \"~{timeout}\"\n    }\n}\n\ntask concatMbiasTsvFiles {\n    input {\n        Array[File?] inputTsvs\n        String outputFileNamePrefix\n        Int timeout = 1\n        Int memory = 1\n        Int threads = 1\n        String modules = \"pandas/2.1.3\"\n    }\n    parameter_meta {\n        inputTsvs: \"Array of mbias tsv files\"\n        outputFileNamePrefix: \"Output file name prefix\"\n        timeout: \"The hours until the task is killed\"\n        memory: \"The GB of memory provided to the task\"\n        threads: \"The number of threads the task has access to\"\n        modules: \"The modules that will be loaded\"\n    }\n\n    command <<<\n        python3<<CODE\n\n        import sys\n        import pandas as pd\n\n        dfs = []\n        input_files = ['~{sep=\"', '\" select_all(inputTsvs)}']\n        columns = ['Strand', 'Read', 'Position', 'nMethylated', 'nUnmethylated']\n        for file in input_files:\n            df = pd.read_csv(file, sep='\\t', skiprows=1, names=columns)  # Skip header\n            dfs.append(df)\n\n        combined_df = pd.concat(dfs, ignore_index=True)\n\n        # Group by Strand, Read, and Position, and sum the methylation counts\n        aggregated_df = combined_df.groupby(['Strand', 'Read', 'Position'], as_index=False).agg({\n            'nMethylated': 'sum',\n            'nUnmethylated': 'sum'\n        }).sort_values(['Strand', 'Read', 'Position'])\n\n        with open(\"~{outputFileNamePrefix}.mbias.tsv\", 'w') as f:\n            aggregated_df.to_csv(f, sep='\\t', index=False)\n        CODE\n    >>>\n\n    output {\n        File combinedTsv = \"~{outputFileNamePrefix}.mbias.tsv\"\n    }\n    runtime {\n        modules: \"~{modules}\"\n        memory:  \"~{memory} GB\"\n        cpu:     \"~{threads}\"\n        timeout: \"~{timeout}\"\n    }\n}"
+}
