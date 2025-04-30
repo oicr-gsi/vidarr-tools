@@ -4,7 +4,7 @@ The home of Python tools for use with Víðarr.
 
 ## Installation
 
-vidarr-tools requires Python 3.10
+vidarr-tools requires Python 3.12
 
 1. Install pipenv
 
